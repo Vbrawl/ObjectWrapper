@@ -10,7 +10,7 @@ typedef struct MClass_struct {
 } MClass_t;
 
 DGObject_t* MClass_Construct(int hello) {
-  DGObject_t* this = DGObject_Construct(MClass_t, NULL);
+  DGObject_t* this = DGObject_Construct(MClass_t, NULL, NULL);
   if(this == NULL) return NULL;
 
   ((MClass_t*)this->object)->hello = hello;
@@ -24,12 +24,18 @@ DGObject_t* MClass_Construct(int hello) {
 
 DGOI_Register(CMClass_t, DGOI_USER_DEFINED + 2);
 typedef struct CMClass_struct {
-
+  int* flag;
 } CMClass_t;
 
-DGObject_t* CMClass_Construct(int hello) {
+void _CMClass_Destroy(DGObject_t* this) {
+  *((CMClass_t*)this->object)->flag = 1;
+};
+
+DGObject_t* CMClass_Construct(int* flag, int hello) {
   DGObject_t* super = MClass_Construct(hello);
-  DGObject_t* this = DGObject_Construct(CMClass_t, super);
+  DGObject_t* this = DGObject_Construct(CMClass_t, _CMClass_Destroy, super);
+
+  ((CMClass_t*)this->object)->flag = flag;
 
   return this;
 }
@@ -44,9 +50,11 @@ int main() {
   if(((MClass_t*)temp->object)->hello != 5) return -2;
   MClass_Destroy(temp);
 
-  DGObject_t* temp2 = CMClass_Construct(4);
+  int flag = 0;
+  DGObject_t* temp2 = CMClass_Construct(&flag, 4);
   if(CMClass_hello(temp2) != 4) return -3;
   if(CMClass_hello(temp2) != ((MClass_t*)DGObject_FindTypeInClass(temp2, DGOI_MClass_t)->object)->hello) return -4;
   CMClass_Destroy(temp2);
+  if(flag != 1) return -5;
   return 0;
 }
