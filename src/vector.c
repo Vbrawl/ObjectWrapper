@@ -63,6 +63,29 @@ void* OWVector_Get(OWObject_t* this, size_t index) {
   return obj->array + index * obj->item_size;
 }
 
+int OWVector_Remove(OWObject_t* this, size_t index) {
+  this = OWObject_FindTypeInClass(this, OWID_VECTOR);
+  if(this == NULL) {
+    return -1;
+  }
+  OWVector_t* const obj = this->object;
+
+  if(index >= obj->size) {
+    return -2;
+  }
+
+  size_t item_offset = obj->item_size * index;
+  size_t next_item_offset = item_offset + obj->item_size;
+  size_t size_to_move = (obj->size - index) * obj->item_size;
+
+  memmove(
+        obj->array + item_offset,
+        obj->array + next_item_offset,
+        size_to_move);
+
+  return 0;
+}
+
 void _OWVector_Destroy(OWObject_t* this) {
   OWVector_t* const obj = this->object;
   if(obj->array != NULL) {
