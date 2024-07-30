@@ -24,3 +24,12 @@ void DGObject_Destroy(DGObject_t* this) {
   free(this->object);
   free(this);
 }
+
+DGObject_t* DGObject_FindTypeInClass(DGObject_t* this, DGOI type) {
+  while(this->type != type && this->super != NULL) {
+    this = this->super;
+  }
+
+  if(this->type != type) return NULL;
+  return this;
+}

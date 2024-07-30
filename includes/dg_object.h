@@ -18,5 +18,6 @@ typedef struct DGObject_struct {
 #define DGObject_Super(type, cls) ((type*)cls->super->object)
 DGObject_t* _DGObject_Construct(size_t size, DGOI type, DGObject_t* super);
 void DGObject_Destroy(DGObject_t* this);
+DGObject_t* DGObject_FindTypeInClass(DGObject_t* this, DGOI type);
 
 #endif
