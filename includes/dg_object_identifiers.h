@@ -5,6 +5,7 @@
 typedef int DGOI;
 enum {
   DGOI_UNDEFINED = 0,
+  DGOI_VECTOR = 1,
 
   DGOI_USER_DEFINED = 1000
 };
