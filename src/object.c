@@ -1,8 +1,8 @@
-#include "dg_object.h"
+#include "object.h"
 #include <stdlib.h>
 
-DGObject_t* _DGObject_Construct(size_t size, DGOI type, DGDestroyCallback_t* destroy_callback, DGObject_t* super) {
-  DGObject_t* this = malloc(sizeof(DGObject_t));
+OWObject_t* _OWObject_Construct(size_t size, OWID type, OWDestroyCallback_t* destroy_callback, OWObject_t* super) {
+  OWObject_t* this = malloc(sizeof(OWObject_t));
   if(this == NULL) { return NULL; }
 
   this->object = malloc(size);
@@ -18,8 +18,8 @@ DGObject_t* _DGObject_Construct(size_t size, DGOI type, DGDestroyCallback_t* des
 }
 
 
-void DGObject_Destroy(DGObject_t* this) {
-  DGObject_t* prev_this = this;
+void OWObject_Destroy(OWObject_t* this) {
+  OWObject_t* prev_this = this;
   while(this != NULL) {
     if(this->destroy_callback != NULL) {
       this->destroy_callback(this);
@@ -32,7 +32,7 @@ void DGObject_Destroy(DGObject_t* this) {
   }
 }
 
-DGObject_t* DGObject_FindTypeInClass(DGObject_t* this, DGOI type) {
+OWObject_t* OWObject_FindTypeInClass(OWObject_t* this, OWID type) {
   while(this->type != type && this->super != NULL) {
     this = this->super;
   }

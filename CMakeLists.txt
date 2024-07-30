@@ -17,5 +17,5 @@ add_test(NAME ${name} COMMAND ./${name})
 endmacro()
 
 
-TestCase(dg_object_test tests/dg_object.c src/dg_object.c)
-TestCase(vector_test tests/vector.c src/dg_object.c src/vector.c)
+TestCase(object_test tests/object.c src/object.c)
+TestCase(vector_test tests/vector.c src/object.c src/vector.c)

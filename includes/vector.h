@@ -1,23 +1,23 @@
-#ifndef DG_VECTOR_H
-#define DG_VECTOR_H
+#ifndef OW_VECTOR_H
+#define OW_VECTOR_H
 
-#include "dg_object.h"
+#include "object.h"
 
 
-typedef struct Vector_struct {
+typedef struct OWVector_struct {
   void* array;
   size_t size;
   size_t available_slots;
   size_t item_size;
   size_t slot_steps;
-} Vector_t;
+} OWVector_t;
 
-DGObject_t* Vector_Construct(size_t item_size, size_t slot_steps);
-int Vector_Resize(DGObject_t* this, size_t slots);
-int Vector_PushBack(DGObject_t* this, void* item);
-void* Vector_Get(DGObject_t* this, size_t index);
-void _Vector_Destroy(DGObject_t* this);
-#define Vector_Destroy DGObject_Destroy
+OWObject_t* OWVector_Construct(size_t item_size, size_t slot_steps);
+int OWVector_Resize(OWObject_t* this, size_t slots);
+int OWVector_PushBack(OWObject_t* this, void* item);
+void* OWVector_Get(OWObject_t* this, size_t index);
+void _OWVector_Destroy(OWObject_t* this);
+#define OWVector_Destroy OWObject_Destroy
 
 
 #endif
