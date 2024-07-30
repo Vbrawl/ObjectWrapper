@@ -18,6 +18,9 @@ DGObject_t* _DGObject_Construct(size_t size, DGOI type, DGObject_t* super) {
 
 
 void DGObject_Destroy(DGObject_t* this) {
+  if(this->super != NULL) {
+    DGObject_Destroy(this->super);
+  }
   free(this->object);
   free(this);
 }
