@@ -46,6 +46,7 @@ int main() {
 
   DGObject_t* temp2 = CMClass_Construct(4);
   if(CMClass_hello(temp2) != 4) return -3;
+  if(CMClass_hello(temp2) != ((MClass_t*)DGObject_FindTypeInClass(temp2, DGOI_MClass_t)->object)->hello) return -4;
   CMClass_Destroy(temp2);
   return 0;
 }
