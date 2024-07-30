@@ -9,12 +9,12 @@ project(
 
 include_directories(includes)
 
-
-add_executable(dg_object_test tests/dg_object.c src/dg_object.c)
-
-
 enable_testing()
 
-add_test(
-	NAME dg_object_test
-	COMMAND ./dg_object_test)
+macro(TestCase name)
+add_executable(${name} ${ARGN})
+add_test(NAME ${name} COMMAND ./${name})
+endmacro()
+
+
+TestCase(dg_object_test tests/dg_object.c src/dg_object.c)
