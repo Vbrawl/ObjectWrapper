@@ -5,14 +5,13 @@
 
 
 typedef struct OWVector_struct {
-  void* array;
+  void** array;
   size_t size;
   size_t available_slots;
-  size_t item_size;
   size_t slot_steps;
 } OWVector_t;
 
-OWObject_t* OWVector_Construct(size_t item_size, size_t slot_steps);
+OWObject_t* OWVector_Construct(size_t slot_steps);
 int OWVector_Resize(OWObject_t* this, size_t slots);
 int OWVector_PushBack(OWObject_t* this, void* item);
 void* OWVector_Get(OWObject_t* this, size_t index);
