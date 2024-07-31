@@ -5,10 +5,13 @@ OWObject_t* _OWObject_Construct(size_t size, OWID type, OWDestroyCallback_t* des
   OWObject_t* this = malloc(sizeof(OWObject_t));
   if(this == NULL) { return NULL; }
 
-  this->object = malloc(size);
-  if(this->object == NULL) {
-    free(this);
-    return NULL;
+  this->object = NULL;
+  if(size > 0) {
+    this->object = malloc(size);
+    if(this->object == NULL) {
+      free(this);
+      return NULL;
+    }
   }
 
   this->super = super;
@@ -24,7 +27,9 @@ void OWObject_Destroy(OWObject_t* this) {
     if(this->destroy_callback != NULL) {
       this->destroy_callback(this);
     }
-    free(this->object);
+    if(this->object != NULL) {
+      free(this->object);
+    }
 
     this = this->super;
     free(prev_this);

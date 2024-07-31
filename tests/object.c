@@ -44,6 +44,12 @@ OWObject_t* CMClass_Construct(int* flag, int hello) {
 #define CMClass_Destroy OWObject_Destroy
 
 
+OWObject_t* EmptyClass_Construct() {
+  OWObject_t* this = _OWObject_Construct(0, OWID_UNDEFINED, NULL, NULL);
+
+  return this;
+}
+
 int main() {
   OWObject_t* temp = MClass_Construct(5);
   if(temp == NULL) return -1;
@@ -56,5 +62,10 @@ int main() {
   if(CMClass_hello(temp2) != ((MClass_t*)OWObject_FindTypeInClass(temp2, OWID_MClass_t)->object)->hello) return -4;
   CMClass_Destroy(temp2);
   if(flag != 1) return -5;
+
+
+  OWObject_t* empty = EmptyClass_Construct();
+  if(empty->object != NULL) return -6;
+  OWObject_Destroy(empty);
   return 0;
 }
