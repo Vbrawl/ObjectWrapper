@@ -25,6 +25,14 @@ int main() {
     return -3;
   }
 
+  i = 100;
+  OWVector_PushBack(vector, &i);
+  temp_pointer = OWVector_Get(vector, OWVector_GetSize(vector) - 1);
+  *temp_pointer = 101;
+  if(i != 101) {
+    return -4;
+  }
+
   OWVector_Destroy(vector);
   return 0;
 }
