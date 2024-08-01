@@ -10,7 +10,9 @@ int main() {
   for (i = 0; i < 6; i++) {
     temp_pointer = malloc(sizeof(int));
     *temp_pointer = i;
-    OWVector_PushBack(vector, temp_pointer);
+    if(OWVector_PushBack(vector, temp_pointer) != 0) {
+      return 1;
+    }
   }
 
   temp_pointer = (int*)OWVector_Get(vector, 2);
@@ -29,15 +31,15 @@ int main() {
   free(temp_pointer);
 
   i = 100;
-  OWVector_PushBack(vector, &i);
-  temp_pointer = OWVector_Get(vector, OWVector_GetSize(vector) - 1);
+  OWVector_PushFront(vector, &i);
+  temp_pointer = OWVector_Get(vector, 0);
   *temp_pointer = 101;
   if(i != 101) {
     return -4;
   }
 
   int size = OWVector_GetSize(vector);
-  temp_pointer = OWVector_PopBack(vector);
+  temp_pointer = OWVector_PopFront(vector);
   if(temp_pointer == NULL) {
     return -5;
   }
@@ -45,17 +47,30 @@ int main() {
     return -6;
   }
 
+  OWVector_Insert(vector, 1, &i);
+  temp_pointer = OWVector_Pop(vector, 1);
+  if(temp_pointer == NULL) {
+    return -7;
+  }
+  if(OWVector_GetSize(vector) == size) {
+
+  }
+  *temp_pointer = 102;
+  if(i != 102) {
+    return -8;
+  }
+
   while(OWVector_GetSize(vector) != 0) {
     size = OWVector_GetSize(vector);
-    temp_pointer = OWVector_PopFront(vector);
+    temp_pointer = OWVector_PopBack(vector);
 
     if(temp_pointer == NULL) {
-      return -7;
+      return -9;
     }
     free(temp_pointer);
 
     if(OWVector_GetSize(vector) == size) {
-      return -8;
+      return -10;
     }
   }
 
