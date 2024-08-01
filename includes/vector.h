@@ -17,6 +17,9 @@ int OWVector_PushBack(OWObject_t* this, void* item);
 #define OWVector_GetSize(this) ((OWVector_t*)OWObject_FindTypeInClass(this, OWID_VECTOR)->object)->size
 void* OWVector_Get(OWObject_t* this, size_t index);
 int OWVector_Remove(OWObject_t* this, size_t index);
+void* OWVector_Pop(OWObject_t* this, size_t index);
+void* OWVector_PopBack(OWObject_t* this);
+void* OWVector_PopFront(OWObject_t* this);
 void _OWVector_Destroy(OWObject_t* this);
 #define OWVector_Destroy OWObject_Destroy
 

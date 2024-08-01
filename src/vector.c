@@ -82,6 +82,24 @@ int OWVector_Remove(OWObject_t* this, size_t index) {
   return 0;
 }
 
+void* OWVector_Pop(OWObject_t* this, size_t index) {
+  this = OWObject_FindTypeInClass(this, OWID_VECTOR);
+
+  void* item = OWVector_Get(this, index);
+  OWVector_Remove(this, index);
+
+  return item;
+}
+
+void* OWVector_PopBack(OWObject_t* this) {
+  this = OWObject_FindTypeInClass(this, OWID_VECTOR);
+  return OWVector_Pop(this, ((OWVector_t*)this->object)->size - 1);
+}
+
+void* OWVector_PopFront(OWObject_t* this) {
+  return OWVector_Pop(this, 0);
+}
+
 void _OWVector_Destroy(OWObject_t* this) {
   OWVector_t* const obj = this->object;
   if(obj->array != NULL) {
