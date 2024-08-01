@@ -29,7 +29,7 @@ int OWVector_Resize(OWObject_t* this, size_t slots) {
   return 0;
 }
 
-int _OWVector_Insert(OWObject_t* this, enum OWVECTOR_INSERT_OPTION option, size_t index, void* item) {
+int OWVector_Insert(OWObject_t* this, size_t index, void* item) {
   int error = 0;
   this = OWObject_FindTypeInClass(this, OWID_VECTOR);
   if(this == NULL) {
@@ -37,16 +37,9 @@ int _OWVector_Insert(OWObject_t* this, enum OWVECTOR_INSERT_OPTION option, size_
   }
 
   OWVector_t* const obj = this->object;
-  if(option == OWVECTOR_INSERT_OPTION_INDEX) {
-    if(index >= obj->size) return -2;
+  if(index > obj->size) {
+    return -2;
   }
-  else if(option == OWVECTOR_INSERT_OPTION_BACK) {
-    index = obj->size;
-  }
-  else if(option == OWVECTOR_INSERT_OPTION_FRONT) {
-    index = 0;
-  }
-
 
   if(obj->size + 1 > obj->available_slots) {
     error = OWVector_Resize(this, obj->available_slots + obj->slot_steps);
@@ -55,12 +48,11 @@ int _OWVector_Insert(OWObject_t* this, enum OWVECTOR_INSERT_OPTION option, size_
     }
   }
 
-  if(option == OWVECTOR_INSERT_OPTION_INDEX || (option == OWVECTOR_INSERT_OPTION_FRONT && obj->size > 0)) {
+  if(obj->size > 0 || index > 0) {
     memmove(obj->array + index + 1,
             obj->array + index,
             (obj->size - index) * sizeof(void*));
   }
-  // elseif(option == OWVECTOR_INSERT_BACK) // We don't need to move anything
   obj->array[index] = item;
   obj->size += 1;
 
