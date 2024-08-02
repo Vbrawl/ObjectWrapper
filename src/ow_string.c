@@ -21,6 +21,7 @@ int OWString_Set(OWObject_t* this, const char* content, size_t content_size) {
   }
   memcpy(OWArray_GetBuffer(this), content, sizeof(char) * content_size);
   OWArray_At(char, this, content_size) = '\0';
+  obj->size = content_size;
 
   return 0;
 }
@@ -37,6 +38,37 @@ int OWString_Append(OWObject_t* this, const char* content, size_t content_size) 
   if(content_size > 0) {
     memcpy(OWArray_GetBuffer(this) + obj->size * sizeof(char), content, sizeof(char) * content_size);
     OWArray_At(char, this, final_size) = '\0';
+  }
+  obj->size = final_size;
+
+  return 0;
+}
+
+
+int OWString_Compare(OWObject_t* this, OWObject_t* other) {
+  int i, difference;
+  size_t size1, size2;
+  const char *str1, *str2;
+
+  // Initialize variables
+  size1 = OWString_GetSize(this);
+  size2 = OWString_GetSize(other);
+
+  str1 = OWString_GetBuffer(this);
+  str2 = OWString_GetBuffer(other);
+
+  // Perform size checks
+  if(size1 > size2) {
+    return str1[size2];
+  }
+  else if(size1 < size2) {
+    return str2[size1];
+  }
+
+  // Perform value checks
+  for (int i = 0; i < size1; i++) {
+    difference = str1[i] - str2[i];
+    if(difference != 0) return difference;
   }
 
   return 0;
