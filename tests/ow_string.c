@@ -25,6 +25,12 @@ int test_OWString_Compare() {
     return -3;
   }
 
+  OWString_Set(str1, OWString_GetBuffer(str2), OWString_GetSize(str2));
+  OWString_Append(str1, "!", 1);
+  if(OWString_Compare(str1, str2) <= 0) {
+    return -4;
+  }
+
   return 0;
 }
 
