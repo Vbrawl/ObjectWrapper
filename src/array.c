@@ -18,9 +18,18 @@ int OWArray_Resize(OWObject_t* this, size_t slots) {
   }
   OWArray_t* const obj = this->object;
 
-  obj->array = realloc(obj->array, sizeof(void*) * slots);
-  obj->slots = slots;
-  if(obj->array == NULL) return -2;
+  if(slots == 0) {
+    if(obj->array != NULL) {
+      free(obj->array);
+    }
+    obj->array = NULL;
+    obj->slots = 0;
+  }
+  else {
+    obj->array = realloc(obj->array, sizeof(void*) * slots);
+    obj->slots = slots;
+    if(obj->array == NULL) return -2;
+  }
   return 0;
 }
 
