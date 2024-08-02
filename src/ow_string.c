@@ -4,9 +4,9 @@
 
 
 OWObject_t* OWString_Construct() {
-  OWObject_t* this = _OWObject_Construct(sizeof(OWString_t), OWID_STRING, _OWString_Destroy, NULL);
+  OWObject_t* array = OWArray_Construct(sizeof(char), 0);
+  OWObject_t* this = _OWObject_Construct(sizeof(OWString_t), OWID_STRING, NULL, array);
   OWString_t* const obj = this->object;
-  obj->string = NULL;
   obj->size = 0;
 
   return this;
@@ -16,45 +16,28 @@ int OWString_Set(OWObject_t* this, const char* content, size_t content_size) {
   this = OWObject_FindTypeInClass(this, OWID_STRING);
   OWString_t* const obj = this->object;
 
-  if(content_size == 0) {
-    if(obj->size > 0) {
-      free(obj->string);
-    }
-    obj->string = NULL;
-    obj->size = 0;
+  if(content_size + 1 > OWArray_GetSlots(this)) {
+    OWArray_Resize(this, content_size + 1);
   }
-  else {
-    obj->string = realloc(obj->string, content_size + 1);
-    if(obj->string == NULL) {
-      return -1;
-    }
-    memcpy(obj->string, content, content_size);
-    obj->size = content_size;
-    obj->string[obj->size] = '\0';
-  }
+  memcpy(OWArray_GetBuffer(this), content, sizeof(char) * content_size);
+  OWArray_At(char, this, content_size) = '\0';
+
   return 0;
 }
 
 int OWString_Append(OWObject_t* this, const char* content, size_t content_size) {
   this = OWObject_FindTypeInClass(this, OWID_STRING);
   OWString_t* const obj = this->object;
+  size_t final_size = obj->size + content_size;
+
+  if(final_size + 1 > OWArray_GetSlots(this)) {
+    OWArray_Resize(this, final_size + 1);
+  }
 
   if(content_size > 0) {
-    obj->string = realloc(obj->string, obj->size + content_size + 1);
-    if(obj->string == NULL) {
-      return -1;
-    }
-    memcpy(obj->string + obj->size, content, content_size);
-    obj->size += content_size;
-    obj->string[obj->size] = '\0';
+    memcpy(OWArray_GetBuffer(this) + obj->size * sizeof(char), content, sizeof(char) * content_size);
+    OWArray_At(char, this, final_size) = '\0';
   }
 
   return 0;
-}
-
-void _OWString_Destroy(OWObject_t* this) {
-  OWString_t* const obj = this->object;
-  if(obj->size > 0) {
-    free(obj->string);
-  }
 }
