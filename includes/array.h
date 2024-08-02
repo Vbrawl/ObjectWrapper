@@ -11,6 +11,8 @@ typedef struct OWArray_struct {
 OWObject_t* OWArray_Construct(size_t slots);
 int OWArray_Resize(OWObject_t* this, size_t slots);
 #define OWArray_At(this, index) ((OWArray_t*)OWObject_FindTypeInClass(this, OWID_ARRAY)->object)->array[index]
+#define OWArray_GetBuffer(this) ((OWArray_t*)OWObject_FindTypeInClass(this, OWID_ARRAY)->object)->array
+#define OWArray_GetSlots(this) ((OWArray_t*)OWObject_FindTypeInClass(this, OWID_ARRAY)->object)->slots
 void _OWArray_Destroy(OWObject_t* this);
 #define OWArray_Destroy OWObject_Destroy
 

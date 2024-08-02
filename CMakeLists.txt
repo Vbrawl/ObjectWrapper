@@ -37,7 +37,7 @@ endmacro()
 enable_testing()
 
 TestCase(object_test tests/object.c src/object.c)
-TestCase(vector_test tests/vector.c src/object.c src/vector.c)
+TestCase(vector_test tests/vector.c src/object.c src/vector.c src/array.c)
 #TestCase(string_test tests/ow_string.c src/object.c src/ow_string.c)
 TestCase(array_test tests/array.c src/object.c src/array.c)
 
