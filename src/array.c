@@ -2,10 +2,11 @@
 #include <stdlib.h>
 
 
-OWObject_t* OWArray_Construct(size_t slots) {
+OWObject_t* OWArray_Construct(size_t slot_size, size_t slots) {
   OWObject_t* this = _OWObject_Construct(sizeof(OWArray_t), OWID_ARRAY, _OWArray_Destroy, NULL);
   OWArray_t* const obj = this->object;
 
+  obj->slot_size = slot_size;
   OWArray_Resize(this, slots);
 
   return this;
@@ -26,7 +27,7 @@ int OWArray_Resize(OWObject_t* this, size_t slots) {
     obj->slots = 0;
   }
   else {
-    obj->array = realloc(obj->array, sizeof(void*) * slots);
+    obj->array = realloc(obj->array, obj->slot_size * slots);
     obj->slots = slots;
     if(obj->array == NULL) return -2;
   }
