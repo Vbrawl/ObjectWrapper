@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.18)
 
+if(NOT DEFINED CMAKE_BUILD_TYPE)
 set(CMAKE_BUILD_TYPE Debug)
+endif()
 
 project(
 	ObjectWrapper
@@ -36,6 +38,7 @@ enable_testing()
 
 TestCase(object_test tests/object.c src/object.c)
 TestCase(vector_test tests/vector.c src/object.c src/vector.c)
+TestCase(string_test tests/ow_string.c src/object.c src/ow_string.c)
 
 
 # Add installation steps

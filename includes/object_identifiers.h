@@ -6,9 +6,11 @@ typedef int OWID;
 enum {
   OWID_UNDEFINED = 0,
   OWID_VECTOR = 1,
+  OWID_STRING = 2,
 
   OWID_USER_DEFINED = 1000
 };
 
 
 #endif
+
