@@ -5,7 +5,7 @@
 
 
 OWObject_t* OWVector_Construct(size_t slot_steps) {
-  OWObject_t* array = OWArray_Construct(slot_steps);
+  OWObject_t* array = OWArray_Construct(sizeof(void*), slot_steps);
   OWObject_t* this = _OWObject_Construct(sizeof(OWVector_t), OWID_VECTOR, NULL, array);
   OWVector_t* const obj = this->object;
 
@@ -33,12 +33,12 @@ int OWVector_Insert(OWObject_t* this, size_t index, void* item) {
     }
   }
 
-  if(obj->size > 0 || index > 0) {
-    memmove(OWArray_GetBuffer(this) + index + 1,
-            OWArray_GetBuffer(this) + index,
+  if((obj->size > 0 || index > 0) && obj->size != index) {
+    memmove(OWArray_GetBuffer(this) + (index + 1) * sizeof(void*),
+            OWArray_GetBuffer(this) + index * sizeof(void*),
             (obj->size - index) * sizeof(void*));
   }
-  OWArray_At(this, index) = item;
+  OWArray_At(void*, this, index) = item;
   obj->size += 1;
 
   return 0;
@@ -55,7 +55,7 @@ void* OWVector_Get(OWObject_t* this, size_t index) {
     return NULL;
   }
 
-  return OWArray_At(this, index);
+  return OWArray_At(void*, this, index);
 }
 
 int OWVector_Remove(OWObject_t* this, size_t index) {
@@ -69,8 +69,8 @@ int OWVector_Remove(OWObject_t* this, size_t index) {
     return -2;
   }
 
-  memmove(OWArray_GetBuffer(this) + index,
-          OWArray_GetBuffer(this) + index + 1,
+  memmove(OWArray_GetBuffer(this) + index * sizeof(void*),
+          OWArray_GetBuffer(this) + (index + 1) * sizeof(void*),
           (obj->size - index) * sizeof(void*));
   obj->size -= 1;
 
