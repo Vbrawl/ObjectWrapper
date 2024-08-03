@@ -19,7 +19,10 @@ include_directories(includes)
 # Create the shared library target
 add_library(objectwrapper SHARED
 	src/object.c
-	src/vector.c)
+	src/array.c
+	src/ow_string.c
+	src/vector.c
+	src/map.c)
 target_include_directories(objectwrapper PUBLIC includes)
 
 set_target_properties(objectwrapper PROPERTIES
