@@ -6,6 +6,7 @@ OWObject_t* OWArray_Construct(size_t slot_size, size_t slots) {
   OWObject_t* this = _OWObject_Construct(sizeof(OWArray_t), OWID_ARRAY, _OWArray_Destroy, NULL);
   OWArray_t* const obj = this->object;
 
+  obj->array = NULL;
   obj->slot_size = slot_size;
   OWArray_Resize(this, slots);
 
