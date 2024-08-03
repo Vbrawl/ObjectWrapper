@@ -8,6 +8,7 @@ enum {
   OWID_VECTOR = 1,
   OWID_STRING = 2,
   OWID_ARRAY = 3,
+  OWID_MAP = 4,
 
   OWID_USER_DEFINED = 1000
 };

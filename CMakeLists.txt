@@ -40,6 +40,7 @@ TestCase(object_test tests/object.c src/object.c)
 TestCase(vector_test tests/vector.c src/object.c src/vector.c src/array.c)
 TestCase(string_test tests/ow_string.c src/object.c src/ow_string.c src/array.c)
 TestCase(array_test tests/array.c src/object.c src/array.c)
+TestCase(map_test tests/map.c src/map.c src/vector.c src/array.c src/object.c src/ow_string.c)
 
 
 # Add installation steps
