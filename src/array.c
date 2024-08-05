@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 
-OWObject_t* OWArray_Construct(size_t slot_size, size_t slots) {
-  OWObject_t* this = _OWObject_Construct(sizeof(OWArray_t), OWID_ARRAY, _OWArray_Destroy, NULL);
+OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots) {
+  OWO_Array_t* this = _OWObject_Construct(sizeof(OWArray_t), OWID_ARRAY, _OWArray_Destroy, NULL);
   OWArray_t* const obj = this->object;
 
   obj->array = NULL;
@@ -13,7 +13,7 @@ OWObject_t* OWArray_Construct(size_t slot_size, size_t slots) {
   return this;
 }
 
-int OWArray_Resize(OWObject_t* this, size_t slots) {
+int OWArray_Resize(OWO_Array_t* this, size_t slots) {
   this = OWObject_FindTypeInClass(this, OWID_ARRAY);
   if(this == NULL) {
     return -1;
@@ -35,7 +35,7 @@ int OWArray_Resize(OWObject_t* this, size_t slots) {
   return 0;
 }
 
-void _OWArray_Destroy(OWObject_t* this) {
+void _OWArray_Destroy(OWO_Array_t* this) {
   OWArray_t* const obj = this->object;
   if(obj->array != NULL) {
     free(obj->array);
