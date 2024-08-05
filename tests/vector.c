@@ -4,7 +4,7 @@
 
 
 int main() {
-  OWObject_t* vector = OWVector_Construct(5);
+  OWO_Vector_t* vector = OWVector_Construct(5);
   int* temp_pointer = NULL;
   int i;
   for (i = 0; i < 6; i++) {

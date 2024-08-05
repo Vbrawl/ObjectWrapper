@@ -4,9 +4,9 @@
 #include <string.h>
 
 
-OWObject_t* OWVector_Construct(size_t slot_steps) {
-  OWObject_t* array = OWArray_Construct(sizeof(void*), slot_steps);
-  OWObject_t* this = _OWObject_Construct(sizeof(OWVector_t), OWID_VECTOR, NULL, array);
+OWO_Vector_t* OWVector_Construct(size_t slot_steps) {
+  OWO_Array_t* array = OWArray_Construct(sizeof(void*), slot_steps);
+  OWO_Vector_t* this = _OWObject_Construct(sizeof(OWVector_t), OWID_VECTOR, NULL, array);
   OWVector_t* const obj = this->object;
 
   obj->size = 0;
@@ -14,7 +14,7 @@ OWObject_t* OWVector_Construct(size_t slot_steps) {
   return this;
 }
 
-int OWVector_Insert(OWObject_t* this, size_t index, void* item) {
+int OWVector_Insert(OWO_Vector_t* this, size_t index, void* item) {
   int error = 0;
   this = OWObject_FindTypeInClass(this, OWID_VECTOR);
   if(this == NULL) {
@@ -44,7 +44,7 @@ int OWVector_Insert(OWObject_t* this, size_t index, void* item) {
   return 0;
 }
 
-void* OWVector_Get(OWObject_t* this, size_t index) {
+void* OWVector_Get(OWO_Vector_t* this, size_t index) {
   this = OWObject_FindTypeInClass(this, OWID_VECTOR);
   if(this == NULL) {
     return NULL;
@@ -58,7 +58,7 @@ void* OWVector_Get(OWObject_t* this, size_t index) {
   return OWArray_At(void*, this, index);
 }
 
-int OWVector_Remove(OWObject_t* this, size_t index) {
+int OWVector_Remove(OWO_Vector_t* this, size_t index) {
   this = OWObject_FindTypeInClass(this, OWID_VECTOR);
   if(this == NULL) {
     return -1;
@@ -77,7 +77,7 @@ int OWVector_Remove(OWObject_t* this, size_t index) {
   return 0;
 }
 
-void* OWVector_Pop(OWObject_t* this, size_t index) {
+void* OWVector_Pop(OWO_Vector_t* this, size_t index) {
   this = OWObject_FindTypeInClass(this, OWID_VECTOR);
 
   void* item = OWVector_Get(this, index);
