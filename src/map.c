@@ -1,10 +1,9 @@
 #include "map.h"
-#include "ow_string.h"
 
 
 
-OWObject_t* OWMap_Construct(size_t slot_steps) {
-  OWObject_t* this = _OWObject_Construct(sizeof(OWMap_t), OWID_MAP, _OWMap_Destroy, NULL);
+OWO_Map_t* OWMap_Construct(size_t slot_steps) {
+  OWO_Map_t* this = _OWObject_Construct(sizeof(OWMap_t), OWID_MAP, _OWMap_Destroy, NULL);
   if(this == NULL) {
     return NULL;
   }
@@ -17,7 +16,7 @@ OWObject_t* OWMap_Construct(size_t slot_steps) {
 }
 
 
-int OWMap_Set(OWObject_t* this, OWObject_t* key, void* item) {
+int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, void* item) {
   this = OWObject_FindTypeInClass(this, OWID_MAP);
   OWMap_t* const obj = this->object;
 
@@ -26,7 +25,7 @@ int OWMap_Set(OWObject_t* this, OWObject_t* key, void* item) {
     OWVector_PushBack(obj->values, item);
   }
   else {
-    OWObject_t* temp;
+    OWO_String_t* temp;
     int difference;
     int i = -1; // becomes 0 in the first do-while
     do {
@@ -46,11 +45,11 @@ int OWMap_Set(OWObject_t* this, OWObject_t* key, void* item) {
 }
 
 
-void* OWMap_Get(OWObject_t* this, OWObject_t* key) {
+void* OWMap_Get(OWO_Map_t* this, OWO_String_t* key) {
   this = OWObject_FindTypeInClass(this, OWID_MAP);
   OWMap_t* const obj = this->object;
 
-  OWObject_t* temp;
+  OWO_String_t* temp;
   int difference;
   int i = -1; // becomes 0 in the first do-while
 
@@ -67,7 +66,7 @@ void* OWMap_Get(OWObject_t* this, OWObject_t* key) {
 }
 
 
-void _OWMap_Destroy(OWObject_t* this) {
+void _OWMap_Destroy(OWO_Map_t* this) {
   OWMap_t* const obj = this->object;
   OWVector_Destroy(obj->keys);
   OWVector_Destroy(obj->values);

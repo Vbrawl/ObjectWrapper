@@ -6,7 +6,8 @@
 
 
 int main() {
-  OWObject_t *map, *key1, *key2;
+  OWO_Map_t *map;
+  OWO_String_t *key1, *key2;
   const char *ckey1, *ckey2;
   int *item1, *item2;
 
