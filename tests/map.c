@@ -53,7 +53,8 @@ int main() {
     if(OWMap_UnSet(map, temp) != 0) return -3;
   }
 
-
+  free(item1);
+  free(item2);
   OWMap_Destroy(map);
   return 0;
 }

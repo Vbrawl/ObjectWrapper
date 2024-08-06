@@ -62,6 +62,7 @@ int OWMap_UnSet(OWO_Map_t* this, OWO_Map_t* key) {
 
   OWVector_Remove(obj->keys, i);
   OWVector_Remove(obj->values, i);
+  OWString_Destroy(temp);
   return 0;
 }
 
