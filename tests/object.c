@@ -66,7 +66,10 @@ int main() {
 
 
   OWObject_t* empty = EmptyClass_Construct();
+  OWObject_t* empty2 = OWObject_Ref(empty);
   if(empty->object != NULL) return -7;
-  OWObject_Destroy(empty);
+  OWObject_UnRef(empty);
+  OWObject_UnRef(empty2);
+
   return 0;
 }

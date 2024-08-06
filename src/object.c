@@ -15,6 +15,7 @@ OWObject_t* _OWObject_Construct(size_t size, OWID type, OWDestroyCallback_t* des
   }
 
   this->super = super;
+  this->reference_count += 1;
   this->destroy_callback = destroy_callback;
   this->type = type;
   return this;
@@ -50,4 +51,16 @@ void* OWObject_FindObjectInClass(OWObject_t* this, OWID type) {
   this = OWObject_FindTypeInClass(this, type);
   if(this == NULL) return NULL;
   return this->object;
+}
+
+OWObject_t* OWObject_Ref(OWObject_t* this) {
+  this->reference_count += 1;
+  return this;
+}
+
+void OWObject_UnRef(OWObject_t* this) {
+  this->reference_count -= 1;
+  if(this->reference_count <= 0) {
+    OWObject_Destroy(this);
+  }
 }
