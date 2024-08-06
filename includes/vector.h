@@ -18,7 +18,7 @@ OWO_Vector_t* OWVector_Construct(size_t slot_steps);
 int OWVector_Insert(OWO_Vector_t* this, size_t index, void* item);
 #define OWVector_PushBack(this, item) OWVector_Insert(this, OWVector_GetSize(this), item)
 #define OWVector_PushFront(this, item) OWVector_Insert(this, 0, item)
-#define OWVector_GetSize(this) ((OWVector_t*)OWObject_FindTypeInClass(this, OWID_VECTOR)->object)->size
+#define OWVector_GetSize(this) ((OWVector_t*)OWObject_FindObjectInClass(this, OWID_VECTOR))->size
 void* OWVector_Get(OWO_Vector_t* this, size_t index);
 int OWVector_Remove(OWO_Vector_t* this, size_t index);
 void* OWVector_Pop(OWO_Vector_t* this, size_t index);

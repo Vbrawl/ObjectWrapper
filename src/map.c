@@ -17,8 +17,8 @@ OWO_Map_t* OWMap_Construct(size_t slot_steps) {
 
 
 int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, void* item) {
-  this = OWObject_FindTypeInClass(this, OWID_MAP);
-  OWMap_t* const obj = this->object;
+  OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
+  if(obj == NULL) return -1;
 
   if(OWVector_GetSize(obj->keys) == 0) {
     OWVector_PushBack(obj->keys, key);
@@ -46,8 +46,8 @@ int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, void* item) {
 
 
 void* OWMap_Get(OWO_Map_t* this, OWO_String_t* key) {
-  this = OWObject_FindTypeInClass(this, OWID_MAP);
-  OWMap_t* const obj = this->object;
+  OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
+  if(obj == NULL) return NULL;
 
   OWO_String_t* temp;
   int difference;

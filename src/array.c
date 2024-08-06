@@ -14,11 +14,8 @@ OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots) {
 }
 
 int OWArray_Resize(OWO_Array_t* this, size_t slots) {
-  this = OWObject_FindTypeInClass(this, OWID_ARRAY);
-  if(this == NULL) {
-    return -1;
-  }
-  OWArray_t* const obj = this->object;
+  OWArray_t* const obj = OWObject_FindObjectInClass(this, OWID_ARRAY);
+  if(this == NULL) return -1;
 
   if(slots == 0) {
     if(obj->array != NULL) {

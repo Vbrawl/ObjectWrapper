@@ -16,15 +16,9 @@ OWO_Vector_t* OWVector_Construct(size_t slot_steps) {
 
 int OWVector_Insert(OWO_Vector_t* this, size_t index, void* item) {
   int error = 0;
-  this = OWObject_FindTypeInClass(this, OWID_VECTOR);
-  if(this == NULL) {
-    return -1;
-  }
-
-  OWVector_t* const obj = this->object;
-  if(index > obj->size) {
-    return -2;
-  }
+  OWVector_t* const obj = OWObject_FindObjectInClass(this, OWID_VECTOR);
+  if(obj == NULL) return -1;
+  if(index > obj->size) return -2;
 
   if(obj->size + 1 > OWArray_GetSlots(this)) {
     error = OWVector_Resize(this, OWArray_GetSlots(this) + obj->slot_steps);
@@ -45,11 +39,8 @@ int OWVector_Insert(OWO_Vector_t* this, size_t index, void* item) {
 }
 
 void* OWVector_Get(OWO_Vector_t* this, size_t index) {
-  this = OWObject_FindTypeInClass(this, OWID_VECTOR);
-  if(this == NULL) {
-    return NULL;
-  }
-  OWVector_t* const obj = this->object;
+  OWVector_t* const obj = OWObject_FindObjectInClass(this, OWID_VECTOR);
+  if(obj == NULL) return NULL;
 
   if(index >= obj->size) {
     return NULL;
@@ -59,11 +50,8 @@ void* OWVector_Get(OWO_Vector_t* this, size_t index) {
 }
 
 int OWVector_Remove(OWO_Vector_t* this, size_t index) {
-  this = OWObject_FindTypeInClass(this, OWID_VECTOR);
-  if(this == NULL) {
-    return -1;
-  }
-  OWVector_t* const obj = this->object;
+  OWVector_t* const obj = OWObject_FindObjectInClass(this, OWID_VECTOR);
+  if(obj == NULL) return -1;
 
   if(index >= obj->size) {
     return -2;
@@ -78,8 +66,6 @@ int OWVector_Remove(OWO_Vector_t* this, size_t index) {
 }
 
 void* OWVector_Pop(OWO_Vector_t* this, size_t index) {
-  this = OWObject_FindTypeInClass(this, OWID_VECTOR);
-
   void* item = OWVector_Get(this, index);
   OWVector_Remove(this, index);
 

@@ -13,8 +13,7 @@ OWO_String_t* OWString_Construct() {
 }
 
 int OWString_Set(OWO_String_t* this, const char* content, size_t content_size) {
-  this = OWObject_FindTypeInClass(this, OWID_STRING);
-  OWString_t* const obj = this->object;
+  OWString_t* const obj = OWObject_FindObjectInClass(this, OWID_STRING);
 
   if(content_size + 1 > OWArray_GetSlots(this)) {
     OWArray_Resize(this, content_size + 1);
@@ -27,8 +26,7 @@ int OWString_Set(OWO_String_t* this, const char* content, size_t content_size) {
 }
 
 int OWString_Append(OWO_String_t* this, const char* content, size_t content_size) {
-  this = OWObject_FindTypeInClass(this, OWID_STRING);
-  OWString_t* const obj = this->object;
+  OWString_t* const obj = OWObject_FindObjectInClass(this, OWID_STRING);
   size_t final_size = obj->size + content_size;
 
   if(final_size + 1 > OWArray_GetSlots(this)) {

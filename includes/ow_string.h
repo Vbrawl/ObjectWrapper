@@ -30,7 +30,7 @@ int OWString_Append(OWO_String_t* this, const char* content, size_t content_size
  */
 int OWString_Compare(OWO_String_t* this, OWO_String_t* other);
 #define OWString_GetBuffer(this) OWArray_GetBuffer(this)
-#define OWString_GetSize(this) ((OWString_t*)OWObject_FindTypeInClass(this, OWID_STRING)->object)->size
+#define OWString_GetSize(this) ((OWString_t*)OWObject_FindObjectInClass(this, OWID_STRING))->size
 #define OWString_GetLength OWString_GetSize
 #define OWString_Destroy OWObject_Destroy
 
