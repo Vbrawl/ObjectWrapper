@@ -16,8 +16,10 @@ OWO_Map_t* OWMap_Construct(size_t slot_steps);
 
 // key: OWString_t
 int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, void* item);
+int OWMap_UnSet(OWO_Map_t* this, OWO_String_t* key);
 void* OWMap_Get(OWO_Map_t* this, OWO_String_t* key);
 void _OWMap_Destroy(OWO_Map_t* this);
+#define OWMap_GetSize(this) OWVector_GetSize(((OWMap_t*)OWObject_FindObjectInClass(this, OWID_MAP))->keys)
 #define OWMap_Destroy OWObject_Destroy
 
 #endif

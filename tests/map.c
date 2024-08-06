@@ -45,6 +45,14 @@ int main() {
     return -2;
   }
 
+  OWO_String_t* temp;
+  OWMap_t* map_obj = OWObject_FindObjectInClass(map, OWID_MAP);
+  while(OWMap_GetSize(map) > 0) {
+    temp = OWVector_Get(map_obj->keys, 0);
+
+    if(OWMap_UnSet(map, temp) != 0) return -3;
+  }
+
 
   OWMap_Destroy(map);
   return 0;

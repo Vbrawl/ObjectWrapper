@@ -44,6 +44,27 @@ int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, void* item) {
   return 0;
 }
 
+int OWMap_UnSet(OWO_Map_t* this, OWO_Map_t* key) {
+  OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
+  if(obj == NULL) return -1;
+
+  OWO_String_t* temp;
+  int difference;
+  int i = -1;
+
+  do {
+    i += 1;
+    temp = OWVector_Get(obj->keys, i);
+    difference = OWString_Compare(key, temp);
+  } while(i < OWVector_GetSize(obj->keys) && difference != 0);
+
+  if(difference != 0) return -2;
+
+  OWVector_Remove(obj->keys, i);
+  OWVector_Remove(obj->values, i);
+  return 0;
+}
+
 
 void* OWMap_Get(OWO_Map_t* this, OWO_String_t* key) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
