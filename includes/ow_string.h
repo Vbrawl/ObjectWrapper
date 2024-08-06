@@ -8,10 +8,12 @@ typedef struct OWString_struct {
   size_t size; // This does NOT count the NULL-byte
 } OWString_t;
 
-OWObject_t* OWString_Construct();
+typedef OWObject_t OWO_String_t;
+
+OWO_String_t* OWString_Construct();
 #define OWString_Resize OWArray_Resize
-int OWString_Set(OWObject_t* this, const char* content, size_t content_size);
-int OWString_Append(OWObject_t* this, const char* content, size_t content_size);
+int OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
+int OWString_Append(OWO_String_t* this, const char* content, size_t content_size);
 
 /*
  * return code:
@@ -26,7 +28,7 @@ int OWString_Append(OWObject_t* this, const char* content, size_t content_size);
  *    OWString_Compare("Hello World!", "Hello World") => 33
  *    OWString_Compare("Hello World", "Hello World!") => -33
  */
-int OWString_Compare(OWObject_t* this, OWObject_t* other);
+int OWString_Compare(OWO_String_t* this, OWO_String_t* other);
 #define OWString_GetBuffer(this) OWArray_GetBuffer(this)
 #define OWString_GetSize(this) ((OWString_t*)OWObject_FindTypeInClass(this, OWID_STRING)->object)->size
 #define OWString_GetLength OWString_GetSize

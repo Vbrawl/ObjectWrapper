@@ -3,16 +3,16 @@
 #include <string.h>
 
 
-OWObject_t* OWString_Construct() {
-  OWObject_t* array = OWArray_Construct(sizeof(char), 0);
-  OWObject_t* this = _OWObject_Construct(sizeof(OWString_t), OWID_STRING, NULL, array);
+OWO_String_t* OWString_Construct() {
+  OWO_Array_t* array = OWArray_Construct(sizeof(char), 0);
+  OWO_String_t* this = _OWObject_Construct(sizeof(OWString_t), OWID_STRING, NULL, array);
   OWString_t* const obj = this->object;
   obj->size = 0;
 
   return this;
 }
 
-int OWString_Set(OWObject_t* this, const char* content, size_t content_size) {
+int OWString_Set(OWO_String_t* this, const char* content, size_t content_size) {
   this = OWObject_FindTypeInClass(this, OWID_STRING);
   OWString_t* const obj = this->object;
 
@@ -26,7 +26,7 @@ int OWString_Set(OWObject_t* this, const char* content, size_t content_size) {
   return 0;
 }
 
-int OWString_Append(OWObject_t* this, const char* content, size_t content_size) {
+int OWString_Append(OWO_String_t* this, const char* content, size_t content_size) {
   this = OWObject_FindTypeInClass(this, OWID_STRING);
   OWString_t* const obj = this->object;
   size_t final_size = obj->size + content_size;
@@ -45,7 +45,7 @@ int OWString_Append(OWObject_t* this, const char* content, size_t content_size) 
 }
 
 
-int OWString_Compare(OWObject_t* this, OWObject_t* other) {
+int OWString_Compare(OWO_String_t* this, OWO_String_t* other) {
   int i, difference;
   size_t size1, size2;
   const char *str1, *str2;

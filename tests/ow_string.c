@@ -2,8 +2,8 @@
 #include <string.h>
 
 int test_OWString_Compare() {
-  OWObject_t* str1 = OWString_Construct();
-  OWObject_t* str2 = OWString_Construct();
+  OWO_String_t* str1 = OWString_Construct();
+  OWO_String_t* str2 = OWString_Construct();
 
   const char* cstr = "Hello World";
   OWString_Set(str1, cstr, strlen(cstr));
@@ -36,7 +36,7 @@ int test_OWString_Compare() {
 
 int main() {
   int error = 0;
-  OWObject_t* str = OWString_Construct();
+  OWO_String_t* str = OWString_Construct();
   if(OWString_Set(str, "Hello", 5) < 0) {
     return -1;
   }
