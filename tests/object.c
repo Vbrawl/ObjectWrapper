@@ -60,12 +60,13 @@ int main() {
   OWObject_t* temp2 = CMClass_Construct(&flag, 4);
   if(CMClass_hello(temp2) != 4) return -3;
   if(CMClass_hello(temp2) != ((MClass_t*)OWObject_FindTypeInClass(temp2, OWID_MClass_t)->object)->hello) return -4;
+  if(CMClass_hello(temp2) != (((MClass_t*)OWObject_FindObjectInClass(temp2, OWID_MClass_t))->hello)) return -5;
   CMClass_Destroy(temp2);
-  if(flag != 1) return -5;
+  if(flag != 1) return -6;
 
 
   OWObject_t* empty = EmptyClass_Construct();
-  if(empty->object != NULL) return -6;
+  if(empty->object != NULL) return -7;
   OWObject_Destroy(empty);
   return 0;
 }

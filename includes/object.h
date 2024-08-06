@@ -22,5 +22,6 @@ typedef struct OWObject_struct {
 OWObject_t* _OWObject_Construct(size_t size, OWID type, OWDestroyCallback_t* destroy_callback, OWObject_t* super);
 void OWObject_Destroy(OWObject_t* this);
 OWObject_t* OWObject_FindTypeInClass(OWObject_t* this, OWID type);
+void* OWObject_FindObjectInClass(OWObject_t* this, OWID type);
 
 #endif

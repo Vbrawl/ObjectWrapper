@@ -45,3 +45,9 @@ OWObject_t* OWObject_FindTypeInClass(OWObject_t* this, OWID type) {
   if(this->type != type) return NULL;
   return this;
 }
+
+void* OWObject_FindObjectInClass(OWObject_t* this, OWID type) {
+  this = OWObject_FindTypeInClass(this, type);
+  if(this == NULL) return NULL;
+  return this->object;
+}
