@@ -22,7 +22,8 @@ add_library(objectwrapper SHARED
 	src/array.c
 	src/ow_string.c
 	src/vector.c
-	src/map.c)
+	src/map.c
+	src/ctypes.c)
 target_include_directories(objectwrapper PUBLIC includes)
 
 set_target_properties(objectwrapper PROPERTIES
@@ -35,15 +36,17 @@ set_target_properties(objectwrapper PROPERTIES
 macro(TestCase name)
 add_executable(${name} ${ARGN})
 add_test(NAME ${name} COMMAND ./${name})
+add_test(NAME memcheck_${name} COMMAND valgrind --error-exitcode=1 --leak-check=full ./${name})
 endmacro()
 
 enable_testing()
 
 TestCase(object_test tests/object.c src/object.c)
-TestCase(vector_test tests/vector.c src/object.c src/vector.c src/array.c)
+TestCase(vector_test tests/vector.c src/object.c src/vector.c src/array.c src/ctypes.c)
 TestCase(string_test tests/ow_string.c src/object.c src/ow_string.c src/array.c)
 TestCase(array_test tests/array.c src/object.c src/array.c)
-TestCase(map_test tests/map.c src/map.c src/vector.c src/array.c src/object.c src/ow_string.c)
+TestCase(map_test tests/map.c src/map.c src/vector.c src/array.c src/object.c src/ow_string.c src/ctypes.c)
+TestCase(ctypes_test tests/ctypes.c src/object.c src/ctypes.c)
 
 
 # Add installation steps
