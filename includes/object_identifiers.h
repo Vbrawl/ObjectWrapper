@@ -10,6 +10,10 @@ enum {
   OWID_ARRAY = 3,
   OWID_MAP = 4,
 
+  OWID_INTEGER = 5,
+  OWID_CHARACTER = 6,
+  OWID_BOOLEAN = 7,
+
   OWID_USER_DEFINED = 1000
 };
 
