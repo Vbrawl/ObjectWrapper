@@ -31,8 +31,8 @@ int test_OWString_Compare() {
     return -4;
   }
 
-  OWString_Destroy(str1);
-  OWString_Destroy(str2);
+  OWObject_UnRef(str1);
+  OWObject_UnRef(str2);
 
   return 0;
 }
@@ -61,6 +61,6 @@ int main() {
     return -5;
   }
 
-  OWString_Destroy(str);
+  OWObject_UnRef(str);
   return 0;
 }
