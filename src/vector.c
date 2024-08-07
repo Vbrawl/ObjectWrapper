@@ -6,7 +6,7 @@
 
 OWO_Vector_t* OWVector_Construct(size_t slot_steps) {
   OWO_Array_t* array = OWArray_Construct(sizeof(OWObject_t*), slot_steps);
-  OWO_Vector_t* this = _OWObject_Construct(sizeof(OWVector_t), OWID_VECTOR, NULL, array);
+  OWO_Vector_t* this = _OWObject_Construct(sizeof(OWVector_t), OWID_VECTOR, _OWVector_Destroy, array);
   OWVector_t* const obj = this->object;
 
   obj->size = 0;

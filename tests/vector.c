@@ -64,15 +64,6 @@ int main() {
 
   OWObject_UnRef(temp_pointer);
 
-  while(OWVector_GetSize(vector) != 0) {
-    size = OWVector_GetSize(vector);
-    OWVector_Remove(vector, OWVector_GetSize(vector) - 1);
-
-    if(OWVector_GetSize(vector) == size) {
-      return -11;
-    }
-  }
-
   OWVector_Destroy(vector);
   return 0;
 }
