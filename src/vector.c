@@ -60,9 +60,11 @@ int OWVector_Remove(OWO_Vector_t* this, size_t index) {
 
   OWObject_UnRef(OWArray_At(OWObject_t*, this, index));
 
-  memmove(OWArray_GetBuffer(this) + index * sizeof(OWObject_t*),
-          OWArray_GetBuffer(this) + (index + 1) * sizeof(OWObject_t*),
-          (obj->size - index) * sizeof(OWObject_t*));
+  if(index + 1 != obj->size) {
+    memmove(OWArray_GetBuffer(this) + index * sizeof(OWObject_t*),
+            OWArray_GetBuffer(this) + (index + 1) * sizeof(OWObject_t*),
+            (obj->size - index) * sizeof(OWObject_t*));
+  }
   obj->size -= 1;
 
   return 0;

@@ -3,6 +3,28 @@
 #include<stdlib.h>
 
 
+int remove_out_of_bounds() {
+
+  /*
+   * This tests whether the vector can remove items that are out of bounds.
+   */
+
+  OWO_Vector_t* vector = OWVector_Construct(2);
+  OWO_Integer_t* temp;
+
+
+  temp = OWInteger_Construct(2);
+  OWVector_PushBack(vector, temp);
+  OWObject_UnRef(temp);
+
+  temp = OWInteger_Construct(2);
+  OWVector_PushBack(vector, temp);
+  OWObject_UnRef(temp);
+
+  OWObject_UnRef(vector);
+  return 0;
+}
+
 
 int main() {
   OWO_Vector_t* vector = OWVector_Construct(5);
@@ -65,5 +87,6 @@ int main() {
   OWObject_UnRef(temp_pointer);
 
   OWVector_Destroy(vector);
-  return 0;
+
+  return remove_out_of_bounds();
 }
