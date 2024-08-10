@@ -37,7 +37,7 @@ int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, OWObject_t* item) {
       if(temp == NULL)
         difference = 0;
       else {
-        difference = OWString_Compare(key, temp);
+        difference = OWString_CompareOWString(key, temp);
         OWObject_UnRef(temp);
       }
     } while(i < OWVector_GetSize(obj->keys) && difference > 0);
@@ -70,7 +70,7 @@ int OWMap_UnSet(OWO_Map_t* this, OWO_Map_t* key) {
   do {
     i += 1;
     temp = OWVector_Get(obj->keys, i);
-    difference = OWString_Compare(key, temp);
+    difference = OWString_CompareOWString(key, temp);
     OWObject_UnRef(temp);
   } while(i < OWVector_GetSize(obj->keys) && difference != 0);
 
@@ -97,7 +97,7 @@ OWObject_t* OWMap_Get(OWO_Map_t* this, OWO_String_t* key) {
   do {
     i += 1;
     temp = OWVector_Get(obj->keys, i);
-    difference = OWString_Compare(key, temp);
+    difference = OWString_CompareOWString(key, temp);
     OWObject_UnRef(temp);
   } while(i < OWVector_GetSize(obj->keys) && difference != 0);
 
