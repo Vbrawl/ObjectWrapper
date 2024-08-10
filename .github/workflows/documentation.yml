@@ -36,6 +36,7 @@ jobs:
         run: sudo apt update && sudo apt install -y doxygen
 
       - name: Compile html
+        working-directory: ./
         run: doxygen
 
       - name: Setup Pages
