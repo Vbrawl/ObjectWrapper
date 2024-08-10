@@ -12,6 +12,7 @@ typedef struct OWString_struct {
 typedef OWObject_t OWO_String_t;
 
 OWO_String_t* OWString_Construct(const char* content, size_t content_size);
+#define OWString_ConstructEmpty() OWString_Construct(NULL, 0);
 #define OWString_ConstructSimple(content) OWString_Construct(content, strlen(content))
 #define OWString_Clone(this) OWString_Construct(OWString_GetBuffer(this), OWString_GetSize(this))
 

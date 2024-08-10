@@ -22,8 +22,14 @@ int OWString_Set(OWO_String_t* this, const char* content, size_t content_size) {
   if(content_size + 1 > OWArray_GetSlots(this)) {
     OWArray_Resize(this, content_size + 1);
   }
-  memcpy(OWArray_GetBuffer(this), content, sizeof(char) * content_size);
-  OWArray_At(char, this, content_size) = '\0';
+
+  if(content == NULL) {
+    memset(OWArray_GetBuffer(this), 0, sizeof(char) * content_size + 1);
+  }
+  else {
+    memcpy(OWArray_GetBuffer(this), content, sizeof(char) * content_size);
+    OWArray_At(char, this, content_size) = '\0';
+  }
   obj->size = content_size;
 
   return 0;

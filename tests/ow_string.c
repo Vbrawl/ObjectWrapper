@@ -1,6 +1,15 @@
 #include "ow_string.h"
 #include <string.h>
 
+int test_Empty() {
+  OWO_String_t* str = OWString_ConstructEmpty();
+
+  if(OWString_GetSize(str) != 0) return -1;
+
+  OWObject_UnRef(str);
+  return 0;
+}
+
 int test_Append() {
   OWO_String_t* str = OWString_ConstructSimple("Hello");
   OWString_AppendSimple(str, "!");
@@ -57,6 +66,9 @@ int main() {
   if(error != 0) return error;
 
   error = test_Clone();
+  if(error != 0) return error;
+
+  error = test_Empty();
   if(error != 0) return error;
 
   return 0;
