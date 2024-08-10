@@ -10,6 +10,7 @@ typedef struct OWArray_struct {
 } OWArray_t;
 
 typedef OWObject_t OWO_Array_t;
+#define OWO_Typed_Array_t(type) OWContainer_Type(OWO_Array_t, type)
 
 OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots);
 int OWArray_Resize(OWO_Array_t* this, size_t slots);

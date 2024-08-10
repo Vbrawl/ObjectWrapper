@@ -65,7 +65,7 @@ int main() {
   if(flag != 1) return -6;
 
 
-  OWObject_t* empty = EmptyClass_Construct();
+  OWContainer_Type(OWObject_t, OWO_Integer_t)* empty = EmptyClass_Construct();
   OWObject_t* empty2 = OWObject_Ref(empty);
   if(empty->object != NULL) return -7;
   OWObject_UnRef(empty);

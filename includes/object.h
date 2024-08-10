@@ -7,6 +7,8 @@
 #define OWID_Register(cls, id) \
   enum { OWID_##cls = id };
 
+#define OWContainer_Type(container, ...) container
+
 struct OWObject_struct;
 typedef void(OWDestroyCallback_t)(struct OWObject_struct* this);
 

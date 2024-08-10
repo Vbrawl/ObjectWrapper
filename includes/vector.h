@@ -12,6 +12,7 @@ typedef struct OWVector_struct {
 } OWVector_t;
 
 typedef OWObject_t OWO_Vector_t;
+#define OWO_Typed_Vector_t(type) OWContainer_Type(OWO_Vector_t, type)
 
 OWO_Vector_t* OWVector_Construct(size_t slot_steps);
 #define OWVector_Resize OWArray_Resize

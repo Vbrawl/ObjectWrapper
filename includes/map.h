@@ -11,6 +11,7 @@ typedef struct OWMap_struct {
 } OWMap_t;
 
 typedef OWObject_t OWO_Map_t;
+#define OWO_Typed_Map_t(key_type, value_type) OWContainer_Type(OWO_Map_t, key_type, value_type)
 
 OWO_Map_t* OWMap_Construct(size_t slot_steps);
 
