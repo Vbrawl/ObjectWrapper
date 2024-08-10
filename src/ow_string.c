@@ -74,3 +74,26 @@ int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size) {
 
   return 0;
 }
+
+OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size) {
+  OWString_t* const obj = OWObject_FindObjectInClass(this, OWID_STRING);
+  if(obj == NULL) return NULL;
+
+  if(size <= 0) return NULL;
+  if(start < 0) return NULL;
+  if(start + size > OWString_GetSize(this)) return NULL;
+
+  OWO_String_t* sub = OWString_ConstructEmpty();
+  OWString_Resize(sub, size + 1);
+
+  char *buf = OWString_GetBuffer(this);
+  char *sbuf = OWString_GetBuffer(sub);
+
+  for(size_t i = 0; i < size; i++) {
+    sbuf[i] = buf[i + start];
+  }
+  sbuf[size] = '\0';
+  OWString_GetSize(sub) = size;
+
+  return sub;
+}

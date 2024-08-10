@@ -54,6 +54,17 @@ int test_Clone() {
   return 0;
 }
 
+int test_SubString() {
+  OWO_String_t* str1 = OWString_ConstructSimple("Hello World");
+  OWO_String_t* str2 = OWString_SubString(str1, 6, 5);
+
+  if(OWString_CompareSimple(str2, "World") != 0) return -1;
+
+  OWObject_UnRef(str1);
+  OWObject_UnRef(str2);
+  return 0;
+}
+
 
 
 int main() {
@@ -69,6 +80,9 @@ int main() {
   if(error != 0) return error;
 
   error = test_Empty();
+  if(error != 0) return error;
+
+  error = test_SubString();
   if(error != 0) return error;
 
   return 0;

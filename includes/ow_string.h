@@ -12,7 +12,7 @@ typedef struct OWString_struct {
 typedef OWObject_t OWO_String_t;
 
 OWO_String_t* OWString_Construct(const char* content, size_t content_size);
-#define OWString_ConstructEmpty() OWString_Construct(NULL, 0);
+#define OWString_ConstructEmpty() OWString_Construct(NULL, 0)
 #define OWString_ConstructSimple(content) OWString_Construct(content, strlen(content))
 #define OWString_Clone(this) OWString_Construct(OWString_GetBuffer(this), OWString_GetSize(this))
 
@@ -40,6 +40,8 @@ int OWString_Append(OWO_String_t* this, const char* content, size_t content_size
 int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
 #define OWString_CompareSimple(this, other) OWString_Compare(this, other, strlen(other))
 #define OWString_CompareOWString(this, other) OWString_Compare(this, OWString_GetBuffer(other), OWString_GetSize(other))
+
+OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size);
 
 #define OWString_GetBuffer(this) ((char*)OWArray_GetBuffer(this))
 #define OWString_GetSize(this) ((OWString_t*)OWObject_FindObjectInClass(this, OWID_STRING))->size
