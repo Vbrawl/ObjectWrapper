@@ -34,6 +34,18 @@ int test_Compare() {
 }
 
 
+int test_Clone() {
+  OWO_String_t* str1 = OWString_ConstructSimple("Hello World");
+  OWO_String_t* str2 = OWString_Clone(str1);
+
+  if(OWString_CompareOWString(str1, str2) != 0) return -1;
+
+  OWObject_UnRef(str1);
+  OWObject_UnRef(str2);
+  return 0;
+}
+
+
 
 int main() {
   int error = 0;
@@ -44,7 +56,8 @@ int main() {
   error = test_Compare();
   if(error != 0) return error;
 
-
+  error = test_Clone();
+  if(error != 0) return error;
 
   return 0;
 }
