@@ -1,14 +1,18 @@
 #include "ow_string.h"
 #include <stdlib.h>
-#include <string.h>
 
 
-OWO_String_t* OWString_Construct() {
+OWO_String_t* OWString_Construct(const char* content, size_t content_size) {
   OWO_Array_t* array = OWArray_Construct(sizeof(char), 0);
-  OWO_String_t* this = _OWObject_Construct(sizeof(OWString_t), OWID_STRING, NULL, array);
-  OWString_t* const obj = this->object;
-  obj->size = 0;
+  if(array == NULL) return NULL;
 
+  OWO_String_t* this = _OWObject_Construct(sizeof(OWString_t), OWID_STRING, NULL, array);
+  if(this == NULL) {
+    OWArray_Destroy(array);
+    return NULL;
+  }
+
+  OWString_Set(this, content, content_size);
   return this;
 }
 
@@ -43,29 +47,22 @@ int OWString_Append(OWO_String_t* this, const char* content, size_t content_size
 }
 
 
-int OWString_Compare(OWO_String_t* this, OWO_String_t* other) {
+int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size) {
   int i, difference;
-  size_t size1, size2;
-  const char *str1, *str2;
-
-  // Initialize variables
-  size1 = OWString_GetSize(this);
-  size2 = OWString_GetSize(other);
-
-  str1 = OWString_GetBuffer(this);
-  str2 = OWString_GetBuffer(other);
+  size_t size = OWString_GetSize(this);
+  const char *str = OWString_GetBuffer(this);
 
   // Perform size checks
-  if(size1 > size2) {
-    return str1[size2];
+  if(size > other_size) {
+    return str[other_size];
   }
-  else if(size1 < size2) {
-    return str2[size1];
+  else if(size < other_size) {
+    return other[size];
   }
 
   // Perform value checks
-  for (int i = 0; i < size1; i++) {
-    difference = str1[i] - str2[i];
+  for (i = 0; i < size; i++) {
+    difference = str[i] - other[i];
     if(difference != 0) return difference;
   }
 
