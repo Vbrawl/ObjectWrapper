@@ -2,6 +2,13 @@
 #define OW_OBJECT_IDENTIFIERS_H
 
 /**
+ * @file object_identifiers.h
+ * @brief Object Wrapper Identifier
+ *
+ * This file contains the basic OWIDs of the library
+ */
+
+/**
  * @brief Object Wrapper Identifier
  *
  * This is the type for the object identifiers
