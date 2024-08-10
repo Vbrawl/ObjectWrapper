@@ -9,7 +9,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3")
 
 project(
 	ObjectWrapper
-	VERSION 1.1.0
+	VERSION 2.0.0
 	DESCRIPTION "Objects for C"
 	LANGUAGES C)
 
