@@ -14,6 +14,8 @@
  * @brief OWArray class
  *
  * Represents an array object/class.
+ *
+ * @extends OWObject_struct
  */
 typedef struct OWArray_struct {
   /**
