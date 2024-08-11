@@ -1,6 +1,8 @@
 #include "array.h"
 #include <stdlib.h>
 
+void _OWArray_Destroy(OWO_Array_t* this);
+
 
 OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots) {
   OWO_Array_t* this = _OWObject_Construct(sizeof(OWArray_t), OWID_ARRAY, _OWArray_Destroy, NULL);
