@@ -110,7 +110,7 @@ struct OWObject_struct {
    * @memberof OWObject_t
    */
   OWID type;
-}
+};
 
 /**
  * @class OWObject_t
