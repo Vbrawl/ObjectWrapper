@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+void _OWVector_Destroy(OWO_Vector_t* this);
+
 
 OWO_Vector_t* OWVector_Construct(size_t slot_steps) {
   OWO_Array_t* array = OWArray_Construct(sizeof(OWObject_t*), slot_steps);
