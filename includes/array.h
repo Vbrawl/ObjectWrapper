@@ -15,9 +15,9 @@
  *
  * Represents an array object/class.
  *
- * @extends OWObject_struct
+ * @extends OWObject_t
  */
-typedef struct OWArray_struct {
+typedef struct {
   /**
    * @brief Variadic array for the object's stored data
    *
@@ -88,7 +88,7 @@ typedef OWObject_t OWO_Array_t;
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
  *
- * @memberof OWArray_struct
+ * @memberof OWArray_t
  */
 OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots);
 
@@ -105,7 +105,7 @@ OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots);
  *
  * @returns 0 on success, a negative value on failure.
  *
- * @memberof OWArray_struct
+ * @memberof OWArray_t
  */
 int OWArray_Resize(OWO_Array_t* this, size_t slots);
 
@@ -119,7 +119,7 @@ int OWArray_Resize(OWO_Array_t* this, size_t slots);
  * Access the value of the given slot, this macro can be used
  * for reading or writing to the slot.
  *
- * @memberof OWArray_struct
+ * @memberof OWArray_t
  */
 #define OWArray_At(cast_type, this, index) ((cast_type*)((OWArray_t*)OWObject_FindObjectInClass(this, OWID_ARRAY))->array)[index]
 
@@ -132,7 +132,7 @@ int OWArray_Resize(OWO_Array_t* this, size_t slots);
  *
  * @returns A void pointer (void*) which points to the start of the internal buffer.
  *
- * @memberof OWArray_struct
+ * @memberof OWArray_t
  */
 #define OWArray_GetBuffer(this) ((OWArray_t*)OWObject_FindObjectInClass(this, OWID_ARRAY))->array
 
@@ -145,13 +145,13 @@ int OWArray_Resize(OWO_Array_t* this, size_t slots);
  *
  * @returns The number (size_t) of slots in the array.
  *
- * @memberof OWArray_struct
+ * @memberof OWArray_t
  */
 #define OWArray_GetSlots(this) ((OWArray_t*)OWObject_FindObjectInClass(this, OWID_ARRAY))->slots
 
 /**
  * @copydoc OWObject_Destroy
- * @memberof OWArray_struct
+ * @memberof OWArray_t
  */
 #define OWArray_Destroy OWObject_Destroy
 

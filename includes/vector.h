@@ -22,7 +22,7 @@
  *
  * @extends OWArray_t
  */
-typedef struct OWVector_struct {
+typedef struct {
   /**
    * @brief The size of the vector
    *
@@ -78,7 +78,7 @@ typedef OWObject_t OWO_Vector_t;
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
  *
- * @memberof OWVector_struct
+ * @memberof OWVector_t
  */
 OWO_Vector_t* OWVector_Construct(size_t slot_steps);
 
@@ -93,7 +93,7 @@ OWO_Vector_t* OWVector_Construct(size_t slot_steps);
  * but simply controls the number of slots in the internal buffer.
  *
  * @see OWArray_Resize
- * @memberof OWVector_struct
+ * @memberof OWVector_t
  */
 #define OWVector_Resize(this, slots) OWArray_Resize(this, slots)
 
@@ -110,7 +110,7 @@ OWO_Vector_t* OWVector_Construct(size_t slot_steps);
  *
  * @returns 0 on success, a negative value on failure.
  *
- * @memberof OWVector_struct
+ * @memberof OWVector_t
  */
 int OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item);
 
@@ -125,7 +125,7 @@ int OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item);
  * @returns 0 on success, a negative value on failure.
  *
  * @see OWVector_Insert
- * @memberof OWVector_struct
+ * @memberof OWVector_t
  */
 #define OWVector_PushBack(this, item) OWVector_Insert(this, OWVector_GetSize(this), item)
 
@@ -140,7 +140,7 @@ int OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item);
  * @returns 0 on success, a negative value on failure.
  *
  * @see OWVector_Insert
- * @memberof OWVector_struct
+ * @memberof OWVector_t
  */
 #define OWVector_PushFront(this, item) OWVector_Insert(this, 0, item)
 
@@ -152,7 +152,7 @@ int OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item);
  * Get the number of elements in the vector.
  *
  * @returns The number (size_t) of elements inside the vector.
- * @memberof OWVector_struct
+ * @memberof OWVector_t
  */
 #define OWVector_GetSize(this) ((OWVector_t*)OWObject_FindObjectInClass(this, OWID_VECTOR))->size
 
@@ -169,7 +169,7 @@ int OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item);
  *            done with it.
  *
  * @returns A new reference to the object at the specified index.
- * @memberof OWVector_struct
+ * @memberof OWVector_t
  */
 OWObject_t* OWVector_Get(OWO_Vector_t* this, size_t index);
 
@@ -185,7 +185,7 @@ OWObject_t* OWVector_Get(OWO_Vector_t* this, size_t index);
  *       call and will be destroyed if there are no more references to it.
  *
  * @returns 0 on success, a negative value on failure.
- * @memberof OWVector_struct
+ * @memberof OWVector_t
  */
 int OWVector_Remove(OWO_Vector_t* this, size_t index);
 
@@ -202,7 +202,7 @@ int OWVector_Remove(OWO_Vector_t* this, size_t index);
  *            done with it.
  *
  * @returns A new reference to the object at the specified index.
- * @memberof OWVector_struct
+ * @memberof OWVector_t
  */
 OWObject_t* OWVector_Pop(OWO_Vector_t* this, size_t index);
 
@@ -214,7 +214,7 @@ OWObject_t* OWVector_Pop(OWO_Vector_t* this, size_t index);
  * Pop the last item in the vector
  *
  * @see OWVector_Pop
- * @memberof OWVector_struct
+ * @memberof OWVector_t
  */
 #define OWVector_PopBack(this) OWVector_Pop(this, OWVector_GetSize(this) - 1)
 
@@ -226,13 +226,13 @@ OWObject_t* OWVector_Pop(OWO_Vector_t* this, size_t index);
  * Pop the first item in the vector
  *
  * @see OWVector_Pop
- * @memberof OWVector_struct
+ * @memberof OWVector_t
  */
 #define OWVector_PopFront(this) OWVector_Pop(this, 0)
 
 /**
  * @copydoc OWObject_Destroy
- * @memberof OWVector_struct
+ * @memberof OWVector_t
  */
 #define OWVector_Destroy OWObject_Destroy
 

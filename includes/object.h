@@ -53,7 +53,6 @@
  */
 #define OWContainer_Type(container, ...) container
 
-// Used in the destructor callback type, we need this here
 struct OWObject_struct;
 
 /**
@@ -65,19 +64,15 @@ struct OWObject_struct;
  */
 typedef void(OWDestroyCallback_t)(struct OWObject_struct* this);
 
-/**
- * @brief The ObjectWrapper
- *
- * Container allowing variadic data to be stored in it.
- * Capable of holding a reference to the parent of the current class/object.
- */
-typedef struct OWObject_struct {
+struct OWObject_struct {
 
   /**
    * @brief Reference to the super/parent of the current object
    *
    * A pointer to the super class/object.
    * If there is no super class/object this points to NULL.
+   *
+   * @memberof OWObject_t
    */
   struct OWObject_struct* super;
 
@@ -85,6 +80,8 @@ typedef struct OWObject_struct {
    * @brief Data of the object
    *
    * A variadic pointer referencing the data of the current object.
+   *
+   * @memberof OWObject_t
    */
   void* object;
 
@@ -92,6 +89,8 @@ typedef struct OWObject_struct {
    * @brief The destructor of the class/object.
    *
    * This is not a NULL pointer, it's getting called when the object is to be destroyed.
+   *
+   * @memberof OWObject_t
    */
   OWDestroyCallback_t* destroy_callback;
 
@@ -100,14 +99,27 @@ typedef struct OWObject_struct {
    *
    * This holds the number of references to the current object.
    * When this hits 0 the object is automatically destroyed. (Sort of a garbage collector)
+   *
+   * @memberof OWObject_t
    */
   _Atomic int reference_count;
 
   /**
    * The object's type
+   *
+   * @memberof OWObject_t
    */
   OWID type;
-} OWObject_t;
+}
+
+/**
+ * @class OWObject_t
+ * @brief The ObjectWrapper
+ *
+ * Container allowing variadic data to be stored in it.
+ * Capable of holding a reference to the parent of the current class/object.
+ */
+typedef struct OWObject_struct OWObject_t;;
 
 /**
  * @brief Easier object constructor
@@ -119,7 +131,7 @@ typedef struct OWObject_struct {
  * A macro to easily call the OWObject_t's constructor
  *
  * @returns A pointer to the constructed `OWObject_t` instance or `NULL` on failure.
- * @memberof OWObject_struct
+ * @memberof OWObject_t
  */
 #define OWObject_Construct(cls, destroy_callback, super) _OWObject_Construct(sizeof(cls), OWID_##cls, destroy_callback, super);
 
@@ -130,7 +142,7 @@ typedef struct OWObject_struct {
  * @param cls The current object
  *
  * @returns A pointer to the parent `OWObject_t` instance or `NULL` if there is no parent.
- * @memberof OWObject_struct
+ * @memberof OWObject_t
  */
 #define OWObject_Super(type, cls) ((type*)cls->super->object)
 
@@ -145,7 +157,7 @@ typedef struct OWObject_struct {
  * Construct an OWObject_t object and return a reference to it.
  *
  * @returns A pointer to the constructed `OWObject_t` instance or `NULL` on failure.
- * @memberof OWObject_struct
+ * @memberof OWObject_t
  */
 OWObject_t* _OWObject_Construct(size_t size, OWID type, OWDestroyCallback_t* destroy_callback, OWObject_t* super);
 
@@ -158,7 +170,7 @@ OWObject_t* _OWObject_Construct(size_t size, OWID type, OWDestroyCallback_t* des
  * Find an object in the inheritance chain using it's type.
  *
  * @returns A pointer to the discovered `OWObject_t` instance or `NULL` on failure.
- * @memberof OWObject_struct
+ * @memberof OWObject_t
  */
 OWObject_t* OWObject_FindTypeInClass(OWObject_t* this, OWID type);
 
@@ -171,7 +183,7 @@ OWObject_t* OWObject_FindTypeInClass(OWObject_t* this, OWID type);
  * Find an object in the inheritance chain using it's type and return it's data.
  *
  * @returns A pointer to the data of the discovered `OWObject_t` instance (which is of unknown/variadic type) or `NULL` on failure.
- * @memberof OWObject_struct
+ * @memberof OWObject_t
  */
 void* OWObject_FindObjectInClass(OWObject_t* this, OWID type);
 
@@ -183,7 +195,7 @@ void* OWObject_FindObjectInClass(OWObject_t* this, OWID type);
  * Create a reference to keep an object alive.
  *
  * @returns A pointer pointing to the same address as `this`.
- * @memberof OWObject_struct
+ * @memberof OWObject_t
  */
 OWObject_t* OWObject_Ref(OWObject_t* this);
 
@@ -194,7 +206,7 @@ OWObject_t* OWObject_Ref(OWObject_t* this);
  *
  * When there are no more references to the object this will automatically destroy it.
  *
- * @memberof OWObject_struct
+ * @memberof OWObject_t
  */
 void OWObject_UnRef(OWObject_t* this);
 
@@ -205,7 +217,7 @@ void OWObject_UnRef(OWObject_t* this);
  *
  * This macro is used to easily access the reference_count.
  *
- * @memberof OWObject_struct
+ * @memberof OWObject_t
  */
 #define OWObject_GetRefCount(this) this->reference_count
 
@@ -217,7 +229,7 @@ void OWObject_UnRef(OWObject_t* this);
  * Manually destroy an object. All references to the object are invalidated
  * and trying to access them is undefined behaviour.
  *
- * @memberof OWObject_struct
+ * @memberof OWObject_t
  */
 void OWObject_Destroy(OWObject_t* this);
 

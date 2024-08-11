@@ -20,7 +20,7 @@
  *
  * @extends OWArray_t
  */
-typedef struct OWString_struct {
+typedef struct {
   size_t size; // This does NOT count the NULL-byte
 } OWString_t;
 
@@ -40,7 +40,7 @@ typedef OWObject_t OWO_String_t;
  * Construct a string with the given content. The content_size can be used to trim the string.
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 OWO_String_t* OWString_Construct(const char* content, size_t content_size);
 
@@ -49,7 +49,7 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size);
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_ConstructEmpty() OWString_Construct(NULL, 0)
 
@@ -62,7 +62,7 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size);
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_ConstructSimple(content) OWString_Construct(content, strlen(content))
 
@@ -75,7 +75,7 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size);
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_Clone(this) OWString_Construct(OWString_GetBuffer(this), OWString_GetSize(this))
 
@@ -88,7 +88,7 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size);
  *
  * @returns 0 on success, a negative value on failure.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 int OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
 
@@ -102,7 +102,7 @@ int OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
  *
  * @returns 0 on success, a negative value on failure.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_SetSimple(this, content) OWString_Set(this, content, strlen(content))
 
@@ -116,7 +116,7 @@ int OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
  *
  * @returns 0 on success, a negative value on failure.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_SetOWString(this, other) OWString_Set(this, OWString_GetBuffer(other), OWString_GetSize(other))
 
@@ -129,7 +129,7 @@ int OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
  *
  * @returns 0 on success, a negative value on failure.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 int OWString_Append(OWO_String_t* this, const char* content, size_t content_size);
 
@@ -143,7 +143,7 @@ int OWString_Append(OWO_String_t* this, const char* content, size_t content_size
  *
  * @returns 0 on success, a negative value on failure.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_AppendSimple(this, content) OWString_Append(this, content, strlen(content))
 
@@ -157,7 +157,7 @@ int OWString_Append(OWO_String_t* this, const char* content, size_t content_size
  *
  * @returns 0 on success, a negative value on failure.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_AppendOWString(this, other) OWString_Append(this, OWString_GetBuffer(other), OWString_GetSize(other))
 
@@ -180,7 +180,7 @@ int OWString_Append(OWO_String_t* this, const char* content, size_t content_size
  *
  * @returns 0 on equality, the difference of the first differing character on non-equality.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
 
@@ -196,7 +196,7 @@ int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
  *
  * @returns 0 on equality, the difference of the first differing character on non-equality.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_CompareSimple(this, other) OWString_Compare(this, other, strlen(other))
 
@@ -212,7 +212,7 @@ int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
  *
  * @returns 0 on equality, the difference of the first differing character on non-equality.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_CompareOWString(this, other) OWString_Compare(this, OWString_GetBuffer(other), OWString_GetSize(other))
 
@@ -225,7 +225,7 @@ int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
  *
  * @returns An OWString with the selected contents.
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size);
 
@@ -251,7 +251,7 @@ size_t OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size);
  * This macro automatically finds the content's length.
  *
  * @returns The offset in which the sub-string was found or -1 if substring was not found.
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_FindStrSimple(this, sub) OWString_FindStr(this, sub, strlen(sub))
 
@@ -264,7 +264,7 @@ size_t OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size);
  * This macro automatically finds the content and it's length.
  *
  * @returns The offset in which the sub-string was found or -1 if substring was not found.
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_FindStrOWString(this, other) OWString_FindStr(this, OWString_GetBuffer(other), OWString_GetSize(other))
 
@@ -275,7 +275,7 @@ size_t OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size);
  *
  * @returns A c-string (aka `char*`, note the absense of `const`)
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_GetBuffer(this) ((char*)OWArray_GetBuffer(this))
 
@@ -286,13 +286,13 @@ size_t OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size);
  *
  * @returns The length of the string (size_t)
  *
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_GetSize(this) ((OWString_t*)OWObject_FindObjectInClass(this, OWID_STRING))->size
 
 /**
  * @copydoc OWString_GetSize
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_GetLength(this) OWString_GetSize(this)
 
@@ -313,13 +313,13 @@ size_t OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size);
  *          length should be considered as `undefined behaviour`.
  *
  * @see OWArray_Resize
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_Resize(this, size) OWArray_Resize(this, size)
 
 /**
  * @copydoc OWObject_Destroy
- * @memberof OWString_struct
+ * @memberof OWString_t
  */
 #define OWString_Destroy(this) OWObject_Destroy(this)
 

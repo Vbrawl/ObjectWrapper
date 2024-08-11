@@ -20,7 +20,7 @@
  * @note Can only hold references to OWObject_t objects and unreferences
  *       when they are removed from the map
  */
-typedef struct OWMap_struct {
+typedef struct {
   /**
    * @brief Key vector
    *
@@ -70,11 +70,11 @@ typedef OWObject_t OWO_Map_t;
 /**
  * @brief Construct a map
  *
- * @param slot_steps The slot steps for auto-resizing (see @ref OWVector_struct::slot_steps)
+ * @param slot_steps The slot steps for auto-resizing (see @ref OWVector_t::slot_steps)
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
  *
- * @memberof OWMap_struct
+ * @memberof OWMap_t
  */
 OWO_Map_t* OWMap_Construct(size_t slot_steps);
 
@@ -90,7 +90,7 @@ OWO_Map_t* OWMap_Construct(size_t slot_steps);
  * @note A new reference of both the key and the value is created.
  *
  * @returns 0 on success, a negative value on failure.
- * @memberof OWMap_struct
+ * @memberof OWMap_t
  */
 int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, OWObject_t* item);
 
@@ -99,17 +99,16 @@ int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, OWObject_t* item);
  *
  * @param this The OWMap
  * @param key The key
- * @param item The value for the key
  *
  * Clear an entry with the specified key from the map.
  *
  * @note Both the key and the value that are stored
  *       in the internal buffers of the map are passed
- *       through an @ref OWObject_UnRef call and they might
+ *       through an @ref OWObject_t::OWObject_UnRef call and they might
  *       be destroyed if there are no more references to them.
  *
  * @returns 0 on success, a negative value on failure.
- * @memberof OWMap_struct
+ * @memberof OWMap_t
  */
 int OWMap_UnSet(OWO_Map_t* this, OWO_String_t* key);
 
@@ -122,10 +121,10 @@ int OWMap_UnSet(OWO_Map_t* this, OWO_String_t* key);
  * Get a new reference to the value pointed to by the specified key.
  *
  * @attention A new reference to the value is returned, make sure to
- *            call @ref OWObject_UnRef when you are done with it.
+ *            call @ref OWObject_t::OWObject_UnRef when you are done with it.
  *
  * @returns A new reference to the value object or `NULL` if the key was not found in the map.
- * @memberof OWMap_struct
+ * @memberof OWMap_t
  */
 OWObject_t* OWMap_Get(OWO_Map_t* this, OWO_String_t* key);
 
@@ -135,13 +134,13 @@ OWObject_t* OWMap_Get(OWO_Map_t* this, OWO_String_t* key);
  * @param this The OWMap
  *
  * @returns The number (size_t) of the entries in the map.
- * @memberof OWMap_struct
+ * @memberof OWMap_t
  */
 #define OWMap_GetSize(this) OWVector_GetSize(((OWMap_t*)OWObject_FindObjectInClass(this, OWID_MAP))->keys)
 
 /**
  * @copydoc OWObject_Destroy
- * @memberof OWMap_struct
+ * @memberof OWMap_t
  */
 #define OWMap_Destroy OWObject_Destroy
 

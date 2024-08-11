@@ -12,6 +12,7 @@
 #include <stdbool.h>
 
 /**
+ * @class OWInteger_t
  * @brief Integer object type
  *
  * A type for human reference
@@ -28,7 +29,7 @@ typedef OWObject_t OWO_Integer_t;
  * Store an integer inside the object.
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
- * @memberof OWO_Integer_t
+ * @memberof OWInteger_t
  */
 OWO_Integer_t* OWInteger_Construct(int object);
 
@@ -40,12 +41,13 @@ OWO_Integer_t* OWInteger_Construct(int object);
  * Extract the value of an OWInteger to a C integer
  *
  * @returns An integer (int) with the value inside of the passed in object.
- * @memberof OWO_Integer_t
+ * @memberof OWInteger_t
  */
 #define OWInteger_UnWrap(this) (*(int*)this->object)
 
 
 /**
+ * @class OWCharacter_t
  * @brief Character object type
  *
  * A type for human reference
@@ -62,7 +64,7 @@ typedef OWObject_t OWO_Character_t;
  * Store a character inside the object.
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
- * @memberof OWO_Character_t
+ * @memberof OWCharacter_t
  */
 OWO_Character_t* OWCharacter_Construct(char object);
 
@@ -74,12 +76,13 @@ OWO_Character_t* OWCharacter_Construct(char object);
  * Extract the value of an OWCharacter to a C character
  *
  * @returns A character (char) with the value inside of the passed in object.
- * @memberof OWO_Character_t
+ * @memberof OWCharacter_t
  */
 #define OWCharacter_UnWrap(this) (*(char*)this->object)
 
 
 /**
+ * @class OWBoolean_t
  * @brief Boolean object type
  *
  * A type for human reference
@@ -96,7 +99,7 @@ typedef OWObject_t OWO_Boolean_t;
  * Store a boolean inside the object.
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
- * @memberof OWO_Boolean_t
+ * @memberof OWBoolean_t
  */
 OWO_Boolean_t* OWBoolean_Construct(bool object);
 
@@ -108,7 +111,7 @@ OWO_Boolean_t* OWBoolean_Construct(bool object);
  * Extract the value of an OWBoolean to a C boolean
  *
  * @returns A boolean (bool) with the value inside of the passed in object.
- * @memberof OWO_Boolean_t
+ * @memberof OWBoolean_t
  */
 #define OWBoolean_UnWrap(this) (*(bool*)this->object)
 
