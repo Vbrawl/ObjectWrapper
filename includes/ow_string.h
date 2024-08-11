@@ -39,6 +39,7 @@ typedef OWObject_t OWO_String_t;
  * Construct a string with the given content. The content_size can be used to trim the string.
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
+ * @memberof OWString_struct
  */
 OWO_String_t* OWString_Construct(const char* content, size_t content_size);
 
@@ -46,6 +47,8 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size);
  * @brief Construct an empty string
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
+ *
+ * @memberof OWString_struct
  */
 #define OWString_ConstructEmpty() OWString_Construct(NULL, 0)
 
@@ -57,6 +60,8 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size);
  * Construct a string with the given content.
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
+ *
+ * @memberof OWString_struct
  */
 #define OWString_ConstructSimple(content) OWString_Construct(content, strlen(content))
 
@@ -68,6 +73,8 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size);
  * Create a complete copy of an OWString object.
  *
  * @returns A pointer to the object instance that was created or `NULL` on failure.
+ *
+ * @memberof OWString_struct
  */
 #define OWString_Clone(this) OWString_Construct(OWString_GetBuffer(this), OWString_GetSize(this))
 
@@ -79,6 +86,8 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size);
  * @param content_size The number of bytes to copy from content to OWString's buffer (not counting the NULL-byte)
  *
  * @returns 0 on success, a negative value on failure.
+ *
+ * @memberof OWString_struct
  */
 int OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
 
@@ -91,6 +100,8 @@ int OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
  * This macro automatically finds the string length using strlen().
  *
  * @returns 0 on success, a negative value on failure.
+ *
+ * @memberof OWString_struct
  */
 #define OWString_SetSimple(this, content) OWString_Set(this, content, strlen(content))
 
@@ -103,6 +114,8 @@ int OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
  * This macro automatically finds the content and it's length.
  *
  * @returns 0 on success, a negative value on failure.
+ *
+ * @memberof OWString_struct
  */
 #define OWString_SetOWString(this, other) OWString_Set(this, OWString_GetBuffer(other), OWString_GetSize(other))
 
@@ -114,6 +127,8 @@ int OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
  * @param content_size The number of bytes to add from content to OWString's buffer (not counting the NULL-byte)
  *
  * @returns 0 on success, a negative value on failure.
+ *
+ * @memberof OWString_struct
  */
 int OWString_Append(OWO_String_t* this, const char* content, size_t content_size);
 
@@ -126,6 +141,8 @@ int OWString_Append(OWO_String_t* this, const char* content, size_t content_size
  * This macro automatically finds the content's size using strlen().
  *
  * @returns 0 on success, a negative value on failure.
+ *
+ * @memberof OWString_struct
  */
 #define OWString_AppendSimple(this, content) OWString_Append(this, content, strlen(content))
 
@@ -138,6 +155,8 @@ int OWString_Append(OWO_String_t* this, const char* content, size_t content_size
  * This macro automatically finds the content and it's length.
  *
  * @returns 0 on success, a negative value on failure.
+ *
+ * @memberof OWString_struct
  */
 #define OWString_AppendOWString(this, other) OWString_Append(this, OWString_GetBuffer(other), OWString_GetSize(other))
 
@@ -159,6 +178,8 @@ int OWString_Append(OWO_String_t* this, const char* content, size_t content_size
  * @endcode
  *
  * @returns 0 on equality, the difference of the first differing character on non-equality.
+ *
+ * @memberof OWString_struct
  */
 int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
 
@@ -173,6 +194,8 @@ int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
  * This macro automatically finds the content's length.
  *
  * @returns 0 on equality, the difference of the first differing character on non-equality.
+ *
+ * @memberof OWString_struct
  */
 #define OWString_CompareSimple(this, other) OWString_Compare(this, other, strlen(other))
 
@@ -187,6 +210,8 @@ int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
  * This macro automatically finds the content and it's length.
  *
  * @returns 0 on equality, the difference of the first differing character on non-equality.
+ *
+ * @memberof OWString_struct
  */
 #define OWString_CompareOWString(this, other) OWString_Compare(this, OWString_GetBuffer(other), OWString_GetSize(other))
 
@@ -198,6 +223,8 @@ int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
  * @param size The number of bytes to copy to the substring
  *
  * @returns An OWString with the selected contents.
+ *
+ * @memberof OWString_struct
  */
 OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size);
 
@@ -207,6 +234,8 @@ OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size);
  * @param this The OWString
  *
  * @returns A c-string (aka `char*`, note the absense of `const`)
+ *
+ * @memberof OWString_struct
  */
 #define OWString_GetBuffer(this) ((char*)OWArray_GetBuffer(this))
 
@@ -216,11 +245,14 @@ OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size);
  * @param this The OWString
  *
  * @returns The length of the string (size_t)
+ *
+ * @memberof OWString_struct
  */
 #define OWString_GetSize(this) ((OWString_t*)OWObject_FindObjectInClass(this, OWID_STRING))->size
 
 /**
  * @copydoc OWString_GetSize
+ * @memberof OWString_struct
  */
 #define OWString_GetLength(this) OWString_GetSize(this)
 
@@ -239,11 +271,15 @@ OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size);
  *          the implementation will break. There are ways to get away with it but
  *          it's not recommended. Any calls with a `size` value less than the content's
  *          length should be considered as `undefined behaviour`.
+ *
+ * @see OWArray_Resize
+ * @memberof OWString_struct
  */
 #define OWString_Resize(this, size) OWArray_Resize(this, size)
 
 /**
  * @copydoc OWObject_Destroy
+ * @memberof OWString_struct
  */
 #define OWString_Destroy(this) OWObject_Destroy(this)
 
