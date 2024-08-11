@@ -65,6 +65,16 @@ int test_SubString() {
   return 0;
 }
 
+int test_FindStr() {
+  OWO_String_t* str1 = OWString_ConstructSimple("Hello World");
+
+  if(OWString_FindStrSimple(str1, "Hello") != 0) return -1;
+  if(OWString_FindStrSimple(str1, "World") != 6) return -2;
+  if(OWString_FindStrSimple(str1, "yolo") != -1) return -3;
+
+  OWObject_UnRef(str1);
+  return 0;
+}
 
 
 int main() {
@@ -83,6 +93,9 @@ int main() {
   if(error != 0) return error;
 
   error = test_SubString();
+  if(error != 0) return error;
+
+  error = test_FindStr();
   if(error != 0) return error;
 
   return 0;

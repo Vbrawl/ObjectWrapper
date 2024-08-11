@@ -4,6 +4,7 @@
 #include "object.h"
 #include "array.h"
 #include <string.h>
+#include <stdbool.h>
 
 /**
  * @file ow_string.h
@@ -227,6 +228,45 @@ int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
  * @memberof OWString_struct
  */
 OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size);
+
+/**
+ * @brief Find a substring in the OWString's content
+ *
+ * @param this The OWString which contents will be searched
+ * @param sub The contents to search for
+ * @param sub_size The length of the contents to search for
+ *
+ * Find the position of a substring in a string.
+ *
+ * @returns The offset in which the sub-string was found or -1 if substring was not found.
+ */
+size_t OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size);
+
+/**
+ * @brief Simple way to call @ref OWString_FindStr
+ *
+ * @param this The OWString which contents will be searched
+ * @param sub The contents to search for
+ *
+ * This macro automatically finds the content's length.
+ *
+ * @returns The offset in which the sub-string was found or -1 if substring was not found.
+ * @memberof OWString_struct
+ */
+#define OWString_FindStrSimple(this, sub) OWString_FindStr(this, sub, strlen(sub))
+
+/**
+ * @brief Call @ref OWString_FindStr for @ref OWString_t objects
+ *
+ * @param this The OWString which will be searched
+ * @param other The OWString to search for
+ *
+ * This macro automatically finds the content and it's length.
+ *
+ * @returns The offset in which the sub-string was found or -1 if substring was not found.
+ * @memberof OWString_struct
+ */
+#define OWString_FindStrOWString(this, other) OWString_FindStr(this, OWString_GetBuffer(other), OWString_GetSize(other))
 
 /**
  * @brief Get the internal buffer of the string

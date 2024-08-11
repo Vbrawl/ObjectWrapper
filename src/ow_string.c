@@ -97,3 +97,24 @@ OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size) 
 
   return sub;
 }
+
+size_t OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size) {
+  this = OWObject_FindTypeInClass(this, OWID_STRING);
+  if(this == NULL) return -1;
+
+  const char *buf = OWString_GetBuffer(this);
+  const size_t bsize = OWString_GetSize(this);
+
+  if(bsize < sub_size) return -1;
+
+  bool found = false;
+  size_t offset = 0;
+  size_t end = bsize - sub_size;
+  for(size_t i = 0; i < bsize && i - offset < sub_size && offset < end; i++) {
+    if(!found) offset = i;
+    found = (buf[i] == sub[i - offset]);
+  }
+  if(!found) offset = -1;
+
+  return offset;
+}
