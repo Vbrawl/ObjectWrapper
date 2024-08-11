@@ -1,6 +1,6 @@
 #include "map.h"
 
-
+void _OWMap_Destroy(OWO_Map_t* this);
 
 OWO_Map_t* OWMap_Construct(size_t slot_steps) {
   OWO_Map_t* this = _OWObject_Construct(sizeof(OWMap_t), OWID_MAP, _OWMap_Destroy, NULL);
