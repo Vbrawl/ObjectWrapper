@@ -110,6 +110,12 @@ OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots);
 int OWArray_Resize(OWO_Array_t* this, size_t slots);
 
 /**
+ * @copydoc OWIsEqualCallback_t
+ * @memberof OWArray_t
+ */
+bool OWArray_IsEqual(OWO_Array_t* this, OWObject_t* other);
+
+/**
  * @brief Access a slot in the array
  *
  * @param cast_type The type of the objects in the array
