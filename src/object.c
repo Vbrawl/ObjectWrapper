@@ -1,7 +1,7 @@
 #include "object.h"
 #include <stdlib.h>
 
-OWObject_t* _OWObject_Construct(size_t size, OWID type, OWDestroyCallback_t* destroy_callback, OWObject_t* super) {
+OWObject_t* _OWObject_Construct(size_t size, OWID type, OWObject_t* super, OWDestroyCallback_t* destroy_callback, OWIsEqualCallback_t* is_equal_callback) {
   OWObject_t* this = malloc(sizeof(OWObject_t));
   if(this == NULL) { return NULL; }
 
@@ -17,6 +17,7 @@ OWObject_t* _OWObject_Construct(size_t size, OWID type, OWDestroyCallback_t* des
   this->super = super;
   this->reference_count = 1;
   this->destroy_callback = destroy_callback;
+  this->is_equal_callback = is_equal_callback;
   this->type = type;
   return this;
 }
@@ -55,4 +56,10 @@ void OWObject_UnRef(OWObject_t* this) {
   if(this->reference_count <= 0) {
     OWObject_Destroy(this);
   }
+}
+
+bool OWObject_IsEqual(OWObject_t* this, OWObject_t* other) {
+  if(this->is_equal_callback != NULL) return this->is_equal_callback(this, other);
+  if(other->is_equal_callback != NULL) return other->is_equal_callback(other, this);
+  return this->object == other->object;
 }

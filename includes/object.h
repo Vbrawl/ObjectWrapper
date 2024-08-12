@@ -9,6 +9,7 @@
  */
 
 #include <stddef.h>
+#include <stdbool.h>
 #include "object_identifiers.h"
 
 /**
@@ -64,6 +65,18 @@ struct OWObject_struct;
  */
 typedef void(OWDestroyCallback_t)(struct OWObject_struct* this);
 
+/**
+ * @brief The object's IsEqual function type
+ *
+ * @param this The object that's being compared to other
+ * @param other The other object
+ *
+ * The IsEqual callback needs to check if the 2 objects are equal
+ *
+ * @returns The equality check results
+ */
+typedef bool(OWIsEqualCallback_t)(struct OWObject_struct* this, struct OWObject_struct* other);
+
 struct OWObject_struct {
 
   /**
@@ -88,11 +101,21 @@ struct OWObject_struct {
   /**
    * @brief The destructor of the class/object.
    *
-   * This is not a NULL pointer, it's getting called when the object is to be destroyed.
+   * If this is not a NULL pointer it's getting called when the object is to be destroyed.
    *
    * @memberof OWObject_t
    */
   OWDestroyCallback_t* destroy_callback;
+
+  /**
+   * @brief The callback used by the @ref OWObject_IsEqual function
+   *
+   * If this is not a NULL pointer it's getting called when OWObject_IsEqual is called.
+   *
+   * @returns The result of the equality check (bool)
+   * @memberof OWObject_t
+   */
+  OWIsEqualCallback_t* is_equal_callback;
 
   /**
    * @brief The object's reference counter
@@ -125,15 +148,16 @@ typedef struct OWObject_struct OWObject_t;;
  * @brief Easier object constructor
  *
  * @param cls The class to construct
- * @param destroy_callback The function to be called when the object is to be destroyed
  * @param super The super/parent object
+ * @param destroy_callback The function to be called when the object is to be destroyed
+ * @param is_equal_callback The function to be called when the @ref OWObject_IsEqual function is called on the object
  *
  * A macro to easily call the OWObject_t's constructor
  *
  * @returns A pointer to the constructed `OWObject_t` instance or `NULL` on failure.
  * @memberof OWObject_t
  */
-#define OWObject_Construct(cls, destroy_callback, super) _OWObject_Construct(sizeof(cls), OWID_##cls, destroy_callback, super);
+#define OWObject_Construct(cls, super, destroy_callback, is_equal_callback) _OWObject_Construct(sizeof(cls), OWID_##cls, super, destroy_callback, is_equal_callback);
 
 /**
  * @brief Easy access to the super/parent object
@@ -151,15 +175,16 @@ typedef struct OWObject_struct OWObject_t;;
  *
  * @param size The size needed for the object's data
  * @param type The type of the object
- * @param destroy_callback The destructor of the object
  * @param super The super/parent object
+ * @param destroy_callback The destructor of the object
+ * @param is_equal_callback The equality checker of the class
  *
  * Construct an OWObject_t object and return a reference to it.
  *
  * @returns A pointer to the constructed `OWObject_t` instance or `NULL` on failure.
  * @memberof OWObject_t
  */
-OWObject_t* _OWObject_Construct(size_t size, OWID type, OWDestroyCallback_t* destroy_callback, OWObject_t* super);
+OWObject_t* _OWObject_Construct(size_t size, OWID type, OWObject_t* super, OWDestroyCallback_t* destroy_callback, OWIsEqualCallback_t* is_equal_callback);
 
 /**
  * @brief Find an object in inheritance chain
@@ -220,6 +245,22 @@ void OWObject_UnRef(OWObject_t* this);
  * @memberof OWObject_t
  */
 #define OWObject_GetRefCount(this) this->reference_count
+
+/**
+ * @brief Check if 2 objects are equal
+ *
+ * @param this The first object
+ * @param other The second object
+ *
+ * @note This function tries to find an OWIsEqualCallback_t in first object,
+ *        if the first object doesn't have such a callback the second object is searched.
+ *        If none of these 2 objects have an OWIsEqualCallback_t, this function compares
+ *        the @ref OWObject_t::object pointer.
+ *
+ * @returns The result of the equality check
+ * @memberof OWObject_t
+ */
+bool OWObject_IsEqual(OWObject_t* this, OWObject_t* other);
 
 /**
  * @brief Destroy an object

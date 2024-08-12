@@ -10,7 +10,7 @@ typedef struct MClass_struct {
 } MClass_t;
 
 OWObject_t* MClass_Construct(int hello) {
-  OWObject_t* this = OWObject_Construct(MClass_t, NULL, NULL);
+  OWObject_t* this = OWObject_Construct(MClass_t, NULL, NULL, NULL);
   if(this == NULL) return NULL;
 
   ((MClass_t*)this->object)->hello = hello;
@@ -33,7 +33,7 @@ void _CMClass_Destroy(OWObject_t* this) {
 
 OWObject_t* CMClass_Construct(int* flag, int hello) {
   OWObject_t* super = MClass_Construct(hello);
-  OWObject_t* this = OWObject_Construct(CMClass_t, _CMClass_Destroy, super);
+  OWObject_t* this = OWObject_Construct(CMClass_t, super, _CMClass_Destroy, NULL);
 
   ((CMClass_t*)this->object)->flag = flag;
 
@@ -45,7 +45,7 @@ OWObject_t* CMClass_Construct(int* flag, int hello) {
 
 
 OWObject_t* EmptyClass_Construct() {
-  OWObject_t* this = _OWObject_Construct(0, OWID_UNDEFINED, NULL, NULL);
+  OWObject_t* this = _OWObject_Construct(0, OWID_UNDEFINED, NULL, NULL, NULL);
 
   return this;
 }
@@ -70,6 +70,16 @@ int main() {
   if(empty->object != NULL) return -7;
   OWObject_UnRef(empty);
   OWObject_UnRef(empty2);
+
+
+  OWObject_t* temp3 = MClass_Construct(5);
+  OWObject_t* temp4 = OWObject_Ref(temp3);
+  OWObject_t* temp5 = MClass_Construct(4);
+  if(!OWObject_IsEqual(temp3, temp4)) return -8;
+  if(OWObject_IsEqual(temp3, temp5)) return -9;
+  OWObject_UnRef(temp3);
+  OWObject_UnRef(temp4);
+  OWObject_UnRef(temp5);
 
   return 0;
 }
