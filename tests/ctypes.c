@@ -8,6 +8,10 @@ int main() {
   if(OWInteger_UnWrap(number) != 5) return -1;
   OWObject_UnRef(number);
 
+  OWO_UnsignedInteger8_t* number8 = OWUnsignedInteger8_Construct(5);
+  if(OWUnsignedInteger8_UnWrap(number8) != 5) return -1;
+  OWObject_UnRef(number8);
+
   OWO_Character_t* character = OWCharacter_Construct('a');
   if(OWCharacter_UnWrap(character) != 'a') return -2;
   OWObject_UnRef(character);

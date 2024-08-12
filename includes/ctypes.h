@@ -10,6 +10,7 @@
 
 #include "object.h"
 #include <stdbool.h>
+#include <stdint.h>
 
 /**
  * @class OWInteger_t
@@ -44,6 +45,41 @@ OWO_Integer_t* OWInteger_Construct(int object);
  * @memberof OWInteger_t
  */
 #define OWInteger_UnWrap(this) (*(int*)this->object)
+
+
+/**
+ * @class OWUnsignedInteger8_t
+ * @brief Integer object type
+ *
+ * A type for human reference
+ *
+ * @extends OWObject_t
+ */
+typedef OWObject_t OWO_UnsignedInteger8_t;
+
+/**
+ * @brief Construct an unsigned 8-bit integer
+ *
+ * @param object The uint8_t to store in the object
+ *
+ * Store an unsigned 8-bit integer inside the object.
+ *
+ * @returns A pointer to the object instance that was created or `NULL` on failure.
+ * @memberof OWUnsignedInteger8_t
+ */
+OWO_UnsignedInteger8_t* OWUnsignedInteger8_Construct(uint8_t object);
+
+/**
+ * @brief Extract an OWUnsignedInteger8_t
+ *
+ * @param this The OWUnsignedInteger8_t
+ *
+ * Extract the value of an OWInteger to a C unsigned 8-bit integer
+ *
+ * @returns An unsigned 8-bit integer (uint8_t) with the value inside of the passed in object.
+ * @memberof OWUnsignedInteger8_t
+ */
+#define OWUnsignedInteger8_UnWrap(this) (*(uint8_t*)this->object)
 
 
 /**
