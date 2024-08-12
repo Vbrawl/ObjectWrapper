@@ -49,7 +49,7 @@ OWO_Integer_t* OWInteger_Construct(int object);
 
 /**
  * @class OWUnsignedInteger8_t
- * @brief Integer object type
+ * @brief Unsigned 8-bit integer object type
  *
  * A type for human reference
  *
