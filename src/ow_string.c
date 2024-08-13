@@ -7,7 +7,7 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size) {
   OWO_Array_t* array = OWArray_Construct(sizeof(char), 0);
   if(array == NULL) return NULL;
 
-  OWO_String_t* this = _OWObject_Construct(sizeof(OWString_t), OWID_STRING, array, NULL, NULL);
+  OWO_String_t* this = _OWObject_Construct(sizeof(OWString_t), OWID_STRING, array, NULL, OWString_IsEqual);
   if(this == NULL) {
     OWArray_Destroy(array);
     return NULL;
