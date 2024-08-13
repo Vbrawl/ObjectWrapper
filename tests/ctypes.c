@@ -2,6 +2,20 @@
 #include "object.h"
 
 
+int test_IsEqual() {
+  OWO_Integer_t* number = OWInteger_Construct(5);
+  OWO_Integer_t* number2 = OWInteger_Construct(5);
+
+  if(!OWObject_IsEqual(number, number2)) return -1;
+  OWInteger_UnWrap(number2) = 4;
+  if(OWObject_IsEqual(number, number2)) return -2;
+
+  OWObject_UnRef(number);
+  OWObject_UnRef(number2);
+  return 0;
+}
+
+
 int main() {
 
   OWO_Integer_t* number = OWInteger_Construct(5);
@@ -20,5 +34,5 @@ int main() {
   if(OWBoolean_UnWrap(boolean) != true) return -3;
   OWObject_UnRef(boolean);
 
-  return 0;
+  return test_IsEqual();
 }
