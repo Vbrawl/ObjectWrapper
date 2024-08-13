@@ -13,12 +13,37 @@
 #include <stdint.h>
 
 /**
+ * @class OWCType_t
+ * @brief Container for C-Types
+ *
+ * A variadic container for C types
+ *
+ * @note This class doesn't have a constructor but all classes that extend it should have.
+ *
+ * @extends OWObject_t
+ */
+typedef struct {
+  void* value;
+  size_t size;
+} OWCType_t;
+
+/**
+ * @brief CType variadic object type
+ *
+ * A type for human reference
+ */
+typedef OWObject_t OWO_CType_t;
+
+#define OWCType_UnWrap(c_type, this) (*(c_type*)((OWCType_t*)OWObject_FindObjectInClass(this, OWID_CTYPE))->value)
+
+
+/**
  * @class OWInteger_t
  * @brief Integer object type
  *
  * A type for human reference
  *
- * @extends OWObject_t
+ * @extends OWCType_t
  */
 typedef OWObject_t OWO_Integer_t;
 
@@ -44,7 +69,7 @@ OWO_Integer_t* OWInteger_Construct(int object);
  * @returns An integer (int) with the value inside of the passed in object.
  * @memberof OWInteger_t
  */
-#define OWInteger_UnWrap(this) (*(int*)this->object)
+#define OWInteger_UnWrap(this) OWCType_UnWrap(int, this)
 
 
 /**
@@ -53,7 +78,7 @@ OWO_Integer_t* OWInteger_Construct(int object);
  *
  * A type for human reference
  *
- * @extends OWObject_t
+ * @extends OWCType_t
  */
 typedef OWObject_t OWO_UnsignedInteger8_t;
 
@@ -79,7 +104,7 @@ OWO_UnsignedInteger8_t* OWUnsignedInteger8_Construct(uint8_t object);
  * @returns An unsigned 8-bit integer (uint8_t) with the value inside of the passed in object.
  * @memberof OWUnsignedInteger8_t
  */
-#define OWUnsignedInteger8_UnWrap(this) (*(uint8_t*)this->object)
+#define OWUnsignedInteger8_UnWrap(this) OWCType_UnWrap(uint8_t, this)
 
 
 /**
@@ -88,7 +113,7 @@ OWO_UnsignedInteger8_t* OWUnsignedInteger8_Construct(uint8_t object);
  *
  * A type for human reference
  *
- * @extends OWObject_t
+ * @extends OWCType_t
  */
 typedef OWObject_t OWO_Character_t;
 
@@ -114,7 +139,7 @@ OWO_Character_t* OWCharacter_Construct(char object);
  * @returns A character (char) with the value inside of the passed in object.
  * @memberof OWCharacter_t
  */
-#define OWCharacter_UnWrap(this) (*(char*)this->object)
+#define OWCharacter_UnWrap(this) OWCType_UnWrap(char, this)
 
 
 /**
@@ -123,7 +148,7 @@ OWO_Character_t* OWCharacter_Construct(char object);
  *
  * A type for human reference
  *
- * @extends OWObject_t
+ * @extends OWCType_t
  */
 typedef OWObject_t OWO_Boolean_t;
 
@@ -149,7 +174,7 @@ OWO_Boolean_t* OWBoolean_Construct(bool object);
  * @returns A boolean (bool) with the value inside of the passed in object.
  * @memberof OWBoolean_t
  */
-#define OWBoolean_UnWrap(this) (*(bool*)this->object)
+#define OWBoolean_UnWrap(this) OWCType_UnWrap(bool, this)
 
 
 

@@ -1,42 +1,42 @@
 #include "ctypes.h"
+#include <string.h>
+#include <stdlib.h>
 
-#define CTYPE_CONSTRUCTOR(obj_name, c_type, owid) \
+void _OWCType_Destroy(OWO_CType_t* this);
+
+#define CTYPE_CONSTRUCTOR(obj_name, c_type) \
 OWO_ ## obj_name ## _t* OW ## obj_name ## _Construct(c_type object) {\
-  OWO_ ## obj_name ## _t* this = _OWObject_Construct(sizeof(c_type), owid, NULL, NULL);\
-  *((c_type*)this->object) = object;\
+  OWO_CType_t* this = _OWObject_Construct(sizeof(OWCType_t), OWID_CTYPE, NULL, _OWCType_Destroy, OWCType_IsEqual);\
+  if(this == NULL) return NULL;\
+  OWCType_t* obj = this->object;\
+  obj->size = sizeof(c_type);\
+  obj->value = malloc(obj->size);\
+  if(obj->value == NULL) {\
+    OWObject_Destroy(this);\
+    return NULL;\
+  }\
+  *((c_type*)obj->value) = object;\
   return this;\
 }
 
+bool OWCType_IsEqual(OWO_CType_t* this, OWObject_t* other) {
+  OWCType_t* obj = OWObject_FindObjectInClass(this, OWID_CTYPE);
+  OWCType_t* oobj = OWObject_FindObjectInClass(other, OWID_CTYPE);
 
-/* Integer *
-OWO_Integer_t* OWInteger_Construct(int object) {
-  OWO_Integer_t* this = _OWObject_Construct(sizeof(int), OWID_INTEGER, NULL, NULL);
-  *((int*)this->object) = object;
-  return this;
+  if(obj == oobj) return true;
+  if(obj == NULL || oobj == NULL) return false;
+
+  if(obj->size != oobj->size) return false;
+  return memcmp(obj->value, oobj->value, obj->size) == 0;
+}
+
+void _OWCType_Destroy(OWO_CType_t* this) {
+  OWCType_t* const obj = this->object;
+  if(obj->value != NULL) free(obj->value);
 }
 
 
-/* Character *
-OWO_Character_t* OWCharacter_Construct(char object) {
-  OWO_Character_t* this = _OWObject_Construct(sizeof(char), OWID_CHARACTER, NULL, NULL);
-  *((char*)this->object) = object;
-  return this;
-}
-
-
-/* Boolean *
-OWO_Boolean_t* OWBoolean_Construct(bool object) {
-  OWO_Boolean_t* this = _OWObject_Construct(sizeof(bool), OWID_BOOLEAN, NULL, NULL);
-  *((bool*)this->object) = object;
-  return this;
-}
-*/
-
-
-CTYPE_CONSTRUCTOR(Integer, int, OWID_INTEGER)
-
-CTYPE_CONSTRUCTOR(UnsignedInteger8, uint8_t, OWID_UNSIGNED_INTEGER_8)
-
-CTYPE_CONSTRUCTOR(Character, char, OWID_CHARACTER)
-
-CTYPE_CONSTRUCTOR(Boolean, bool, OWID_BOOLEAN)
+CTYPE_CONSTRUCTOR(Integer, int)
+CTYPE_CONSTRUCTOR(UnsignedInteger8, uint8_t)
+CTYPE_CONSTRUCTOR(Character, char)
+CTYPE_CONSTRUCTOR(Boolean, bool)
