@@ -1,12 +1,13 @@
 #include "ow_string.h"
 #include <stdlib.h>
+#include <string.h>
 
 
 OWO_String_t* OWString_Construct(const char* content, size_t content_size) {
   OWO_Array_t* array = OWArray_Construct(sizeof(char), 0);
   if(array == NULL) return NULL;
 
-  OWO_String_t* this = _OWObject_Construct(sizeof(OWString_t), OWID_STRING, NULL, array);
+  OWO_String_t* this = _OWObject_Construct(sizeof(OWString_t), OWID_STRING, array, NULL, NULL);
   if(this == NULL) {
     OWArray_Destroy(array);
     return NULL;
@@ -117,4 +118,19 @@ size_t OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size) {
   if(!found) offset = -1;
 
   return offset;
+}
+
+bool OWString_IsEqual(OWO_String_t* this, OWObject_t* other) {
+  OWString_t* const obj = OWObject_FindObjectInClass(this, OWID_STRING);
+  OWString_t* const oobj = OWObject_FindObjectInClass(other, OWID_STRING);
+
+  if(obj == oobj) return true;
+  if(obj == NULL || oobj == NULL) return false;
+
+  if(obj->size != oobj->size) return false;
+
+  const char* buf = OWString_GetBuffer(this);
+  const char* obuf = OWString_GetBuffer(other);
+
+  return strncmp(buf, obuf, obj->size) == 0;
 }

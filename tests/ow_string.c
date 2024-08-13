@@ -76,6 +76,26 @@ int test_FindStr() {
   return 0;
 }
 
+int test_IsEqual() {
+  OWO_String_t* str1 = OWString_ConstructSimple("Hello World");
+  OWO_String_t* str2 = OWString_ConstructSimple("Hello World");
+  OWO_String_t* empty = OWString_ConstructEmpty();
+
+  if(!OWString_IsEqual(str1, str2)) return -1;
+
+  OWString_SetSimple(str2, "Hello");
+  if(OWString_IsEqual(str1, str2)) return -2;
+
+  if(OWString_IsEqual(str1, empty)) return -3;
+  if(OWString_IsEqual(str2, empty)) return -4;
+  if(!OWString_IsEqual(empty, empty)) return -5;
+
+  OWObject_UnRef(empty);
+  OWObject_UnRef(str2);
+  OWObject_UnRef(str1);
+  return 0;
+}
+
 
 int main() {
   int error = 0;
@@ -96,6 +116,9 @@ int main() {
   if(error != 0) return error;
 
   error = test_FindStr();
+  if(error != 0) return error;
+
+  error = test_IsEqual();
   if(error != 0) return error;
 
   return 0;

@@ -217,6 +217,12 @@ int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
 #define OWString_CompareOWString(this, other) OWString_Compare(this, OWString_GetBuffer(other), OWString_GetSize(other))
 
 /**
+ * @copydoc OWIsEqualCallback_t
+ * @memberof OWString_t
+ */
+bool OWString_IsEqual(OWO_String_t* this, OWObject_t* other);
+
+/**
  * @brief Get a substring from an OWString's content
  *
  * @param this The OWString which contents will be used to create the substring
