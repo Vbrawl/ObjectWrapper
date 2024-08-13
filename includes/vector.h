@@ -174,6 +174,12 @@ int OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item);
 OWObject_t* OWVector_Get(OWO_Vector_t* this, size_t index);
 
 /**
+ * @copydoc OWIsEqualCallback_t
+ * @memberof OWVector_t
+ */
+bool OWVector_IsEqual(OWO_Vector_t* this, OWObject_t* other);
+
+/**
  * @brief Remove an object from the vector.
  *
  * @param this The OWVector

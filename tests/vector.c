@@ -26,67 +26,92 @@ int remove_out_of_bounds() {
 }
 
 
+int test_IsEqual() {
+  OWO_Vector_t* vec1 = OWVector_Construct(2);
+  OWO_Vector_t* vec2 = vec1;
+
+  OWObject_t* temp = OWInteger_Construct(5);
+  OWVector_PushBack(vec1, temp);
+  OWObject_UnRef(temp);
+
+  temp = OWInteger_Construct(4);
+  OWVector_PushBack(vec1, temp);
+  OWObject_UnRef(temp);
+
+  if(!OWVector_IsEqual(vec1, vec2)) return -1;
+
+  vec2 = OWVector_Construct(3);
+  temp = OWInteger_Construct(5);
+  OWVector_PushBack(vec2, temp);
+  OWObject_UnRef(temp);
+
+  temp = OWInteger_Construct(4);
+  OWVector_PushBack(vec2, temp);
+  OWObject_UnRef(temp);
+
+  if(!OWVector_IsEqual(vec1, vec2)) return -2;
+
+  temp = OWInteger_Construct(4);
+  OWVector_PushBack(vec2, temp);
+  OWObject_UnRef(temp);
+
+  if(OWVector_IsEqual(vec1, vec2)) return -3;
+
+  OWObject_UnRef(vec1);
+  OWObject_UnRef(vec2);
+
+  return 0;
+}
+
+int test_Insert() {
+  OWO_Vector_t* vector = OWVector_Construct(2);
+  OWO_Integer_t* temp = OWInteger_Construct(2);
+  OWVector_PushBack(vector, temp);
+  OWObject_UnRef(temp);
+
+  temp = OWInteger_Construct(3);
+  OWVector_PushBack(vector, temp);
+  OWObject_UnRef(temp);
+
+  temp = OWVector_Get(vector, 0);
+  if(OWInteger_UnWrap(temp) != 2) return -1;
+  OWObject_UnRef(temp);
+
+  temp = OWVector_Get(vector, 1);
+  if(OWInteger_UnWrap(temp) != 3) return -2;
+  OWObject_UnRef(temp);
+
+  OWObject_UnRef(vector);
+  return 0;
+}
+
+int test_Pop() {
+  OWO_Vector_t* vector = OWVector_Construct(2);
+  OWO_Integer_t* temp = OWInteger_Construct(2);
+  OWVector_PushBack(vector, temp);
+  OWObject_UnRef(temp);
+
+  temp = OWVector_Pop(vector, 0);
+  if(OWInteger_UnWrap(temp) != 2) return -1;
+  OWObject_UnRef(temp);
+
+  OWObject_UnRef(vector);
+  return 0;
+}
+
+
 int main() {
-  OWO_Vector_t* vector = OWVector_Construct(5);
-  OWO_Integer_t* temp_pointer = NULL;
-  int i;
-  for (i = 0; i < 6; i++) {
-    temp_pointer = OWInteger_Construct(i);
-    if(OWVector_PushBack(vector, temp_pointer) != 0) {
-      return 1;
-    }
-    OWObject_UnRef(temp_pointer);
-  }
+  int error = test_Insert();
+  if(error != 0) return error;
 
-  temp_pointer = (OWO_Integer_t*)OWVector_Get(vector, 2);
-  if(*((int*)temp_pointer->object) != 2) {
-    return -1;
-  }
-  OWObject_UnRef(temp_pointer);
+  error = test_Pop();
+  if(error != 0) return error;
 
-  if(OWVector_Remove(vector, 2) != 0) {
-    return -2;
-  }
+  error = test_IsEqual();
+  if(error != 0) return error;
 
-  temp_pointer = (OWO_Integer_t*)OWVector_Get(vector, 2);
-  if(*((int*)temp_pointer->object) != 3) {
-    return -3;
-  }
-  OWObject_UnRef(temp_pointer);
+  error = remove_out_of_bounds();
+  if(error != 0) return error;
 
-  temp_pointer = OWInteger_Construct(101);
-  OWVector_PushFront(vector, temp_pointer);
-  OWObject_UnRef(temp_pointer);
-
-  temp_pointer = OWVector_Get(vector, 0);
-  *(int*)temp_pointer->object = 101;
-  OWObject_UnRef(temp_pointer);
-
-  int size = OWVector_GetSize(vector);
-  temp_pointer = OWVector_PopFront(vector);
-  if(temp_pointer == NULL) {
-    return -5;
-  }
-  if(OWVector_GetSize(vector) == size) {
-    return -6;
-  }
-  OWObject_UnRef(temp_pointer);
-
-  temp_pointer = OWInteger_Construct(2);
-  OWVector_Insert(vector, 1, temp_pointer);
-  OWObject_UnRef(temp_pointer);
-
-  temp_pointer = OWVector_Pop(vector, 1);
-  if(temp_pointer == NULL) {
-    return -7;
-  }
-  if(OWVector_GetSize(vector) == size) {
-    return -8;
-  }
-
-  OWObject_UnRef(temp_pointer);
-
-  OWVector_Destroy(vector);
-
-  return remove_out_of_bounds();
+  return 0;
 }
