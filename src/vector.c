@@ -2,6 +2,7 @@
 #include "vector.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 void _OWVector_Destroy(OWO_Vector_t* this);
 
@@ -50,6 +51,24 @@ OWObject_t* OWVector_Get(OWO_Vector_t* this, size_t index) {
   }
 
   return OWObject_Ref(OWArray_At(OWObject_t*, this, index));
+}
+
+size_t OWVector_FindItem(OWO_Vector_t* this, OWObject_t* item) {
+  OWVector_t* const obj = OWObject_FindObjectInClass(this, OWID_VECTOR);
+  if(obj == NULL) return -1;
+
+  size_t i = -1;
+  bool found = false;
+  do {
+    i++;
+    OWObject_t* temp = OWVector_Get(this, i);
+    if(temp != NULL) {
+      found = OWObject_IsEqual(item, temp);
+      OWObject_UnRef(temp);
+    }
+  } while(i < obj->size && !found);
+
+  return i;
 }
 
 int OWVector_Remove(OWO_Vector_t* this, size_t index) {

@@ -180,6 +180,18 @@ OWObject_t* OWVector_Get(OWO_Vector_t* this, size_t index);
 bool OWVector_IsEqual(OWO_Vector_t* this, OWObject_t* other);
 
 /**
+ * @brief Find an item in the vector
+ *
+ * @param this The OWVector
+ * @param item The item to search for
+ *
+ * Find an item in the vector and return it's index.
+ *
+ * @returns The index of the item or -1 on failure.
+ */
+size_t OWVector_FindItem(OWO_Vector_t* this, OWObject_t* item);
+
+/**
  * @brief Remove an object from the vector.
  *
  * @param this The OWVector

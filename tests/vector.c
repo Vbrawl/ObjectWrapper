@@ -99,6 +99,31 @@ int test_Pop() {
   return 0;
 }
 
+int test_FindIndex() {
+  OWO_Vector_t* vector = OWVector_Construct(2);
+
+  OWO_Integer_t* temp = OWInteger_Construct(1);
+  OWVector_PushBack(vector, temp);
+  OWObject_UnRef(temp);
+
+  temp = OWInteger_Construct(2);
+  OWVector_PushBack(vector, temp);
+  OWObject_UnRef(temp);
+
+  temp = OWInteger_Construct(3);
+  OWVector_PushBack(vector, temp);
+  OWObject_UnRef(temp);
+
+  temp = OWInteger_Construct(4);
+  OWVector_PushBack(vector, temp);
+
+  if(OWVector_FindItem(vector, temp) != 3) return -1;
+
+  OWObject_UnRef(temp);
+  OWObject_UnRef(vector);
+  return 0;
+}
+
 
 int main() {
   int error = test_Insert();
@@ -111,6 +136,9 @@ int main() {
   if(error != 0) return error;
 
   error = remove_out_of_bounds();
+  if(error != 0) return error;
+
+  error = test_FindIndex();
   if(error != 0) return error;
 
   return 0;
