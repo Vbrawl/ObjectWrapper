@@ -122,6 +122,7 @@ int OWMap_UnSet(OWO_Map_t* this, OWObject_t* key);
  * Find the index of an entry
  *
  * @returns The index of the entry or -1 on failure
+ * @memberof OWMap_t
  */
 size_t OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key);
 
@@ -140,6 +141,21 @@ size_t OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key);
  * @memberof OWMap_t
  */
 OWObject_t* OWMap_Get(OWO_Map_t* this, OWObject_t* key);
+
+/**
+ * @brief Get the vector of keys of the object
+ *
+ * @param this The OWMap
+ *
+ * Get the internal vector of keys.
+ *
+ * @warning Modifying the vector will damage the map object and will result in undefined behaviour.
+ *          The resulting OWVector should be used as read-only.
+ *
+ * @returns A reference to the internal key vector or NULL on failure.
+ * @memberof OWMap_t
+ */
+#define OWMap_GetKeyVector(this) OWObject_Ref(((OWMap_t*)OWObject_FindObjectInClass(this, OWID_MAP))->keys)
 
 /**
  * @copydoc OWIsEqualCallback_t
