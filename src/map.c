@@ -16,7 +16,7 @@ OWO_Map_t* OWMap_Construct(size_t slot_steps) {
 }
 
 
-int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, OWObject_t* item) {
+int OWMap_Set(OWO_Map_t* this, OWObject_t* key, OWObject_t* item) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
   if(obj == NULL) return -1;
 
@@ -31,7 +31,7 @@ int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, OWObject_t* item) {
   return 0;
 }
 
-int OWMap_UnSet(OWO_Map_t* this, OWO_Map_t* key) {
+int OWMap_UnSet(OWO_Map_t* this, OWObject_t* key) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
   if(obj == NULL) return -1;
 
@@ -43,7 +43,7 @@ int OWMap_UnSet(OWO_Map_t* this, OWO_Map_t* key) {
   return 0;
 }
 
-size_t OWMap_FindEntry(OWO_Map_t* this, OWO_String_t* key) {
+size_t OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
   if(obj == NULL) return -1;
 
@@ -51,7 +51,7 @@ size_t OWMap_FindEntry(OWO_Map_t* this, OWO_String_t* key) {
 }
 
 
-OWObject_t* OWMap_Get(OWO_Map_t* this, OWO_String_t* key) {
+OWObject_t* OWMap_Get(OWO_Map_t* this, OWObject_t* key) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
   if(obj == NULL) return NULL;
 

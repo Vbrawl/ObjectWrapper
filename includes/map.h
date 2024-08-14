@@ -26,7 +26,7 @@ typedef struct {
    *
    * A vector holding all keys of the object
    */
-  OWO_Typed_Vector_t(OWO_String_t*)* keys;
+  OWO_Vector_t* keys;
 
   /**
    * @brief Value vector
@@ -65,7 +65,7 @@ typedef OWObject_t OWO_Map_t;
  *
  * @see OWContainer_Type
  */
-#define OWO_Typed_Map_t(value_type) OWContainer_Type(OWO_Map_t, value_type)
+#define OWO_Typed_Map_t(key_type, value_type) OWContainer_Type(OWO_Map_t, key_type, value_type)
 
 /**
  * @brief Construct a map
@@ -92,7 +92,7 @@ OWO_Map_t* OWMap_Construct(size_t slot_steps);
  * @returns 0 on success, a negative value on failure.
  * @memberof OWMap_t
  */
-int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, OWObject_t* item);
+int OWMap_Set(OWO_Map_t* this, OWObject_t* key, OWObject_t* item);
 
 /**
  * @brief Unset a key in the map
@@ -110,7 +110,7 @@ int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, OWObject_t* item);
  * @returns 0 on success, a negative value on failure.
  * @memberof OWMap_t
  */
-int OWMap_UnSet(OWO_Map_t* this, OWO_String_t* key);
+int OWMap_UnSet(OWO_Map_t* this, OWObject_t* key);
 
 
 /**
@@ -123,7 +123,7 @@ int OWMap_UnSet(OWO_Map_t* this, OWO_String_t* key);
  *
  * @returns The index of the entry or -1 on failure
  */
-size_t OWMap_FindEntry(OWO_Map_t* this, OWO_String_t* key);
+size_t OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key);
 
 /**
  * @brief Get the value of a key
@@ -139,7 +139,7 @@ size_t OWMap_FindEntry(OWO_Map_t* this, OWO_String_t* key);
  * @returns A new reference to the value object or `NULL` if the key was not found in the map.
  * @memberof OWMap_t
  */
-OWObject_t* OWMap_Get(OWO_Map_t* this, OWO_String_t* key);
+OWObject_t* OWMap_Get(OWO_Map_t* this, OWObject_t* key);
 
 /**
  * @copydoc OWIsEqualCallback_t
