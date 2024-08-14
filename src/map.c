@@ -3,7 +3,7 @@
 void _OWMap_Destroy(OWO_Map_t* this);
 
 OWO_Map_t* OWMap_Construct(size_t slot_steps) {
-  OWO_Map_t* this = _OWObject_Construct(sizeof(OWMap_t), OWID_MAP, _OWMap_Destroy, NULL);
+  OWO_Map_t* this = _OWObject_Construct(sizeof(OWMap_t), OWID_MAP, NULL, _OWMap_Destroy, NULL);
   if(this == NULL) {
     return NULL;
   }
@@ -20,39 +20,13 @@ int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, OWObject_t* item) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
   if(obj == NULL) return -1;
 
-  OWObject_Ref(key);
-  OWObject_Ref(item);
-
-  if(OWVector_GetSize(obj->keys) == 0) {
-    OWVector_PushBack(obj->keys, key);
-    OWVector_PushBack(obj->values, item);
+  size_t i = OWMap_FindEntry(this, key);
+  if(i < OWMap_GetSize(this)) {
+    OWVector_Remove(obj->keys, i);
+    OWVector_Remove(obj->values, i);
   }
-  else {
-    OWO_String_t* temp;
-    int difference;
-    int i = -1; // becomes 0 in the first do-while
-    do {
-      i += 1;
-      temp = OWVector_Get(obj->keys, i);
-      if(temp == NULL)
-        difference = 0;
-      else {
-        difference = OWString_CompareOWString(key, temp);
-        OWObject_UnRef(temp);
-      }
-    } while(i < OWVector_GetSize(obj->keys) && difference > 0);
-
-    if(difference == 0) {
-      OWVector_Remove(obj->keys, i);
-      OWVector_Remove(obj->values, i);
-    }
-
-    OWVector_Insert(obj->keys, i, key);
-    OWVector_Insert(obj->values, i, item);
-  }
-
-  OWObject_UnRef(key);
-  OWObject_UnRef(item);
+  OWVector_PushBack(obj->keys, key);
+  OWVector_PushBack(obj->values, item);
 
   return 0;
 }
@@ -61,26 +35,19 @@ int OWMap_UnSet(OWO_Map_t* this, OWO_Map_t* key) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
   if(obj == NULL) return -1;
 
-  OWObject_Ref(key);
-
-  OWO_String_t* temp;
-  int difference;
-  int i = -1;
-
-  do {
-    i += 1;
-    temp = OWVector_Get(obj->keys, i);
-    difference = OWString_CompareOWString(key, temp);
-    OWObject_UnRef(temp);
-  } while(i < OWVector_GetSize(obj->keys) && difference != 0);
-
-  OWObject_UnRef(key);
-
-  if(difference != 0) return -2;
+  size_t i = OWMap_FindEntry(this, key);
+  if(i > OWMap_GetSize(this)) return -2;
 
   OWVector_Remove(obj->keys, i);
   OWVector_Remove(obj->values, i);
   return 0;
+}
+
+size_t OWMap_FindEntry(OWO_Map_t* this, OWO_String_t* key) {
+  OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
+  if(obj == NULL) return -1;
+
+  return OWVector_FindItem(obj->keys, key);
 }
 
 
@@ -88,25 +55,31 @@ OWObject_t* OWMap_Get(OWO_Map_t* this, OWO_String_t* key) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
   if(obj == NULL) return NULL;
 
-  OWObject_Ref(key);
+  size_t i = OWMap_FindEntry(this, key);
+  if(i > OWMap_GetSize(this)) return NULL;
 
-  OWO_String_t* temp;
-  int difference;
-  int i = -1; // becomes 0 in the first do-while
+  return OWVector_Get(obj->values, i);
+}
 
-  do {
-    i += 1;
-    temp = OWVector_Get(obj->keys, i);
-    difference = OWString_CompareOWString(key, temp);
-    OWObject_UnRef(temp);
-  } while(i < OWVector_GetSize(obj->keys) && difference != 0);
+bool OWMap_IsEqual(OWO_Map_t* this, OWObject_t* other) {
+  OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
+  OWMap_t* const oobj = OWObject_FindObjectInClass(other, OWID_MAP);
 
-  OWObject_UnRef(key);
 
-  if(difference == 0) {
-    return OWVector_Get(obj->values, i);
+  if(obj == oobj) return true;
+  if(obj == NULL || oobj == NULL) return false;
+  if(OWMap_GetSize(this) != OWMap_GetSize(other)) return false;
+
+  OWO_Vector_t* keys = obj->keys;
+  OWO_Vector_t* okeys = oobj->keys;
+  for(size_t i = 0; i < OWVector_GetSize(keys); i++) {
+    OWObject_t* key = OWVector_Get(keys, i);
+    size_t item_index = OWVector_FindItem(okeys, key);
+    OWObject_UnRef(key);
+
+    if(item_index == -1) return false;
   }
-  return NULL;
+  return true;
 }
 
 

@@ -25,15 +25,19 @@ int main() {
 
 
   temp_pointer = OWMap_Get(map, key1);
-  *((int*)temp_pointer->object) = 1;
+  if(temp_pointer == NULL) return -1;
+  OWInteger_UnWrap(temp_pointer) = 1;
   OWObject_UnRef(temp_pointer);
 
   temp_pointer = OWMap_Get(map, key2);
-  *((int*)temp_pointer->object) = 2;
+  if(temp_pointer == NULL) return -2;
+  OWInteger_UnWrap(temp_pointer) = 2;
   OWObject_UnRef(temp_pointer);
 
-  if(*((int*)item1->object) != 1) return -1;
-  if(*((int*)item2->object) != 2) return -2;
+  if(OWInteger_UnWrap(item1) != 1) return -3;
+  if(OWInteger_UnWrap(item2) != 2) return -4;
+
+  if(!OWMap_IsEqual(map, map)) return -5;
 
   OWObject_UnRef(item1);
   OWObject_UnRef(item2);

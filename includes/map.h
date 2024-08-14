@@ -112,6 +112,19 @@ int OWMap_Set(OWO_Map_t* this, OWO_String_t* key, OWObject_t* item);
  */
 int OWMap_UnSet(OWO_Map_t* this, OWO_String_t* key);
 
+
+/**
+ * @brief Find the index of an entry in the underlying buffers vector
+ *
+ * @param this The OWMap
+ * @param key The key to search for
+ *
+ * Find the index of an entry
+ *
+ * @returns The index of the entry or -1 on failure
+ */
+size_t OWMap_FindEntry(OWO_Map_t* this, OWO_String_t* key);
+
 /**
  * @brief Get the value of a key
  *
@@ -127,6 +140,12 @@ int OWMap_UnSet(OWO_Map_t* this, OWO_String_t* key);
  * @memberof OWMap_t
  */
 OWObject_t* OWMap_Get(OWO_Map_t* this, OWO_String_t* key);
+
+/**
+ * @copydoc OWIsEqualCallback_t
+ * @memberof OWMap_t
+ */
+bool OWMap_IsEqual(OWO_Map_t* this, OWObject_t* other);
 
 /**
  * @brief Get the size of the map
