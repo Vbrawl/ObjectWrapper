@@ -4,8 +4,9 @@ if(NOT DEFINED CMAKE_BUILD_TYPE)
 set(CMAKE_BUILD_TYPE Debug)
 endif()
 
+if(CMAKE_HOST_UNIX)
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g3")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3")
+endif()
 
 project(
 	ObjectWrapper
