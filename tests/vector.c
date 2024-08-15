@@ -118,6 +118,10 @@ int test_FindIndex() {
   OWVector_PushBack(vector, temp);
 
   if(OWVector_FindItem(vector, temp) != 3) return -1;
+  OWObject_UnRef(temp);
+
+  temp = OWInteger_Construct(5);
+  if(OWVector_FindItem(vector, temp) != -1) return -2;
 
   OWObject_UnRef(temp);
   OWObject_UnRef(vector);
