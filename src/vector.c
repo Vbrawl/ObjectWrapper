@@ -68,6 +68,8 @@ size_t OWVector_FindItem(OWO_Vector_t* this, OWObject_t* item) {
     }
   } while(i < obj->size && !found);
 
+  if(!found) i = -1;
+
   return i;
 }
 
