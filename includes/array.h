@@ -140,7 +140,7 @@ bool OWArray_IsEqual(OWO_Array_t* this, OWObject_t* other);
  *
  * @memberof OWArray_t
  */
-#define OWArray_GetBuffer(this) ((OWArray_t*)OWObject_FindObjectInClass(this, OWID_ARRAY))->array
+#define OWArray_GetBuffer(this) ((char*)((OWArray_t*)OWObject_FindObjectInClass(this, OWID_ARRAY))->array)
 
 /**
  * @brief The number of slots of the array
