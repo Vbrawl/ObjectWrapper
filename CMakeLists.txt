@@ -8,6 +8,8 @@ if(CMAKE_HOST_UNIX)
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g3")
 endif()
 
+set(CMAKE_C_STANDARD 11)
+
 project(
 	ObjectWrapper
 	VERSION 2.0.0
