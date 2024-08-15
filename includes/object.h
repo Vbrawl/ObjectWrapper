@@ -12,6 +12,10 @@
 #include <stdbool.h>
 #include "object_identifiers.h"
 
+#ifdef __STDC_NO_ATOMICS__
+#define _Atomic
+#endif
+
 /**
  * @brief Register a new OWID for a class
  *
