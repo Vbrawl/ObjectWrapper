@@ -21,6 +21,10 @@ In some systems you may need to run `sudo ldconfig`
 
 There are some examples in the `examples` directory
 
+## Important
+
+For creating shared libraries in a compact and portable manner visit the `shared_library` example
+
 # Linking to library
 
 To make projects that use this library you need to link against
