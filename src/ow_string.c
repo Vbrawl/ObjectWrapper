@@ -7,17 +7,24 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size) {
   OWO_Array_t* array = OWArray_Construct(sizeof(char), 0);
   if(array == NULL) return NULL;
 
-  OWO_String_t* this = _OWObject_Construct(sizeof(OWString_t), OWID_STRING, array, NULL, OWString_IsEqual);
+  OWO_String_t* this = _OWObject_Construct(sizeof(OWString_t), OWID_STRING, array, NULL, _OWString_IsEqual);
   if(this == NULL) {
     OWArray_Destroy(array);
     return NULL;
   }
+  OWString_t* const obj = this->object;
+
+  obj->methods.set = _OWString_Set;
+  obj->methods.append = _OWString_Append;
+  obj->methods.compare = _OWString_Compare;
+  obj->methods.substring = _OWString_SubString;
+  obj->methods.findstr = _OWString_FindStr;
 
   OWString_Set(this, content, content_size);
   return this;
 }
 
-int OWString_Set(OWO_String_t* this, const char* content, size_t content_size) {
+int _OWString_Set(OWO_String_t* this, const char* content, size_t content_size) {
   OWString_t* const obj = OWObject_FindObjectInClass(this, OWID_STRING);
 
   if(content_size + 1 > OWArray_GetSlots(this)) {
@@ -36,7 +43,7 @@ int OWString_Set(OWO_String_t* this, const char* content, size_t content_size) {
   return 0;
 }
 
-int OWString_Append(OWO_String_t* this, const char* content, size_t content_size) {
+int _OWString_Append(OWO_String_t* this, const char* content, size_t content_size) {
   OWString_t* const obj = OWObject_FindObjectInClass(this, OWID_STRING);
   size_t final_size = obj->size + content_size;
 
@@ -54,7 +61,7 @@ int OWString_Append(OWO_String_t* this, const char* content, size_t content_size
 }
 
 
-int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size) {
+int _OWString_Compare(OWO_String_t* this, const char* other, size_t other_size) {
   int i, difference;
   size_t size = OWString_GetSize(this);
   const char *str = OWString_GetBuffer(this);
@@ -76,7 +83,7 @@ int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size) {
   return 0;
 }
 
-OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size) {
+OWO_String_t* _OWString_SubString(OWO_String_t* this, size_t start, size_t size) {
   OWString_t* const obj = OWObject_FindObjectInClass(this, OWID_STRING);
   if(obj == NULL) return NULL;
 
@@ -99,7 +106,7 @@ OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size) 
   return sub;
 }
 
-size_t OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size) {
+size_t _OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size) {
   this = OWObject_FindTypeInClass(this, OWID_STRING);
   if(this == NULL) return -1;
 
@@ -120,7 +127,7 @@ size_t OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size) {
   return offset;
 }
 
-bool OWString_IsEqual(OWO_String_t* this, OWObject_t* other) {
+bool _OWString_IsEqual(OWO_String_t* this, OWObject_t* other) {
   OWString_t* const obj = OWObject_FindObjectInClass(this, OWID_STRING);
   OWString_t* const oobj = OWObject_FindObjectInClass(other, OWID_STRING);
 

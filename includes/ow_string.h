@@ -14,6 +14,21 @@
  */
 
 /**
+ * @brief String object type
+ *
+ * Create a type for human reference
+ */
+typedef OWObject_t OWO_String_t;
+
+struct _OWString_Methods {
+  int(*set)(OWO_String_t* this, const char* content, size_t content_size);
+  int(*append)(OWO_String_t* this, const char* content, size_t content_size);
+  int(*compare)(OWO_String_t* this, const char* content, size_t content_size);
+  OWO_String_t*(*substring)(OWO_String_t* this, size_t start, size_t size);
+  size_t(*findstr)(OWO_String_t* this, const char* sub, size_t sub_size);
+};
+
+/**
  * @brief OWString class
  *
  * Represents a string object/class.
@@ -22,14 +37,15 @@
  */
 typedef struct {
   size_t size; // This does NOT count the NULL-byte
+  struct _OWString_Methods methods;
 } OWString_t;
 
 /**
- * @brief String object type
+ * @brief Get the methods of the OWString_t object.
  *
- * Create a type for human reference
+ * @returns OWString_t object's methods struct.
  */
-typedef OWObject_t OWO_String_t;
+#define OWString_Methods(this) ((OWString_t*)OWObject_FindObjectInClass(this, OWID_STRING))->methods
 
 /**
  * @brief Construct a string
@@ -90,7 +106,13 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size);
  *
  * @memberof OWString_t
  */
-int OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
+#define OWString_Set(this, content, content_size) OWString_Methods(this).set(this, content, content_size)
+
+/**
+ * @brief Default implementation of OWString_Set
+ * @memberof OWString_t
+ */
+int _OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
 
 /**
  * @brief A simple way to set a string's contents
@@ -131,7 +153,13 @@ int OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
  *
  * @memberof OWString_t
  */
-int OWString_Append(OWO_String_t* this, const char* content, size_t content_size);
+#define OWString_Append(this, content, content_size) OWString_Methods(this).append(this, content, content_size)
+
+/**
+ * @brief Default implementation of OWString_Append
+ * @memberof OWString_t
+ */
+int _OWString_Append(OWO_String_t* this, const char* content, size_t content_size);
 
 /**
  * @brief A simple way to add content to an OWString
@@ -182,7 +210,13 @@ int OWString_Append(OWO_String_t* this, const char* content, size_t content_size
  *
  * @memberof OWString_t
  */
-int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
+#define OWString_Compare(this, other, other_size) OWString_Methods(this).compare(this, other, other_size)
+
+/**
+ * @brief Default implementation of OWString_Compare
+ * @memberof OWString_t
+ */
+int _OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
 
 /**
  * @brief A simple way to use compare an OWString to a c-string
@@ -220,7 +254,13 @@ int OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
  * @copydoc OWIsEqualCallback_t
  * @memberof OWString_t
  */
-bool OWString_IsEqual(OWO_String_t* this, OWObject_t* other);
+#define OWString_IsEqual(this, other) OWObject_IsEqual(this, other)
+
+/**
+ * @brief Default implementation of OWString_IsEqual
+ * @memberof OWString_t
+ */
+bool _OWString_IsEqual(OWO_String_t* this, OWObject_t* other);
 
 /**
  * @brief Get a substring from an OWString's content
@@ -233,7 +273,13 @@ bool OWString_IsEqual(OWO_String_t* this, OWObject_t* other);
  *
  * @memberof OWString_t
  */
-OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size);
+#define OWString_SubString(this, start, size) OWString_Methods(this).substring(this, start, size)
+
+/**
+ * @brief Default implementation of OWString_SubString
+ * @memberof OWString_t
+ */
+OWO_String_t* _OWString_SubString(OWO_String_t* this, size_t start, size_t size);
 
 /**
  * @brief Find a substring in the OWString's content
@@ -246,7 +292,13 @@ OWO_String_t* OWString_SubString(OWO_String_t* this, size_t start, size_t size);
  *
  * @returns The offset in which the sub-string was found or -1 if substring was not found.
  */
-size_t OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size);
+#define OWString_FindStr(this, sub, sub_size) OWString_Methods(this).findstr(this, sub, sub_size)
+
+/**
+ * @brief Default implementation of OWString_FindStr
+ * @memberof OWString_t
+ */
+size_t _OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size);
 
 /**
  * @brief Simple way to call @ref OWString_FindStr
