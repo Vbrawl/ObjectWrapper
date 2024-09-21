@@ -9,15 +9,21 @@ void _OWVector_Destroy(OWO_Vector_t* this);
 
 OWO_Vector_t* OWVector_Construct(size_t slot_steps) {
   OWO_Array_t* array = OWArray_Construct(sizeof(OWObject_t*), slot_steps);
-  OWO_Vector_t* this = _OWObject_Construct(sizeof(OWVector_t), OWID_VECTOR, array, _OWVector_Destroy, OWVector_IsEqual);
+  OWO_Vector_t* this = _OWObject_Construct(sizeof(OWVector_t), OWID_VECTOR, array, _OWVector_Destroy, _OWVector_IsEqual);
   OWVector_t* const obj = this->object;
 
   obj->size = 0;
   obj->slot_steps = slot_steps;
+
+  obj->methods.insert = _OWVector_Insert;
+  obj->methods.get = _OWVector_Get;
+  obj->methods.finditem = _OWVector_FindItem;
+  obj->methods.remove = _OWVector_Remove;
+  obj->methods.pop = _OWVector_Pop;
   return this;
 }
 
-int OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item) {
+int _OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item) {
   int error = 0;
   OWVector_t* const obj = OWObject_FindObjectInClass(this, OWID_VECTOR);
   if(obj == NULL) return -1;
@@ -42,7 +48,7 @@ int OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item) {
   return 0;
 }
 
-OWObject_t* OWVector_Get(OWO_Vector_t* this, size_t index) {
+OWObject_t* _OWVector_Get(OWO_Vector_t* this, size_t index) {
   OWVector_t* const obj = OWObject_FindObjectInClass(this, OWID_VECTOR);
   if(obj == NULL) return NULL;
 
@@ -53,7 +59,7 @@ OWObject_t* OWVector_Get(OWO_Vector_t* this, size_t index) {
   return OWObject_Ref(OWArray_At(OWObject_t*, this, index));
 }
 
-size_t OWVector_FindItem(OWO_Vector_t* this, OWObject_t* item) {
+size_t _OWVector_FindItem(OWO_Vector_t* this, OWObject_t* item) {
   OWVector_t* const obj = OWObject_FindObjectInClass(this, OWID_VECTOR);
   if(obj == NULL) return -1;
 
@@ -73,7 +79,7 @@ size_t OWVector_FindItem(OWO_Vector_t* this, OWObject_t* item) {
   return i;
 }
 
-int OWVector_Remove(OWO_Vector_t* this, size_t index) {
+int _OWVector_Remove(OWO_Vector_t* this, size_t index) {
   OWVector_t* const obj = OWObject_FindObjectInClass(this, OWID_VECTOR);
   if(obj == NULL) return -1;
 
@@ -93,14 +99,14 @@ int OWVector_Remove(OWO_Vector_t* this, size_t index) {
   return 0;
 }
 
-OWObject_t* OWVector_Pop(OWO_Vector_t* this, size_t index) {
+OWObject_t* _OWVector_Pop(OWO_Vector_t* this, size_t index) {
   OWObject_t* item = OWVector_Get(this, index);
   OWVector_Remove(this, index);
 
   return item;
 }
 
-bool OWVector_IsEqual(OWO_Vector_t* this, OWObject_t* other) {
+bool _OWVector_IsEqual(OWO_Vector_t* this, OWObject_t* other) {
   OWVector_t* const obj = OWObject_FindObjectInClass(this, OWID_VECTOR);
   OWVector_t* const oobj = OWObject_FindObjectInClass(other, OWID_VECTOR);
 

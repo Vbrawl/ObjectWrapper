@@ -11,6 +11,24 @@
 #include "object.h"
 #include "array.h"
 
+
+/**
+ * @brief Vector object type
+ *
+ * A type for human reference
+ */
+typedef OWObject_t OWO_Vector_t;
+
+
+struct _OWVector_Methods {
+  int(*insert)(OWO_Vector_t* this, size_t index, OWObject_t* item);
+  OWObject_t*(*get)(OWO_Vector_t* this, size_t index);
+  size_t(*finditem)(OWO_Vector_t* this, OWObject_t* item);
+  int(*remove)(OWO_Vector_t* this, size_t index);
+  OWObject_t*(*pop)(OWO_Vector_t* this, size_t index);
+};
+
+
 /**
  * @brief OWVector class
  *
@@ -36,14 +54,12 @@ typedef struct {
    * The number of slots the vector increases each time it hits the buffer's limit.
    */
   size_t slot_steps;
-} OWVector_t;
 
-/**
- * @brief Vector object type
- *
- * A type for human reference
- */
-typedef OWObject_t OWO_Vector_t;
+  /**
+   * @brief The virtual methods of the object
+   */
+  struct _OWVector_Methods methods;
+} OWVector_t;
 
 /**
  * @brief Vector object type with a value type
@@ -68,6 +84,14 @@ typedef OWObject_t OWO_Vector_t;
  * @see OWContainer_Type
  */
 #define OWO_Typed_Vector_t(type) OWContainer_Type(OWO_Vector_t, type)
+
+/**
+ * @brief Get the methods struct of the object.
+ *
+ * @returns The OWVector_t object's methods struct.
+ * @memberof OWVector_t
+ */
+#define OWVector_Methods(this) ((OWVector_t*)OWObject_FindObjectInClass(this, OWID_VECTOR))->methods
 
 /**
  * @brief Construct a vector
@@ -112,7 +136,13 @@ OWO_Vector_t* OWVector_Construct(size_t slot_steps);
  *
  * @memberof OWVector_t
  */
-int OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item);
+#define OWVector_Insert(this, index, item) OWVector_Methods(this).insert(this, index, item)
+
+/**
+ * @brief Default implementation of OWVector_Insert
+ * @memberof OWVector_t
+ */
+int _OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item);
 
 /**
  * @brief Add an item to the end of the vector.
@@ -171,13 +201,25 @@ int OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item);
  * @returns A new reference to the object at the specified index.
  * @memberof OWVector_t
  */
-OWObject_t* OWVector_Get(OWO_Vector_t* this, size_t index);
+#define OWVector_Get(this, index) OWVector_Methods(this).get(this, index)
+
+/**
+ * @brief Default implementation of OWVector_Get
+ * @memberof OWVector_t
+ */
+OWObject_t* _OWVector_Get(OWO_Vector_t* this, size_t index);
 
 /**
  * @copydoc OWIsEqualCallback_t
  * @memberof OWVector_t
  */
-bool OWVector_IsEqual(OWO_Vector_t* this, OWObject_t* other);
+#define OWVector_IsEqual(this, other) OWObject_IsEqual(this, other)
+
+/**
+ * @brief Default implementation of OWVector_IsEqual
+ * @memberof OWVector_t
+ */
+bool _OWVector_IsEqual(OWO_Vector_t* this, OWObject_t* other);
 
 /**
  * @brief Find an item in the vector
@@ -189,7 +231,13 @@ bool OWVector_IsEqual(OWO_Vector_t* this, OWObject_t* other);
  *
  * @returns The index of the item or -1 on failure.
  */
-size_t OWVector_FindItem(OWO_Vector_t* this, OWObject_t* item);
+#define OWVector_FindItem(this, item) OWVector_Methods(this).finditem(this, item)
+
+/**
+ * @brief Default implementation of OWVector_FindItem
+ * @memberof OWVector_t
+ */
+size_t _OWVector_FindItem(OWO_Vector_t* this, OWObject_t* item);
 
 /**
  * @brief Remove an object from the vector.
@@ -205,7 +253,13 @@ size_t OWVector_FindItem(OWO_Vector_t* this, OWObject_t* item);
  * @returns 0 on success, a negative value on failure.
  * @memberof OWVector_t
  */
-int OWVector_Remove(OWO_Vector_t* this, size_t index);
+#define OWVector_Remove(this, index) OWVector_Methods(this).remove(this, index)
+
+/**
+ * @brief Default implementation of OWVector_Remove
+ * @memberof OWVector_t
+ */
+int _OWVector_Remove(OWO_Vector_t* this, size_t index);
 
 /**
  * @brief Remove an object and get a reference to it.
@@ -222,7 +276,13 @@ int OWVector_Remove(OWO_Vector_t* this, size_t index);
  * @returns A new reference to the object at the specified index.
  * @memberof OWVector_t
  */
-OWObject_t* OWVector_Pop(OWO_Vector_t* this, size_t index);
+#define OWVector_Pop(this, index) OWVector_Methods(this).pop(this, index)
+
+/**
+ * @brief Default implementation of OWVector_Pop
+ * @memberof OWVector_t
+ */
+OWObject_t* _OWVector_Pop(OWO_Vector_t* this, size_t index);
 
 /**
  * @brief Call @ref OWVector_Pop for the last item in the vector
