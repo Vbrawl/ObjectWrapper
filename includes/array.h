@@ -11,6 +11,20 @@
 #include "object.h"
 
 /**
+ * @brief Array object type
+ *
+ * A type for human reference
+ */
+typedef OWObject_t OWO_Array_t;
+
+/**
+ * A structure to hold all object's virtual methods
+ */
+struct _OWArray_Methods {
+  int(*resize)(OWO_Array_t* this, size_t slots);
+};
+
+/**
  * @brief OWArray class
  *
  * Represents an array object/class.
@@ -45,14 +59,16 @@ typedef struct {
    * @ref slots and @ref slot_size
    */
   size_t slot_size;
-} OWArray_t;
 
-/**
- * @brief Array object type
- *
- * A type for human reference
- */
-typedef OWObject_t OWO_Array_t;
+
+  /**
+   * @brief The object's methods
+   *
+   * This is a struct holding function pointers to
+   * each one of the object's methods.
+   */
+  struct _OWArray_Methods methods;
+} OWArray_t;
 
 /**
  * @brief Array object type with a value type
@@ -93,6 +109,17 @@ typedef OWObject_t OWO_Array_t;
 OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots);
 
 /**
+ * @brief Access array's methods
+ *
+ * @param this The OWArray object
+ *
+ * @returns The methods structure of the object
+ *
+ * @memberof OWArray_t
+ */
+#define OWArray_Methods(this) ((OWArray_t*)OWObject_FindObjectInClass(this, OWID_ARRAY))->methods
+
+/**
  * @brief Resize the array
  *
  * @param this The OWArray to resize
@@ -107,13 +134,25 @@ OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots);
  *
  * @memberof OWArray_t
  */
-int OWArray_Resize(OWO_Array_t* this, size_t slots);
+#define OWArray_Resize(this, slots) OWArray_Methods(this).resize(this, slots)
+
+/**
+ * @brief The default implementation for OWArray_Resize
+ * @memberof OWArray_t
+ */
+int _OWArray_Resize(OWO_Array_t* this, size_t slots);
 
 /**
  * @copydoc OWIsEqualCallback_t
  * @memberof OWArray_t
  */
-bool OWArray_IsEqual(OWO_Array_t* this, OWObject_t* other);
+#define OWArray_IsEqual(this, other) OWObject_IsEqual(this, other)
+
+/**
+ * @brief The default implementation for OWArray_IsEqual
+ * @memberof OWArray_t
+ */
+bool _OWArray_IsEqual(OWO_Array_t* this, OWObject_t* other);
 
 /**
  * @brief Access a slot in the array

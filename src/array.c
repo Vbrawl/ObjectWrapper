@@ -6,17 +6,19 @@ void _OWArray_Destroy(OWO_Array_t* this);
 
 
 OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots) {
-  OWO_Array_t* this = _OWObject_Construct(sizeof(OWArray_t), OWID_ARRAY, NULL, _OWArray_Destroy, OWArray_IsEqual);
+  OWO_Array_t* this = _OWObject_Construct(sizeof(OWArray_t), OWID_ARRAY, NULL, _OWArray_Destroy, _OWArray_IsEqual);
   OWArray_t* const obj = this->object;
 
   obj->array = NULL;
   obj->slot_size = slot_size;
+
+  obj->methods.resize = _OWArray_Resize;
   OWArray_Resize(this, slots);
 
   return this;
 }
 
-int OWArray_Resize(OWO_Array_t* this, size_t slots) {
+int _OWArray_Resize(OWO_Array_t* this, size_t slots) {
   OWArray_t* const obj = OWObject_FindObjectInClass(this, OWID_ARRAY);
   if(this == NULL) return -1;
 
@@ -35,7 +37,7 @@ int OWArray_Resize(OWO_Array_t* this, size_t slots) {
   return 0;
 }
 
-bool OWArray_IsEqual(OWO_Array_t* this, OWObject_t* other) {
+bool _OWArray_IsEqual(OWO_Array_t* this, OWObject_t* other) {
   OWArray_t* const obj = OWObject_FindObjectInClass(this, OWID_ARRAY);
   OWArray_t* const oobj = OWObject_FindObjectInClass(other, OWID_ARRAY);
 
