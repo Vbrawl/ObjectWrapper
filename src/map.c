@@ -3,7 +3,7 @@
 void _OWMap_Destroy(OWO_Map_t* this);
 
 OWO_Map_t* OWMap_Construct(size_t slot_steps) {
-  OWO_Map_t* this = _OWObject_Construct(sizeof(OWMap_t), OWID_MAP, NULL, _OWMap_Destroy, NULL);
+  OWO_Map_t* this = _OWObject_Construct(sizeof(OWMap_t), OWID_MAP, NULL, _OWMap_Destroy, _OWMap_IsEqual);
   if(this == NULL) {
     return NULL;
   }
@@ -12,11 +12,16 @@ OWO_Map_t* OWMap_Construct(size_t slot_steps) {
   obj->keys = OWVector_Construct(slot_steps);
   obj->values = OWVector_Construct(slot_steps);
 
+  obj->methods.set = _OWMap_Set;
+  obj->methods.unset = _OWMap_UnSet;
+  obj->methods.find_entry = _OWMap_FindEntry;
+  obj->methods.get = _OWMap_Get;
+
   return this;
 }
 
 
-int OWMap_Set(OWO_Map_t* this, OWObject_t* key, OWObject_t* item) {
+int _OWMap_Set(OWO_Map_t* this, OWObject_t* key, OWObject_t* item) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
   if(obj == NULL) return -1;
 
@@ -31,7 +36,7 @@ int OWMap_Set(OWO_Map_t* this, OWObject_t* key, OWObject_t* item) {
   return 0;
 }
 
-int OWMap_UnSet(OWO_Map_t* this, OWObject_t* key) {
+int _OWMap_UnSet(OWO_Map_t* this, OWObject_t* key) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
   if(obj == NULL) return -1;
 
@@ -43,7 +48,7 @@ int OWMap_UnSet(OWO_Map_t* this, OWObject_t* key) {
   return 0;
 }
 
-size_t OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key) {
+size_t _OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
   if(obj == NULL) return -1;
 
@@ -51,7 +56,7 @@ size_t OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key) {
 }
 
 
-OWObject_t* OWMap_Get(OWO_Map_t* this, OWObject_t* key) {
+OWObject_t* _OWMap_Get(OWO_Map_t* this, OWObject_t* key) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
   if(obj == NULL) return NULL;
 
@@ -61,7 +66,7 @@ OWObject_t* OWMap_Get(OWO_Map_t* this, OWObject_t* key) {
   return OWVector_Get(obj->values, i);
 }
 
-bool OWMap_IsEqual(OWO_Map_t* this, OWObject_t* other) {
+bool _OWMap_IsEqual(OWO_Map_t* this, OWObject_t* other) {
   OWMap_t* const obj = OWObject_FindObjectInClass(this, OWID_MAP);
   OWMap_t* const oobj = OWObject_FindObjectInClass(other, OWID_MAP);
 

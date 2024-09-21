@@ -13,6 +13,22 @@
 #include "vector.h"
 
 /**
+ * @brief Map object type
+ *
+ * A type for human reference
+ */
+typedef OWObject_t OWO_Map_t;
+
+
+struct _OWMap_Methods {
+  int(*set)(OWO_Map_t* this, OWObject_t* key, OWObject_t* item);
+  int(*unset)(OWO_Map_t* this, OWObject_t* key);
+  size_t(*find_entry)(OWO_Map_t* this, OWObject_t* key);
+  OWObject_t*(*get)(OWO_Map_t* this, OWObject_t* key);
+};
+
+
+/**
  * @brief OWMap class
  *
  * Represents a map object/class.
@@ -34,14 +50,12 @@ typedef struct {
    * A vector holding all values of the object
    */
   OWO_Vector_t* values;
-} OWMap_t;
 
-/**
- * @brief Map object type
- *
- * A type for human reference
- */
-typedef OWObject_t OWO_Map_t;
+  /**
+   * @brief Methods
+   */
+  struct _OWMap_Methods methods;
+} OWMap_t;
 
 /**
  * @brief Map object type with a value type
@@ -79,6 +93,14 @@ typedef OWObject_t OWO_Map_t;
 OWO_Map_t* OWMap_Construct(size_t slot_steps);
 
 /**
+ * @brief Get the methods struct of the OWMap_t object
+ *
+ * @returns The OWMap_t object's methods struct.
+ * @memberof OWMap_t
+ */
+#define OWMap_Methods(this) ((OWMap_t*)OWObject_FindObjectInClass(this, OWID_MAP))->methods
+
+/**
  * @brief Set a key in the map
  *
  * @param this The OWMap
@@ -92,7 +114,13 @@ OWO_Map_t* OWMap_Construct(size_t slot_steps);
  * @returns 0 on success, a negative value on failure.
  * @memberof OWMap_t
  */
-int OWMap_Set(OWO_Map_t* this, OWObject_t* key, OWObject_t* item);
+#define OWMap_Set(this, key, item) OWMap_Methods(this).set(this, key, item)
+
+/**
+ * @brief Default implementation of OWMap_Set
+ * @memberof OWMap_t
+ */
+int _OWMap_Set(OWO_Map_t* this, OWObject_t* key, OWObject_t* item);
 
 /**
  * @brief Unset a key in the map
@@ -110,7 +138,13 @@ int OWMap_Set(OWO_Map_t* this, OWObject_t* key, OWObject_t* item);
  * @returns 0 on success, a negative value on failure.
  * @memberof OWMap_t
  */
-int OWMap_UnSet(OWO_Map_t* this, OWObject_t* key);
+#define OWMap_UnSet(this, key) OWMap_Methods(this).unset(this, key)
+
+/**
+ * @brief Default implementation of OWMap_UnSet
+ * @memberof OWMap_t
+ */
+int _OWMap_UnSet(OWO_Map_t* this, OWObject_t* key);
 
 
 /**
@@ -124,7 +158,13 @@ int OWMap_UnSet(OWO_Map_t* this, OWObject_t* key);
  * @returns The index of the entry or -1 on failure
  * @memberof OWMap_t
  */
-size_t OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key);
+#define OWMap_FindEntry(this, key) OWMap_Methods(this).find_entry(this, key)
+
+/**
+ * @brief Default implementation of OWMap_FindEntry
+ * @memberof OWMap_t
+ */
+size_t _OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key);
 
 /**
  * @brief Get the value of a key
@@ -140,7 +180,13 @@ size_t OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key);
  * @returns A new reference to the value object or `NULL` if the key was not found in the map.
  * @memberof OWMap_t
  */
-OWObject_t* OWMap_Get(OWO_Map_t* this, OWObject_t* key);
+#define OWMap_Get(this, key) OWMap_Methods(this).get(this, key)
+
+/**
+ * @brief Default implementation of OWMap_Get
+ * @memberof OWMap_t
+ */
+OWObject_t* _OWMap_Get(OWO_Map_t* this, OWObject_t* key);
 
 /**
  * @brief Get the vector of keys of the object
@@ -161,7 +207,13 @@ OWObject_t* OWMap_Get(OWO_Map_t* this, OWObject_t* key);
  * @copydoc OWIsEqualCallback_t
  * @memberof OWMap_t
  */
-bool OWMap_IsEqual(OWO_Map_t* this, OWObject_t* other);
+#define OWMap_IsEqual(this, other) OWObject_IsEqual(this, other)
+
+/**
+ * @brief Default implementation of OWMap_IsEqual
+ * @memberof OWMap_t
+ */
+bool _OWMap_IsEqual(OWO_Map_t* this, OWObject_t* other);
 
 /**
  * @brief Get the size of the map
