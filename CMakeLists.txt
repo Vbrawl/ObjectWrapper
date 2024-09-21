@@ -12,7 +12,7 @@ set(CMAKE_C_STANDARD 11)
 
 project(
 	ObjectWrapper
-	VERSION 2.0.0
+	VERSION 2.1.0
 	DESCRIPTION "Objects for C"
 	LANGUAGES C)
 
