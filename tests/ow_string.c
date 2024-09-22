@@ -1,5 +1,6 @@
 #include "ow_string.h"
 #include <string.h>
+#include <stdio.h>
 
 int test_Empty() {
   OWO_String_t* str = OWString_ConstructEmpty();
@@ -96,6 +97,18 @@ int test_IsEqual() {
   return 0;
 }
 
+int test_WriteIntegers() {
+  int a = 'A';
+  char b[sizeof(a)];
+  memcpy(b, &a, sizeof(a));
+  OWO_String_t* str1 = OWString_Construct(b, sizeof(b));
+
+  if(OWString_CompareSimple(str1, "A") != 0) return -1;
+
+  OWObject_UnRef(str1);
+  return 0;
+}
+
 
 int main() {
   int error = 0;
@@ -119,6 +132,9 @@ int main() {
   if(error != 0) return error;
 
   error = test_IsEqual();
+  if(error != 0) return error;
+
+  error = test_WriteIntegers();
   if(error != 0) return error;
 
   return 0;
