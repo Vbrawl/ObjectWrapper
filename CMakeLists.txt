@@ -43,10 +43,8 @@ set_target_properties(objectwrapper PROPERTIES
 macro(TestCase name)
 add_executable(${name} ${ARGN})
 
-if(CMAKE_HOST_WIN32)
-add_test(NAME ${name} COMMAND ./Debug/${name}.exe)
-else()
 add_test(NAME ${name} COMMAND ./${name})
+if(CMAKE_HOST_UNIX)
 add_test(NAME memcheck_${name} COMMAND valgrind --error-exitcode=1 --leak-check=full ./${name})
 endif()
 endmacro()
