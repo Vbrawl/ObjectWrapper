@@ -1,5 +1,14 @@
 cmake_minimum_required(VERSION 3.18)
 
+project(
+	ObjectWrapper
+	VERSION 2.1.0
+	DESCRIPTION "Objects for C"
+	LANGUAGES C)
+
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
 if(NOT DEFINED CMAKE_BUILD_TYPE)
 set(CMAKE_BUILD_TYPE Debug)
 endif()
@@ -7,14 +16,6 @@ endif()
 if(CMAKE_HOST_UNIX)
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g3")
 endif()
-
-set(CMAKE_C_STANDARD 11)
-
-project(
-	ObjectWrapper
-	VERSION 2.1.0
-	DESCRIPTION "Objects for C"
-	LANGUAGES C)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
