@@ -100,6 +100,10 @@ jobs:
         working-directory: ${{ github.workspace }}/build
         run: cpack -G 7Z -B packages
 
+      - name: Remove non-packages
+        working-directory: ${{ github.workspace }}/build/packages
+        run: rm -r _CPack_Packages
+
       - name: Upload Packages
         uses: Vbrawl/add-release-files@v1
         with:
