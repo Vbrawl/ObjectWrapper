@@ -19,7 +19,6 @@ endif()
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
-include(CPack)
 
 include_directories(includes)
 
@@ -66,3 +65,6 @@ install(TARGETS objectwrapper
 	INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
 
 install(DIRECTORY includes/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+
+set(CPACK_PACKAGE_NAME "${PROJECT_NAME}-${CMAKE_C_COMPILER_ID}")
+include(CPack)
