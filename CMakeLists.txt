@@ -19,6 +19,7 @@ endif()
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
+include(CPack)
 
 include_directories(includes)
 
