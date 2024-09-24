@@ -4,10 +4,8 @@ name: CMake on multiple platforms
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  release:
+    types: [published]
 
 jobs:
   build:
@@ -48,6 +46,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - id: release-info
+        uses: pozetroninc/github-action-get-latest-release@v0.8.0
+        with:
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          excludes: "prerelease, draft"
+
       - name: Install dependencies
         if: matrix.os == 'ubuntu-latest'
         run: sudo apt update && sudo apt install valgrind
@@ -71,3 +76,33 @@ jobs:
         # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
         # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
         run: ctest --build-config ${{ matrix.build_type }}
+
+      - name: Build Package (TGZ)
+        if: matrix.os == 'ubuntu-latest'
+        working-directory: ${{ github.workspace }}/build
+        run: cpack -G TGZ -B packages
+
+      - name: Build Package (ZIP)
+        working-directory: ${{ github.workspace }}/build
+        run: cpack -G ZIP -B packages
+
+      - name: Build Package (NSIS64)
+        if: matrix.os == 'windows-latest'
+        working-directory: ${{ github.workspace }}/build
+        run: cpack -G NSIS64 -B packages
+
+      - name: Build Package (WIX)
+        if: matrix.os == 'windows-latest
+        working-directory: ${{ github.workspace }}/build
+        run: cpack -G WIX -B packages
+
+      - name: Build Package (7Z)
+        working-directory: ${{ github.workspace }}/build
+        run: cpack -G 7Z -B packages
+
+      - name: Upload Packages
+        uses: Vbrawl/add-release-files@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ steps.release-info.outputs.release }}
+          FILES: ${{ github.workspace }}/build/packages/*
