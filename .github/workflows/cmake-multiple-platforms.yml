@@ -92,7 +92,7 @@ jobs:
         run: cpack -G NSIS64 -B packages
 
       - name: Build Package (WIX)
-        if: matrix.os == 'windows-latest
+        if: matrix.os == 'windows-latest'
         working-directory: ${{ github.workspace }}/build
         run: cpack -G WIX -B packages
 
