@@ -16,6 +16,12 @@
 #define _Atomic
 #endif
 
+#ifdef _WIN32
+  #define SHARED_EXPORT __declspec(dllexport)
+#else
+  #define SHARED_EXPORT
+#endif
+
 /**
  * @brief Register a new OWID for a class
  *
@@ -67,7 +73,7 @@ struct OWObject_struct;
  *
  * The destructor needs to make sure everything inside the object is deallocated.
  */
-typedef void(OWDestroyCallback_t)(struct OWObject_struct* this);
+SHARED_EXPORT typedef void(OWDestroyCallback_t)(struct OWObject_struct* this);
 
 /**
  * @brief The object's IsEqual function type
@@ -79,7 +85,7 @@ typedef void(OWDestroyCallback_t)(struct OWObject_struct* this);
  *
  * @returns The equality check results
  */
-typedef bool(OWIsEqualCallback_t)(struct OWObject_struct* this, struct OWObject_struct* other);
+SHARED_EXPORT typedef bool(OWIsEqualCallback_t)(struct OWObject_struct* this, struct OWObject_struct* other);
 
 struct OWObject_struct {
 
@@ -146,7 +152,7 @@ struct OWObject_struct {
  * Container allowing variadic data to be stored in it.
  * Capable of holding a reference to the parent of the current class/object.
  */
-typedef struct OWObject_struct OWObject_t;;
+SHARED_EXPORT typedef struct OWObject_struct OWObject_t;;
 
 /**
  * @brief Easier object constructor
@@ -188,7 +194,7 @@ typedef struct OWObject_struct OWObject_t;;
  * @returns A pointer to the constructed `OWObject_t` instance or `NULL` on failure.
  * @memberof OWObject_t
  */
-OWObject_t* _OWObject_Construct(size_t size, OWID type, OWObject_t* super, OWDestroyCallback_t* destroy_callback, OWIsEqualCallback_t* is_equal_callback);
+SHARED_EXPORT OWObject_t* _OWObject_Construct(size_t size, OWID type, OWObject_t* super, OWDestroyCallback_t* destroy_callback, OWIsEqualCallback_t* is_equal_callback);
 
 /**
  * @brief Find an object in inheritance chain
@@ -201,7 +207,7 @@ OWObject_t* _OWObject_Construct(size_t size, OWID type, OWObject_t* super, OWDes
  * @returns A pointer to the discovered `OWObject_t` instance or `NULL` on failure.
  * @memberof OWObject_t
  */
-OWObject_t* OWObject_FindTypeInClass(OWObject_t* this, OWID type);
+SHARED_EXPORT OWObject_t* OWObject_FindTypeInClass(OWObject_t* this, OWID type);
 
 /**
  * @brief Find an object's data in the inheritance chain
@@ -214,7 +220,7 @@ OWObject_t* OWObject_FindTypeInClass(OWObject_t* this, OWID type);
  * @returns A pointer to the data of the discovered `OWObject_t` instance (which is of unknown/variadic type) or `NULL` on failure.
  * @memberof OWObject_t
  */
-void* OWObject_FindObjectInClass(OWObject_t* this, OWID type);
+SHARED_EXPORT void* OWObject_FindObjectInClass(OWObject_t* this, OWID type);
 
 /**
  * @brief Get a new reference to an object.
@@ -226,7 +232,7 @@ void* OWObject_FindObjectInClass(OWObject_t* this, OWID type);
  * @returns A pointer pointing to the same address as `this`.
  * @memberof OWObject_t
  */
-OWObject_t* OWObject_Ref(OWObject_t* this);
+SHARED_EXPORT OWObject_t* OWObject_Ref(OWObject_t* this);
 
 /**
  * @brief Destroy a reference to an object.
@@ -237,7 +243,7 @@ OWObject_t* OWObject_Ref(OWObject_t* this);
  *
  * @memberof OWObject_t
  */
-void OWObject_UnRef(OWObject_t* this);
+SHARED_EXPORT void OWObject_UnRef(OWObject_t* this);
 
 /**
  * @brief Get the number of references to the object.
@@ -264,7 +270,7 @@ void OWObject_UnRef(OWObject_t* this);
  * @returns The result of the equality check
  * @memberof OWObject_t
  */
-bool OWObject_IsEqual(OWObject_t* this, OWObject_t* other);
+SHARED_EXPORT bool OWObject_IsEqual(OWObject_t* this, OWObject_t* other);
 
 /**
  * @brief Destroy an object
@@ -276,7 +282,7 @@ bool OWObject_IsEqual(OWObject_t* this, OWObject_t* other);
  *
  * @memberof OWObject_t
  */
-void OWObject_Destroy(OWObject_t* this);
+SHARED_EXPORT void OWObject_Destroy(OWObject_t* this);
 
 
 

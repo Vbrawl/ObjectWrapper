@@ -18,7 +18,7 @@
  *
  * Create a type for human reference
  */
-typedef OWObject_t OWO_String_t;
+SHARED_EXPORT typedef OWObject_t OWO_String_t;
 
 struct _OWString_Methods {
   int(*set)(OWO_String_t* this, const char* content, size_t content_size);
@@ -35,7 +35,7 @@ struct _OWString_Methods {
  *
  * @extends OWArray_t
  */
-typedef struct {
+SHARED_EXPORT typedef struct {
   size_t size; // This does NOT count the NULL-byte
   struct _OWString_Methods methods;
 } OWString_t;
@@ -58,7 +58,7 @@ typedef struct {
  * @returns A pointer to the object instance that was created or `NULL` on failure.
  * @memberof OWString_t
  */
-OWO_String_t* OWString_Construct(const char* content, size_t content_size);
+SHARED_EXPORT OWO_String_t* OWString_Construct(const char* content, size_t content_size);
 
 /**
  * @brief Construct an empty string
@@ -112,7 +112,7 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size);
  * @brief Default implementation of OWString_Set
  * @memberof OWString_t
  */
-int _OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
+SHARED_EXPORT int _OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
 
 /**
  * @brief A simple way to set a string's contents
@@ -159,7 +159,7 @@ int _OWString_Set(OWO_String_t* this, const char* content, size_t content_size);
  * @brief Default implementation of OWString_Append
  * @memberof OWString_t
  */
-int _OWString_Append(OWO_String_t* this, const char* content, size_t content_size);
+SHARED_EXPORT int _OWString_Append(OWO_String_t* this, const char* content, size_t content_size);
 
 /**
  * @brief A simple way to add content to an OWString
@@ -216,7 +216,7 @@ int _OWString_Append(OWO_String_t* this, const char* content, size_t content_siz
  * @brief Default implementation of OWString_Compare
  * @memberof OWString_t
  */
-int _OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
+SHARED_EXPORT int _OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
 
 /**
  * @brief A simple way to use compare an OWString to a c-string
@@ -260,7 +260,7 @@ int _OWString_Compare(OWO_String_t* this, const char* other, size_t other_size);
  * @brief Default implementation of OWString_IsEqual
  * @memberof OWString_t
  */
-bool _OWString_IsEqual(OWO_String_t* this, OWObject_t* other);
+SHARED_EXPORT bool _OWString_IsEqual(OWO_String_t* this, OWObject_t* other);
 
 /**
  * @brief Get a substring from an OWString's content
@@ -279,7 +279,7 @@ bool _OWString_IsEqual(OWO_String_t* this, OWObject_t* other);
  * @brief Default implementation of OWString_SubString
  * @memberof OWString_t
  */
-OWO_String_t* _OWString_SubString(OWO_String_t* this, size_t start, size_t size);
+SHARED_EXPORT OWO_String_t* _OWString_SubString(OWO_String_t* this, size_t start, size_t size);
 
 /**
  * @brief Find a substring in the OWString's content
@@ -298,7 +298,7 @@ OWO_String_t* _OWString_SubString(OWO_String_t* this, size_t start, size_t size)
  * @brief Default implementation of OWString_FindStr
  * @memberof OWString_t
  */
-size_t _OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size);
+SHARED_EXPORT size_t _OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size);
 
 /**
  * @brief Simple way to call @ref OWString_FindStr

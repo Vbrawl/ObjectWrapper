@@ -15,7 +15,7 @@
  *
  * A type for human reference
  */
-typedef OWObject_t OWO_Array_t;
+SHARED_EXPORT typedef OWObject_t OWO_Array_t;
 
 /**
  * A structure to hold all object's virtual methods
@@ -31,7 +31,7 @@ struct _OWArray_Methods {
  *
  * @extends OWObject_t
  */
-typedef struct {
+SHARED_EXPORT typedef struct {
   /**
    * @brief Variadic array for the object's stored data
    *
@@ -106,7 +106,7 @@ typedef struct {
  *
  * @memberof OWArray_t
  */
-OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots);
+SHARED_EXPORT OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots);
 
 /**
  * @brief Access array's methods
@@ -140,7 +140,7 @@ OWO_Array_t* OWArray_Construct(size_t slot_size, size_t slots);
  * @brief The default implementation for OWArray_Resize
  * @memberof OWArray_t
  */
-int _OWArray_Resize(OWO_Array_t* this, size_t slots);
+SHARED_EXPORT int _OWArray_Resize(OWO_Array_t* this, size_t slots);
 
 /**
  * @copydoc OWIsEqualCallback_t
@@ -152,7 +152,7 @@ int _OWArray_Resize(OWO_Array_t* this, size_t slots);
  * @brief The default implementation for OWArray_IsEqual
  * @memberof OWArray_t
  */
-bool _OWArray_IsEqual(OWO_Array_t* this, OWObject_t* other);
+SHARED_EXPORT bool _OWArray_IsEqual(OWO_Array_t* this, OWObject_t* other);
 
 /**
  * @brief Access a slot in the array

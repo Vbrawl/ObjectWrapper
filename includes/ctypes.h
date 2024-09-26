@@ -22,7 +22,7 @@
  *
  * @extends OWObject_t
  */
-typedef struct {
+SHARED_EXPORT typedef struct {
   void* value;
   size_t size;
 } OWCType_t;
@@ -32,7 +32,7 @@ typedef struct {
  *
  * A type for human reference
  */
-typedef OWObject_t OWO_CType_t;
+SHARED_EXPORT typedef OWObject_t OWO_CType_t;
 
 #define OWCType_UnWrap(c_type, this) (*(c_type*)((OWCType_t*)OWObject_FindObjectInClass(this, OWID_CTYPE))->value)
 
@@ -45,7 +45,7 @@ typedef OWObject_t OWO_CType_t;
  *
  * @extends OWCType_t
  */
-typedef OWObject_t OWO_Integer_t;
+SHARED_EXPORT typedef OWObject_t OWO_Integer_t;
 
 /**
  * @brief Construct an integer
@@ -57,7 +57,7 @@ typedef OWObject_t OWO_Integer_t;
  * @returns A pointer to the object instance that was created or `NULL` on failure.
  * @memberof OWInteger_t
  */
-OWO_Integer_t* OWInteger_Construct(int object);
+SHARED_EXPORT OWO_Integer_t* OWInteger_Construct(int object);
 
 /**
  * @brief Extract an OWInteger
@@ -80,7 +80,7 @@ OWO_Integer_t* OWInteger_Construct(int object);
  *
  * @extends OWCType_t
  */
-typedef OWObject_t OWO_UnsignedInteger8_t;
+SHARED_EXPORT typedef OWObject_t OWO_UnsignedInteger8_t;
 
 /**
  * @brief Construct an unsigned 8-bit integer
@@ -92,7 +92,7 @@ typedef OWObject_t OWO_UnsignedInteger8_t;
  * @returns A pointer to the object instance that was created or `NULL` on failure.
  * @memberof OWUnsignedInteger8_t
  */
-OWO_UnsignedInteger8_t* OWUnsignedInteger8_Construct(uint8_t object);
+SHARED_EXPORT OWO_UnsignedInteger8_t* OWUnsignedInteger8_Construct(uint8_t object);
 
 /**
  * @brief Extract an OWUnsignedInteger8_t
@@ -115,7 +115,7 @@ OWO_UnsignedInteger8_t* OWUnsignedInteger8_Construct(uint8_t object);
  *
  * @extends OWCType_t
  */
-typedef OWObject_t OWO_Character_t;
+SHARED_EXPORT typedef OWObject_t OWO_Character_t;
 
 /**
  * @brief Construct a character
@@ -127,7 +127,7 @@ typedef OWObject_t OWO_Character_t;
  * @returns A pointer to the object instance that was created or `NULL` on failure.
  * @memberof OWCharacter_t
  */
-OWO_Character_t* OWCharacter_Construct(char object);
+SHARED_EXPORT OWO_Character_t* OWCharacter_Construct(char object);
 
 /**
  * @brief Extract an OWCharacter
@@ -150,7 +150,7 @@ OWO_Character_t* OWCharacter_Construct(char object);
  *
  * @extends OWCType_t
  */
-typedef OWObject_t OWO_Boolean_t;
+SHARED_EXPORT typedef OWObject_t OWO_Boolean_t;
 
 /**
  * @brief Construct a boolean
@@ -162,7 +162,7 @@ typedef OWObject_t OWO_Boolean_t;
  * @returns A pointer to the object instance that was created or `NULL` on failure.
  * @memberof OWBoolean_t
  */
-OWO_Boolean_t* OWBoolean_Construct(bool object);
+SHARED_EXPORT OWO_Boolean_t* OWBoolean_Construct(bool object);
 
 /**
  * @brief Extract an OWBoolean

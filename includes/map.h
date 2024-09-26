@@ -17,7 +17,7 @@
  *
  * A type for human reference
  */
-typedef OWObject_t OWO_Map_t;
+SHARED_EXPORT typedef OWObject_t OWO_Map_t;
 
 
 struct _OWMap_Methods {
@@ -36,7 +36,7 @@ struct _OWMap_Methods {
  * @note Can only hold references to OWObject_t objects and unreferences
  *       when they are removed from the map
  */
-typedef struct {
+SHARED_EXPORT typedef struct {
   /**
    * @brief Key vector
    *
@@ -90,7 +90,7 @@ typedef struct {
  *
  * @memberof OWMap_t
  */
-OWO_Map_t* OWMap_Construct(size_t slot_steps);
+SHARED_EXPORT OWO_Map_t* OWMap_Construct(size_t slot_steps);
 
 /**
  * @brief Get the methods struct of the OWMap_t object
@@ -120,7 +120,7 @@ OWO_Map_t* OWMap_Construct(size_t slot_steps);
  * @brief Default implementation of OWMap_Set
  * @memberof OWMap_t
  */
-int _OWMap_Set(OWO_Map_t* this, OWObject_t* key, OWObject_t* item);
+SHARED_EXPORT int _OWMap_Set(OWO_Map_t* this, OWObject_t* key, OWObject_t* item);
 
 /**
  * @brief Unset a key in the map
@@ -144,7 +144,7 @@ int _OWMap_Set(OWO_Map_t* this, OWObject_t* key, OWObject_t* item);
  * @brief Default implementation of OWMap_UnSet
  * @memberof OWMap_t
  */
-int _OWMap_UnSet(OWO_Map_t* this, OWObject_t* key);
+SHARED_EXPORT int _OWMap_UnSet(OWO_Map_t* this, OWObject_t* key);
 
 
 /**
@@ -164,7 +164,7 @@ int _OWMap_UnSet(OWO_Map_t* this, OWObject_t* key);
  * @brief Default implementation of OWMap_FindEntry
  * @memberof OWMap_t
  */
-size_t _OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key);
+SHARED_EXPORT size_t _OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key);
 
 /**
  * @brief Get the value of a key
@@ -186,7 +186,7 @@ size_t _OWMap_FindEntry(OWO_Map_t* this, OWObject_t* key);
  * @brief Default implementation of OWMap_Get
  * @memberof OWMap_t
  */
-OWObject_t* _OWMap_Get(OWO_Map_t* this, OWObject_t* key);
+SHARED_EXPORT OWObject_t* _OWMap_Get(OWO_Map_t* this, OWObject_t* key);
 
 /**
  * @brief Get the vector of keys of the object
@@ -213,7 +213,7 @@ OWObject_t* _OWMap_Get(OWO_Map_t* this, OWObject_t* key);
  * @brief Default implementation of OWMap_IsEqual
  * @memberof OWMap_t
  */
-bool _OWMap_IsEqual(OWO_Map_t* this, OWObject_t* other);
+SHARED_EXPORT bool _OWMap_IsEqual(OWO_Map_t* this, OWObject_t* other);
 
 /**
  * @brief Get the size of the map
