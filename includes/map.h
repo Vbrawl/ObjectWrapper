@@ -20,7 +20,7 @@
 SHARED_EXPORT typedef OWObject_t OWO_Map_t;
 
 
-SHARED_EXPORT struct _OWMap_Methods {
+struct _OWMap_Methods {
   int(*set)(OWO_Map_t* this, OWObject_t* key, OWObject_t* item);
   int(*unset)(OWO_Map_t* this, OWObject_t* key);
   size_t(*find_entry)(OWO_Map_t* this, OWObject_t* key);

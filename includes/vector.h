@@ -20,7 +20,7 @@
 SHARED_EXPORT typedef OWObject_t OWO_Vector_t;
 
 
-SHARED_EXPORT struct _OWVector_Methods {
+struct _OWVector_Methods {
   int(*insert)(OWO_Vector_t* this, size_t index, OWObject_t* item);
   OWObject_t*(*get)(OWO_Vector_t* this, size_t index);
   size_t(*finditem)(OWO_Vector_t* this, OWObject_t* item);

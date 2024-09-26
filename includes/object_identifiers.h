@@ -24,7 +24,7 @@
  * All values for this type should have the `OWID_` prefix.
  */
 SHARED_EXPORT typedef int OWID;
-SHARED_EXPORT enum {
+enum {
   OWID_UNDEFINED = 0,
   OWID_VECTOR = 1,
   OWID_STRING = 2,

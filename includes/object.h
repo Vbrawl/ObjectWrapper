@@ -64,7 +64,7 @@
  */
 #define OWContainer_Type(container, ...) container
 
-SHARED_EXPORT struct OWObject_struct;
+struct OWObject_struct;
 
 /**
  * @brief The object's destructor function type
@@ -87,7 +87,7 @@ SHARED_EXPORT typedef void(OWDestroyCallback_t)(struct OWObject_struct* this);
  */
 SHARED_EXPORT typedef bool(OWIsEqualCallback_t)(struct OWObject_struct* this, struct OWObject_struct* other);
 
-SHARED_EXPORT struct OWObject_struct {
+struct OWObject_struct {
 
   /**
    * @brief Reference to the super/parent of the current object

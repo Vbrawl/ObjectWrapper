@@ -20,7 +20,7 @@
  */
 SHARED_EXPORT typedef OWObject_t OWO_String_t;
 
-SHARED_EXPORT struct _OWString_Methods {
+struct _OWString_Methods {
   int(*set)(OWO_String_t* this, const char* content, size_t content_size);
   int(*append)(OWO_String_t* this, const char* content, size_t content_size);
   int(*compare)(OWO_String_t* this, const char* content, size_t content_size);

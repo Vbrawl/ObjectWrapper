@@ -20,7 +20,7 @@ SHARED_EXPORT typedef OWObject_t OWO_Array_t;
 /**
  * A structure to hold all object's virtual methods
  */
-SHARED_EXPORT struct _OWArray_Methods {
+struct _OWArray_Methods {
   int(*resize)(OWO_Array_t* this, size_t slots);
 };
 
