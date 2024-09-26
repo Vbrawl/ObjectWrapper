@@ -1,6 +1,14 @@
 #ifndef OW_OBJECT_IDENTIFIERS_H
 #define OW_OBJECT_IDENTIFIERS_H
 
+#ifndef SHARED_EXPORT
+  #ifdef _WIN32
+    #define SHARED_EXPORT __declspec(dllexport)
+  #else
+    #define SHARED_EXPORT
+  #endif
+#endif
+
 /**
  * @file object_identifiers.h
  * @brief Object Wrapper Identifier
@@ -15,8 +23,8 @@
  *
  * All values for this type should have the `OWID_` prefix.
  */
-typedef int OWID;
-enum {
+SHARED_EXPORT typedef int OWID;
+SHARED_EXPORT enum {
   OWID_UNDEFINED = 0,
   OWID_VECTOR = 1,
   OWID_STRING = 2,

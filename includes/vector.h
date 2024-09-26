@@ -17,10 +17,10 @@
  *
  * A type for human reference
  */
-typedef OWObject_t OWO_Vector_t;
+SHARED_EXPORT typedef OWObject_t OWO_Vector_t;
 
 
-struct _OWVector_Methods {
+SHARED_EXPORT struct _OWVector_Methods {
   int(*insert)(OWO_Vector_t* this, size_t index, OWObject_t* item);
   OWObject_t*(*get)(OWO_Vector_t* this, size_t index);
   size_t(*finditem)(OWO_Vector_t* this, OWObject_t* item);
@@ -40,7 +40,7 @@ struct _OWVector_Methods {
  *
  * @extends OWArray_t
  */
-typedef struct {
+SHARED_EXPORT typedef struct {
   /**
    * @brief The size of the vector
    *
@@ -104,7 +104,7 @@ typedef struct {
  *
  * @memberof OWVector_t
  */
-OWO_Vector_t* OWVector_Construct(size_t slot_steps);
+SHARED_EXPORT OWO_Vector_t* OWVector_Construct(size_t slot_steps);
 
 /**
  * @brief Resize the internal vector's buffer
@@ -142,7 +142,7 @@ OWO_Vector_t* OWVector_Construct(size_t slot_steps);
  * @brief Default implementation of OWVector_Insert
  * @memberof OWVector_t
  */
-int _OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item);
+SHARED_EXPORT int _OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item);
 
 /**
  * @brief Add an item to the end of the vector.
@@ -207,7 +207,7 @@ int _OWVector_Insert(OWO_Vector_t* this, size_t index, OWObject_t* item);
  * @brief Default implementation of OWVector_Get
  * @memberof OWVector_t
  */
-OWObject_t* _OWVector_Get(OWO_Vector_t* this, size_t index);
+SHARED_EXPORT OWObject_t* _OWVector_Get(OWO_Vector_t* this, size_t index);
 
 /**
  * @copydoc OWIsEqualCallback_t
@@ -219,7 +219,7 @@ OWObject_t* _OWVector_Get(OWO_Vector_t* this, size_t index);
  * @brief Default implementation of OWVector_IsEqual
  * @memberof OWVector_t
  */
-bool _OWVector_IsEqual(OWO_Vector_t* this, OWObject_t* other);
+SHARED_EXPORT bool _OWVector_IsEqual(OWO_Vector_t* this, OWObject_t* other);
 
 /**
  * @brief Find an item in the vector
@@ -237,7 +237,7 @@ bool _OWVector_IsEqual(OWO_Vector_t* this, OWObject_t* other);
  * @brief Default implementation of OWVector_FindItem
  * @memberof OWVector_t
  */
-size_t _OWVector_FindItem(OWO_Vector_t* this, OWObject_t* item);
+SHARED_EXPORT size_t _OWVector_FindItem(OWO_Vector_t* this, OWObject_t* item);
 
 /**
  * @brief Remove an object from the vector.
@@ -259,7 +259,7 @@ size_t _OWVector_FindItem(OWO_Vector_t* this, OWObject_t* item);
  * @brief Default implementation of OWVector_Remove
  * @memberof OWVector_t
  */
-int _OWVector_Remove(OWO_Vector_t* this, size_t index);
+SHARED_EXPORT int _OWVector_Remove(OWO_Vector_t* this, size_t index);
 
 /**
  * @brief Remove an object and get a reference to it.
@@ -282,7 +282,7 @@ int _OWVector_Remove(OWO_Vector_t* this, size_t index);
  * @brief Default implementation of OWVector_Pop
  * @memberof OWVector_t
  */
-OWObject_t* _OWVector_Pop(OWO_Vector_t* this, size_t index);
+SHARED_EXPORT OWObject_t* _OWVector_Pop(OWO_Vector_t* this, size_t index);
 
 /**
  * @brief Call @ref OWVector_Pop for the last item in the vector
