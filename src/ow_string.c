@@ -19,6 +19,7 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size) {
   obj->methods.compare = _OWString_Compare;
   obj->methods.substring = _OWString_SubString;
   obj->methods.findstr = _OWString_FindStr;
+  obj->methods.getsize = _OWString_GetSize;
 
   OWString_Set(this, content, content_size);
   return this;
@@ -92,6 +93,7 @@ OWO_String_t* _OWString_SubString(OWO_String_t* this, size_t start, size_t size)
   if(start + size > OWString_GetSize(this)) return NULL;
 
   OWO_String_t* sub = OWString_ConstructEmpty();
+  OWString_t* const sobj = OWObject_FindObjectInClass(sub, OWID_STRING);
   OWString_Resize(sub, size + 1);
 
   char *buf = OWString_GetBuffer(this);
@@ -101,7 +103,7 @@ OWO_String_t* _OWString_SubString(OWO_String_t* this, size_t start, size_t size)
     sbuf[i] = buf[i + start];
   }
   sbuf[size] = '\0';
-  OWString_GetSize(sub) = size;
+  sobj->size = size;
 
   return sub;
 }
@@ -140,4 +142,20 @@ bool _OWString_IsEqual(OWO_String_t* this, OWObject_t* other) {
   const char* obuf = OWString_GetBuffer(other);
 
   return strncmp(buf, obuf, obj->size) == 0;
+}
+
+size_t _OWString_GetSize(OWO_String_t* this) {
+  OWString_t* const obj = OWObject_FindObjectInClass(this, OWID_STRING);
+  if(obj == NULL) return 0;
+
+  size_t slots = OWArray_GetSlots(this);
+  bool recalculate = false;
+
+  if(obj->size < slots)
+    recalculate = (OWArray_At(char, this, obj->size) != '\0');
+
+  if(obj->size >= slots || recalculate)
+    obj->size = strlen(OWString_GetBuffer(this));
+
+  return obj->size;
 }
