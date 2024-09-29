@@ -10,6 +10,14 @@
 
 OWO_Path_t* OWPath_ConstructWithString(OWO_String_t* string) {
   OWO_Path_t* path = _OWObject_Construct(sizeof(OWPath_t), OWID_PATH, string, NULL, NULL);
+  if(path == NULL) return NULL;
+
+  OWPath_t* const obj = path->object;
+
+  obj->methods.exists = _OWPath_Exists;
+  obj->methods.isdir = _OWPath_IsDir;
+  obj->methods.isfile = _OWPath_IsFile;
+
   return path;
 }
 
@@ -41,13 +49,13 @@ OWO_Path_t* OWPath_Construct(const char* str, size_t len) {
 }
 
 
-bool OWPath_Exists(OWO_Path_t* this) {
+bool _OWPath_Exists(OWO_Path_t* this) {
   struct stat s;
   int err = stat(OWString_GetBuffer(this), &s);
   return (err == 0);
 }
 
-bool OWPath_IsDir(OWO_Path_t* this) {
+bool _OWPath_IsDir(OWO_Path_t* this) {
   struct stat s;
   bool is_dir = false;
   int err = stat(OWString_GetBuffer(this), &s);
@@ -59,7 +67,7 @@ bool OWPath_IsDir(OWO_Path_t* this) {
   return is_dir;
 }
 
-bool OWPath_IsFile(OWO_Path_t* this) {
+bool _OWPath_IsFile(OWO_Path_t* this) {
   struct stat s;
   bool is_file = false;
   int err = stat(OWString_GetBuffer(this), &s);
