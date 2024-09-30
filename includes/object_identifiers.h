@@ -33,6 +33,8 @@ enum {
 
   OWID_CTYPE = 5,
 
+  OWID_PATH = 6,
+
   OWID_USER_DEFINED = 1000
 };
 

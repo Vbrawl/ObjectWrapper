@@ -57,7 +57,7 @@ TestCase(string_test tests/ow_string.c src/object.c src/ow_string.c src/array.c)
 TestCase(array_test tests/array.c src/object.c src/array.c)
 TestCase(map_test tests/map.c src/map.c src/vector.c src/array.c src/object.c src/ow_string.c src/ctypes.c)
 TestCase(ctypes_test tests/ctypes.c src/object.c src/ctypes.c)
-
+TestCase(path_test tests/path.c src/path.c src/object.c src/ow_string.c src/array.c)
 
 # Add installation steps
 install(TARGETS objectwrapper

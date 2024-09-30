@@ -26,6 +26,7 @@ struct _OWString_Methods {
   int(*compare)(OWO_String_t* this, const char* content, size_t content_size);
   OWO_String_t*(*substring)(OWO_String_t* this, size_t start, size_t size);
   size_t(*findstr)(OWO_String_t* this, const char* sub, size_t sub_size);
+  size_t(*getsize)(OWO_String_t* this);
 };
 
 /**
@@ -346,13 +347,19 @@ SHARED_EXPORT size_t _OWString_FindStr(OWO_String_t* this, const char* sub, size
  *
  * @memberof OWString_t
  */
-#define OWString_GetSize(this) ((OWString_t*)OWObject_FindObjectInClass(this, OWID_STRING))->size
+#define OWString_GetSize(this) OWString_Methods(this).getsize(this)
 
 /**
  * @copydoc OWString_GetSize
  * @memberof OWString_t
  */
 #define OWString_GetLength(this) OWString_GetSize(this)
+
+/**
+ * @brief Default implementation of OWString_GetSize
+ * @memberof OWString_t
+ */
+size_t _OWString_GetSize(OWO_String_t* this);
 
 /**
  * @brief Resize the string's buffer

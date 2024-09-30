@@ -11,6 +11,15 @@ int test_Empty() {
   return 0;
 }
 
+int test_EmptyBuffer() {
+  OWO_String_t* str = OWString_Construct(NULL, 10);
+
+  if(OWString_GetSize(str) != 10) return -1;
+
+  OWObject_UnRef(str);
+  return 0;
+}
+
 int test_Append() {
   OWO_String_t* str = OWString_ConstructSimple("Hello");
   OWString_AppendSimple(str, "!");
@@ -123,6 +132,9 @@ int main() {
   if(error != 0) return error;
 
   error = test_Empty();
+  if(error != 0) return error;
+
+  error = test_EmptyBuffer();
   if(error != 0) return error;
 
   error = test_SubString();
