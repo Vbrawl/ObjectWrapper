@@ -30,7 +30,8 @@ add_library(objectwrapper SHARED
 	src/ow_string.c
 	src/vector.c
 	src/map.c
-	src/ctypes.c)
+	src/ctypes.c
+	src/path.c)
 target_include_directories(objectwrapper PUBLIC includes)
 
 set_target_properties(objectwrapper PROPERTIES
