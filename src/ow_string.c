@@ -19,6 +19,7 @@ OWO_String_t* OWString_Construct(const char* content, size_t content_size) {
   obj->methods.compare = _OWString_Compare;
   obj->methods.substring = _OWString_SubString;
   obj->methods.findstr = _OWString_FindStr;
+  obj->methods.findstrrev = _OWString_FindStrRev;
   obj->methods.getsize = _OWString_GetSize;
 
   OWString_Set(this, content, content_size);
@@ -117,6 +118,17 @@ size_t _OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size) {
 
   if(bsize < sub_size) return -1;
 
+  // found:
+  //    This variable signals wether a character matches
+  //
+  // offset:
+  //    When found is false this variable is updated to `i`.
+  //    When found is true this variable doesn't change but
+  //    is used as an offset from the start of the word, while i
+  //    continues to increment this stays the same which keeps track of
+  //    the start of the word and `i` is the counter which gets the next
+  //    character.
+
   bool found = false;
   size_t offset = 0;
   size_t end = bsize - sub_size;
@@ -125,6 +137,45 @@ size_t _OWString_FindStr(OWO_String_t* this, const char* sub, size_t sub_size) {
     found = (buf[i] == sub[i - offset]);
   }
   if(!found) offset = -1;
+
+  return offset;
+}
+
+size_t _OWString_FindStrRev(OWO_String_t* this, const char* sub, size_t sub_size) {
+  this = OWObject_FindTypeInClass(this, OWID_STRING);
+  if(this == NULL) return -1;
+
+  const char *buf = OWString_GetBuffer(this);
+  const size_t bsize = OWString_GetSize(this);
+
+  if(bsize < sub_size) return -1;
+
+  // found:
+  //    This variable signals wether a character matches
+  //
+  // found_whole:
+  //    This variable signals wether the whole substring was found
+  //
+  // offset:
+  //    When found is false this variable is updated to `i`.
+  //    When found is true this variable doesn't change but
+  //    is used as an offset from the start of the word, while `i`
+  //    continues to decrement this stays the same which keeps track of
+  //    the start of the word and `i` is the counter which gets the next
+  //    character.
+
+  // end - 2 => pointer to the last character
+  bool found = false;
+  bool found_whole = false;
+  size_t end = bsize - 1;
+  size_t offset = end;
+  for(size_t i = end; i != -1 && offset - i < sub_size && !found_whole; i--) {
+    if(!found) offset = i;
+    found = (buf[i] == sub[sub_size - (offset - i) - 1]);
+    found_whole = (offset - i == sub_size - 1);
+  }
+  if(!found_whole) offset = -1;
+  else offset = offset - sub_size + 1;
 
   return offset;
 }

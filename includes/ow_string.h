@@ -26,6 +26,7 @@ struct _OWString_Methods {
   int(*compare)(OWO_String_t* this, const char* content, size_t content_size);
   OWO_String_t*(*substring)(OWO_String_t* this, size_t start, size_t size);
   size_t(*findstr)(OWO_String_t* this, const char* sub, size_t sub_size);
+  size_t(*findstrrev)(OWO_String_t* this, const char* sub, size_t sub_size);
   size_t(*getsize)(OWO_String_t* this);
 };
 
@@ -326,6 +327,51 @@ SHARED_EXPORT size_t _OWString_FindStr(OWO_String_t* this, const char* sub, size
  * @memberof OWString_t
  */
 #define OWString_FindStrOWString(this, other) OWString_FindStr(this, OWString_GetBuffer(other), OWString_GetSize(other))
+
+/**
+ * @brief Find in reverse order a substring in the OWString's content
+ *
+ * @param this The OWString which contents will be searched
+ * @param sub The contents to search for
+ * @param sub_size The length of the contents to search for
+ *
+ * Find in reverse order the position of a substring in a string.
+ *
+ * @returns The offset in which the sub-string was found or -1 if substring was not found.
+ */
+#define OWString_FindStrRev(this, sub, sub_size) OWString_Methods(this).findstrrev(this, sub, sub_size)
+
+/**
+ * @brief Default implementation of OWString_FindStr
+ * @memberof OWString_t
+ */
+SHARED_EXPORT size_t _OWString_FindStrRev(OWO_String_t* this, const char* sub, size_t sub_size);
+
+/**
+ * @brief Simple way to call @ref OWString_FindStr
+ *
+ * @param this The OWString which contents will be searched
+ * @param sub The contents to search for
+ *
+ * This macro automatically finds the content's length.
+ *
+ * @returns The offset in which the sub-string was found or -1 if substring was not found.
+ * @memberof OWString_t
+ */
+#define OWString_FindStrRevSimple(this, sub) OWString_FindStrRev(this, sub, strlen(sub))
+
+/**
+ * @brief Call @ref OWString_FindStr for @ref OWString_t objects
+ *
+ * @param this The OWString which will be searched
+ * @param other The OWString to search for
+ *
+ * This macro automatically finds the content and it's length.
+ *
+ * @returns The offset in which the sub-string was found or -1 if substring was not found.
+ * @memberof OWString_t
+ */
+#define OWString_FindStrRevOWString(this, other) OWString_FindStrRev(this, OWString_GetBuffer(other), OWString_GetSize(other))
 
 /**
  * @brief Get the internal buffer of the string

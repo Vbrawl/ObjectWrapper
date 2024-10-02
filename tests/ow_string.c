@@ -86,6 +86,17 @@ int test_FindStr() {
   return 0;
 }
 
+int test_FindStrRev() {
+  OWO_String_t* str1 = OWString_ConstructSimple("Hello World");
+
+  if(OWString_FindStrRevSimple(str1, "Hello") != 0) return 1;
+  if(OWString_FindStrRevSimple(str1, "World") != 6) return 2;
+  if(OWString_FindStrRevSimple(str1, "yolo") != -1) return 3;
+
+  OWObject_UnRef(str1);
+  return 0;
+}
+
 int test_IsEqual() {
   OWO_String_t* str1 = OWString_ConstructSimple("Hello World");
   OWO_String_t* str2 = OWString_ConstructSimple("Hello World");
@@ -141,6 +152,9 @@ int main() {
   if(error != 0) return error;
 
   error = test_FindStr();
+  if(error != 0) return error;
+
+  error = test_FindStrRev();
   if(error != 0) return error;
 
   error = test_IsEqual();
