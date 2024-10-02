@@ -6,7 +6,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <stdio.h>
 
 OWO_Path_t* OWPath_ConstructWithString(OWO_String_t* string) {
   OWO_Path_t* path = _OWObject_Construct(sizeof(OWPath_t), OWID_PATH, string, NULL, NULL);
@@ -17,6 +16,8 @@ OWO_Path_t* OWPath_ConstructWithString(OWO_String_t* string) {
   obj->methods.exists = _OWPath_Exists;
   obj->methods.isdir = _OWPath_IsDir;
   obj->methods.isfile = _OWPath_IsFile;
+  obj->methods.getbasename = _OWPath_GetBaseName;
+  obj->methods.getdirname = _OWPath_GetDirName;
 
   return path;
 }
@@ -77,4 +78,22 @@ bool _OWPath_IsFile(OWO_Path_t* this) {
   }
 
   return is_file;
+}
+
+OWO_Path_t* _OWPath_GetBaseName(OWO_Path_t* this) {
+  size_t i = OWString_FindStrRev(this, "/", 1);
+  if(i == 0 || i == -1) {
+    return OWPath_Construct("/", 1);
+  }
+
+  return OWPath_ConstructWithString(OWString_SubString(this, i + 1, OWString_GetSize(this) - i - 1));
+}
+
+OWO_Path_t* _OWPath_GetDirName(OWO_Path_t* this) {
+  size_t i = OWString_FindStrRev(this, "/", 1);
+  if(i == 0 || i == -1) {
+    return OWPath_Construct("/", 1);
+  }
+
+  return OWPath_ConstructWithString(OWString_SubString(this, 0, i));
 }

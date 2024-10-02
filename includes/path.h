@@ -26,6 +26,8 @@ struct _OWPath_Methods {
   bool(*exists)(OWO_Path_t* this);
   bool(*isdir)(OWO_Path_t* this);
   bool(*isfile)(OWO_Path_t* this);
+  OWO_Path_t*(*getbasename)(OWO_Path_t* this);
+  OWO_Path_t*(*getdirname)(OWO_Path_t* this);
 };
 
 
@@ -134,5 +136,42 @@ SHARED_EXPORT bool _OWPath_IsDir(OWO_Path_t* this);
  * @memberof OWPath_t
  */
 SHARED_EXPORT bool _OWPath_IsFile(OWO_Path_t* this);
+
+/**
+ * @brief Get the basename of the path
+ *
+ * @param this The OWPath
+ *
+ * Get the last part of the path
+ *
+ * @returns The last part of the path
+ * @memberof OWPath_t
+ */
+#define OWPath_GetBaseName(this) OWPath_Methods(this).getbasename(this)
+
+/**
+ * @brief Default implementation of OWPath_GetBaseName
+ * @memberof OWPath_t
+ */
+SHARED_EXPORT OWO_Path_t* _OWPath_GetBaseName(OWO_Path_t* this);
+
+
+/**
+ * @brief Get the dirname of the path
+ *
+ * @param this The OWPath
+ *
+ * Get the parent directory of the path
+ *
+ * @returns The parent directory of the path
+ * @memberof OWPath_t
+ */
+#define OWPath_GetDirName(this) OWPath_Methods(this).getdirname(this)
+
+/**
+ * @brief Default implementation of OWPath_GetDirName
+ * @memberof OWPath_t
+ */
+SHARED_EXPORT OWO_Path_t* _OWPath_GetDirName(OWO_Path_t* this);
 
 #endif

@@ -2,6 +2,7 @@
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <libgen.h>
 #include <stdio.h>
 
 #define RANDOM_STRING "oaiwjdoiawjdioawjdioawjdioajwd"
@@ -42,6 +43,32 @@ int test_ConstructHere() {
   return 0;
 }
 
+int test_GetBaseName() {
+  OWO_Path_t* path = OWPath_ConstructHere();
+  OWO_Path_t* basen = OWPath_GetBaseName(path);
+
+  const char* bn = basename(OWString_GetBuffer(path));
+
+  if(OWString_CompareSimple(basen, bn) != 0) return 1;
+
+  OWObject_UnRef(basen);
+  OWObject_UnRef(path);
+  return 0;
+}
+
+int test_GetDirName() {
+  OWO_Path_t* path = OWPath_ConstructHere();
+  OWO_Path_t* dirn = OWPath_GetDirName(path);
+
+  const char* dn = dirname(OWString_GetBuffer(path));
+
+  if(OWString_CompareSimple(dirn, dn) != 0) return 1;
+
+  OWObject_UnRef(dirn);
+  OWObject_UnRef(path);
+  return 0;
+}
+
 int main(int argc, const char* argv[argc]) {
   int error = test_ConstructHere();
   if(error != 0) return error;
@@ -53,6 +80,12 @@ int main(int argc, const char* argv[argc]) {
   if(error != 0) return error;
 
   error = test_IsFile(argv[0]);
+  if(error != 0) return error;
+
+  error = test_GetBaseName();
+  if(error != 0) return error;
+
+  error = test_GetDirName();
   if(error != 0) return error;
 
   return 0;
