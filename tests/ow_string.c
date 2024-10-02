@@ -88,11 +88,15 @@ int test_FindStr() {
 
 int test_FindStrRev() {
   OWO_String_t* str1 = OWString_ConstructSimple("Hello World");
+  OWO_String_t* str2 = OWString_ConstructSimple("/home/vbrawl/Documents/projects/ObjectWrapper/build");
 
   if(OWString_FindStrRevSimple(str1, "Hello") != 0) return 1;
   if(OWString_FindStrRevSimple(str1, "World") != 6) return 2;
   if(OWString_FindStrRevSimple(str1, "yolo") != -1) return 3;
+  if(OWString_FindStrRevSimple(str1, "/") != -1) return 4;
+  if(OWString_FindStrRevSimple(str2, "/") != 45) return 5;
 
+  OWObject_UnRef(str2);
   OWObject_UnRef(str1);
   return 0;
 }

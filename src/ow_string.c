@@ -169,10 +169,10 @@ size_t _OWString_FindStrRev(OWO_String_t* this, const char* sub, size_t sub_size
   bool found_whole = false;
   size_t end = bsize - 1;
   size_t offset = end;
-  for(size_t i = end; i != -1 && offset - i < sub_size && !found_whole; i--) {
+  for(size_t i = end; i != -1 && offset - i <= sub_size && !found_whole; i--) {
     if(!found) offset = i;
     found = (buf[i] == sub[sub_size - (offset - i) - 1]);
-    found_whole = (offset - i == sub_size - 1);
+    found_whole = (offset - i == sub_size - 1) && found;
   }
   if(!found_whole) offset = -1;
   else offset = offset - sub_size + 1;
@@ -210,3 +210,4 @@ size_t _OWString_GetSize(OWO_String_t* this) {
 
   return obj->size;
 }
+
