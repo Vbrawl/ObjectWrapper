@@ -28,6 +28,7 @@ struct _OWPath_Methods {
   bool(*isfile)(OWO_Path_t* this);
   OWO_Path_t*(*getbasename)(OWO_Path_t* this);
   OWO_Path_t*(*getdirname)(OWO_Path_t* this);
+  OWO_Path_t*(*join)(OWO_Path_t* this, OWO_Path_t* other);
 };
 
 
@@ -173,5 +174,24 @@ SHARED_EXPORT OWO_Path_t* _OWPath_GetBaseName(OWO_Path_t* this);
  * @memberof OWPath_t
  */
 SHARED_EXPORT OWO_Path_t* _OWPath_GetDirName(OWO_Path_t* this);
+
+/**
+ * @brief Get a new path from the join of the parameters
+ *
+ * @param this The OWPath
+ * @param other The other OWPath
+ *
+ * Get the joined path from the 2 entered paths
+ *
+ * @returns The joined path
+ * @memberof OWPath_t
+ */
+#define OWPath_Join(this, other) OWPath_Methods(this).join(this, other)
+
+/**
+ * @brief Default implementation of OWPath_Join
+ * @memberof OWPath_t
+ */
+SHARED_EXPORT OWO_Path_t* _OWPath_Join(OWO_Path_t* this, OWO_Path_t* other);
 
 #endif

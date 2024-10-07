@@ -69,6 +69,21 @@ int test_GetDirName() {
   return 0;
 }
 
+int test_Join() {
+  OWO_Path_t* dir1 = OWPath_ConstructWithString(OWString_ConstructSimple("Dir1"));
+  OWO_Path_t* dir2 = OWPath_ConstructWithString(OWString_ConstructSimple("Dir2"));
+  OWO_Path_t* expected_result = OWPath_ConstructWithString(OWString_ConstructSimple("Dir1/Dir2"));
+
+  OWO_Path_t* result = OWPath_Join(dir1, dir2);
+  if(OWString_CompareOWString(expected_result, result) != 0) return 1;
+
+  OWObject_UnRef(result);
+  OWObject_UnRef(expected_result);
+  OWObject_UnRef(dir2);
+  OWObject_UnRef(dir1);
+  return 0;
+}
+
 int main(int argc, const char* argv[argc]) {
   int error = test_ConstructHere();
   if(error != 0) return error;
@@ -86,6 +101,9 @@ int main(int argc, const char* argv[argc]) {
   if(error != 0) return error;
 
   error = test_GetDirName();
+  if(error != 0) return error;
+
+  error = test_Join();
   if(error != 0) return error;
 
   return 0;

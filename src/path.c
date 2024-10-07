@@ -18,6 +18,7 @@ OWO_Path_t* OWPath_ConstructWithString(OWO_String_t* string) {
   obj->methods.isfile = _OWPath_IsFile;
   obj->methods.getbasename = _OWPath_GetBaseName;
   obj->methods.getdirname = _OWPath_GetDirName;
+  obj->methods.join = _OWPath_Join;
 
   return path;
 }
@@ -96,4 +97,30 @@ OWO_Path_t* _OWPath_GetDirName(OWO_Path_t* this) {
   }
 
   return OWPath_ConstructWithString(OWString_SubString(this, 0, i));
+}
+
+OWO_Path_t* _OWPath_Join(OWO_Path_t* this, OWO_Path_t* other) {
+  size_t tsize, osize;
+  const char *tbuf, *obuf;
+
+  // if one of the strings is empty return the one that's not.
+  // In case both strings are empty return "/"
+  tsize = OWString_GetSize(this);
+  osize = OWString_GetSize(other);
+  if(tsize <= 0 && osize <= 0) return OWString_ConstructSimple("/");
+  if(tsize <= 0) return OWString_Clone(other);
+  if(osize <= 0) return OWString_Clone(this);
+
+  tbuf = OWString_GetBuffer(this);
+  obuf = OWString_GetBuffer(other);
+
+  // Resolve and return the path
+  if(obuf[0] == '/') return OWString_Clone(other);
+
+  OWO_Path_t* resolved_path = OWPath_ConstructWithString(OWString_ConstructEmpty());
+  OWString_SetOWString(resolved_path, this);
+  if(tbuf[tsize - 1] != '/') OWString_AppendSimple(resolved_path, "/");
+  OWString_AppendOWString(resolved_path, other);
+
+  return resolved_path;
 }
